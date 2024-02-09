@@ -48,7 +48,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
 
-  Stripe.publishableKey = 'pk_test_51NayeVFRHqwLPZjY8Eu3S8mR4jzXoSt486Vtx1eOLENOMujlBoBzvY4DVVL5QZABDUR0CrQJcgAMyor7ea1StKFT00OcHIehid';
+  Stripe.publishableKey =
+      'pk_test_51NayeVFRHqwLPZjY8Eu3S8mR4jzXoSt486Vtx1eOLENOMujlBoBzvY4DVVL5QZABDUR0CrQJcgAMyor7ea1StKFT00OcHIehid';
   await Stripe.instance.applySettings();
 
   notificationService.initialiseNotification();
@@ -74,7 +75,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-
     //For stop rotating the screen
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
@@ -82,54 +82,136 @@ class MyApp extends StatelessWidget {
     ]);
 
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Colors.black12,));
+      statusBarColor: Colors.black12,
+    ));
     return ScreenUtilInit(
         designSize: const Size(430, 932),
         minTextAdapt: true,
         splitScreenMode: true,
-      builder: (context,child) {
-        return GetMaterialApp(
-          debugShowCheckedModeBanner: false,
-          darkTheme: Themes().darkTheme,
-          theme: Themes().lightTheme,
-          themeMode: ThemeService().getThemeMode(),
-          title: 'Hyip Pro',
-          initialRoute: SplashScreen.routeName,
-          getPages: [
-            GetPage(name: SplashScreen.routeName, page: ()=> SplashScreen()),
-            GetPage(name: OnboardingScreen.routeName, page: ()=> OnboardingScreen(),transition: Transition.fadeIn),
-            GetPage(name: LoginScreen.routeName, page: ()=> LoginScreen(),transition: Transition.fadeIn),
-            GetPage(name: RegisterScreen.routeName, page: ()=> RegisterScreen(),transition: Transition.fadeIn),
-            GetPage(name: DashBoardScreen.routeName, page: ()=> DashBoardScreen(),transition: Transition.fadeIn),
-            GetPage(name: BottomNavBar.routeName, page: ()=> BottomNavBar(),transition: Transition.fadeIn),
-            GetPage(name: InvestHistoryScreen.routeName, page: ()=> InvestHistoryScreen(),transition: Transition.fadeIn),
-            GetPage(name: DepositScreen.routeName, page: ()=> DepositScreen(),transition: Transition.fadeIn),
-            GetPage(name: PlanScreen.routeName, page: ()=> PlanScreen(),transition: Transition.fadeIn),
-            GetPage(name: BadgesScreen.routeName, page: ()=> BadgesScreen(),transition: Transition.fadeIn),
-            GetPage(name: ChangePasswordScreen.routeName, page: ()=> ChangePasswordScreen(),transition: Transition.fadeIn),
-            GetPage(name: EditAccountScreen.routeName, page: ()=> EditAccountScreen(),transition: Transition.fadeIn),
-            GetPage(name: TwoFaScreen.routeName, page: ()=> TwoFaScreen(),transition: Transition.fadeIn),
-            GetPage(name: ReferralBonusScreen.routeName, page: ()=> ReferralBonusScreen(),transition: Transition.fadeIn),
-            GetPage(name: PayoutScreen.routeName, page: ()=> PayoutScreen(),transition: Transition.fadeIn),
-            GetPage(name: ReferralScreen.routeName, page: ()=> ReferralScreen(),transition: Transition.fadeIn),
-            GetPage(name: DepositHistoryScreen.routeName, page: ()=> DepositHistoryScreen(),transition: Transition.fadeIn),
-            GetPage(name: PayoutHistoryScreen.routeName, page: ()=> PayoutHistoryScreen(),transition: Transition.fadeIn),
-            GetPage(name: SupportTicketScreen.routeName, page: ()=> SupportTicketScreen(),transition: Transition.fadeIn),
-            GetPage(name: CreateNewTicketScreen.routeName, page: ()=> CreateNewTicketScreen(),transition: Transition.fadeIn),
-            GetPage(name: TicketViewReplyScreen.routeName, page: ()=> TicketViewReplyScreen(),transition: Transition.fadeIn),
-            GetPage(name: AddressVerificationScreen.routeName, page: ()=> AddressVerificationScreen(),transition: Transition.fadeIn),
-            GetPage(name: IdentityVerificationScreen.routeName, page: ()=> IdentityVerificationScreen(),transition: Transition.fadeIn),
-            GetPage(name: NotificationScreen.routeName, page: ()=> NotificationScreen(),transition: Transition.fadeIn),
-            GetPage(name: LanguageScreen.routeName, page: ()=> LanguageScreen(),transition: Transition.fadeIn),
-            GetPage(name: TransferScreen.routeName, page: ()=> TransferScreen(),transition: Transition.fadeIn),
-            GetPage(name: MailVerificationScreen.routeName, page: ()=> MailVerificationScreen(),transition: Transition.fadeIn),
-            GetPage(name: TwoFactorVerificationScreen.routeName, page: ()=> TwoFactorVerificationScreen(),transition: Transition.fadeIn),
-            GetPage(name: SmsVerificationScreen.routeName, page: ()=> SmsVerificationScreen(),transition: Transition.fadeIn),
-          ],
-        );
-      }
-    );
+        builder: (context, child) {
+          return GetMaterialApp(
+            debugShowCheckedModeBanner: false,
+            darkTheme: Themes().darkTheme,
+            theme: Themes().lightTheme,
+            themeMode: ThemeService().getThemeMode(),
+            title: 'Hyip Pro',
+            initialRoute: SplashScreen.routeName,
+            getPages: [
+              GetPage(name: SplashScreen.routeName, page: () => SplashScreen()),
+              GetPage(
+                  name: OnboardingScreen.routeName,
+                  page: () => OnboardingScreen(),
+                  transition: Transition.fadeIn),
+              GetPage(
+                  name: LoginScreen.routeName,
+                  page: () => LoginScreen(),
+                  transition: Transition.fadeIn),
+              GetPage(
+                  name: RegisterScreen.routeName,
+                  page: () => RegisterScreen(),
+                  transition: Transition.fadeIn),
+              GetPage(
+                  name: DashBoardScreen.routeName,
+                  page: () => DashBoardScreen(),
+                  transition: Transition.fadeIn),
+              GetPage(
+                  name: BottomNavBar.routeName,
+                  page: () => BottomNavBar(),
+                  transition: Transition.fadeIn),
+              GetPage(
+                  name: InvestHistoryScreen.routeName,
+                  page: () => InvestHistoryScreen(),
+                  transition: Transition.fadeIn),
+              GetPage(
+                  name: DepositScreen.routeName,
+                  page: () => DepositScreen(),
+                  transition: Transition.fadeIn),
+              GetPage(
+                  name: PlanScreen.routeName,
+                  page: () => PlanScreen(),
+                  transition: Transition.fadeIn),
+              GetPage(
+                  name: BadgesScreen.routeName,
+                  page: () => BadgesScreen(),
+                  transition: Transition.fadeIn),
+              GetPage(
+                  name: ChangePasswordScreen.routeName,
+                  page: () => ChangePasswordScreen(),
+                  transition: Transition.fadeIn),
+              GetPage(
+                  name: EditAccountScreen.routeName,
+                  page: () => EditAccountScreen(),
+                  transition: Transition.fadeIn),
+              GetPage(
+                  name: TwoFaScreen.routeName,
+                  page: () => TwoFaScreen(),
+                  transition: Transition.fadeIn),
+              GetPage(
+                  name: ReferralBonusScreen.routeName,
+                  page: () => ReferralBonusScreen(),
+                  transition: Transition.fadeIn),
+              GetPage(
+                  name: PayoutScreen.routeName,
+                  page: () => PayoutScreen(),
+                  transition: Transition.fadeIn),
+              GetPage(
+                  name: ReferralScreen.routeName,
+                  page: () => ReferralScreen(),
+                  transition: Transition.fadeIn),
+              GetPage(
+                  name: DepositHistoryScreen.routeName,
+                  page: () => DepositHistoryScreen(),
+                  transition: Transition.fadeIn),
+              GetPage(
+                  name: PayoutHistoryScreen.routeName,
+                  page: () => PayoutHistoryScreen(),
+                  transition: Transition.fadeIn),
+              GetPage(
+                  name: SupportTicketScreen.routeName,
+                  page: () => SupportTicketScreen(),
+                  transition: Transition.fadeIn),
+              GetPage(
+                  name: CreateNewTicketScreen.routeName,
+                  page: () => CreateNewTicketScreen(),
+                  transition: Transition.fadeIn),
+              GetPage(
+                  name: TicketViewReplyScreen.routeName,
+                  page: () => TicketViewReplyScreen(),
+                  transition: Transition.fadeIn),
+              GetPage(
+                  name: AddressVerificationScreen.routeName,
+                  page: () => AddressVerificationScreen(),
+                  transition: Transition.fadeIn),
+              GetPage(
+                  name: IdentityVerificationScreen.routeName,
+                  page: () => IdentityVerificationScreen(),
+                  transition: Transition.fadeIn),
+              GetPage(
+                  name: NotificationScreen.routeName,
+                  page: () => NotificationScreen(),
+                  transition: Transition.fadeIn),
+              GetPage(
+                  name: LanguageScreen.routeName,
+                  page: () => LanguageScreen(),
+                  transition: Transition.fadeIn),
+              GetPage(
+                  name: TransferScreen.routeName,
+                  page: () => TransferScreen(),
+                  transition: Transition.fadeIn),
+              GetPage(
+                  name: MailVerificationScreen.routeName,
+                  page: () => MailVerificationScreen(),
+                  transition: Transition.fadeIn),
+              GetPage(
+                  name: TwoFactorVerificationScreen.routeName,
+                  page: () => TwoFactorVerificationScreen(),
+                  transition: Transition.fadeIn),
+              GetPage(
+                  name: SmsVerificationScreen.routeName,
+                  page: () => SmsVerificationScreen(),
+                  transition: Transition.fadeIn),
+            ],
+          );
+        });
   }
 }
-
-

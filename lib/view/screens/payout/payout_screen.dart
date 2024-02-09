@@ -40,13 +40,11 @@ class _PayoutScreenState extends State<PayoutScreen> {
   dynamic percentageCharge;
   dynamic currency;
 
-
   dynamic data;
 
   final selectedLanguageStorage = GetStorage();
 
   List<Gateway> filteredPayoutGatewaysList = [];
-
 
   @override
   Widget build(BuildContext context) {
@@ -419,7 +417,6 @@ class _PayoutScreenState extends State<PayoutScreen> {
                                         height: 8.h,
                                       ),
 
-
                                       // Container(
                                       //   height: 52.h,
                                       //   width: double.infinity,
@@ -479,21 +476,24 @@ class _PayoutScreenState extends State<PayoutScreen> {
                                           color: Get.isDarkMode
                                               ? AppColors.appContainerBgColor
                                               : AppColors.appFillColor,
-                                          borderRadius: BorderRadius.circular(12),
+                                          borderRadius:
+                                              BorderRadius.circular(12),
                                         ),
                                         child: StatefulBuilder(
                                           builder: (context, setState) {
                                             return DropdownButton2<String>(
                                               items: [
                                                 DropdownMenuItem(
-                                                  value: '${payoutController.message!.interestBalance}',
+                                                  value:
+                                                      '${payoutController.message!.interestBalance}',
                                                   child: Row(
                                                     children: [
                                                       Text(
                                                         'Current Balance: ${payoutController.message!.interestAmount}',
                                                         style: TextStyle(
                                                           fontSize: 14.sp,
-                                                          fontWeight: FontWeight.w400,
+                                                          fontWeight:
+                                                              FontWeight.w400,
                                                         ),
                                                       ),
                                                       // Text(
@@ -510,21 +510,21 @@ class _PayoutScreenState extends State<PayoutScreen> {
                                               onChanged: (value) {
                                                 setState(() {
                                                   selectedOption = value!;
-                                                  walletType = "interest_balance"; // You can update this accordingly
+                                                  walletType =
+                                                      "interest_balance"; // You can update this accordingly
                                                   if (kDebugMode) {
                                                     print(walletType);
                                                   }
                                                 });
                                               },
-                                              value: '${payoutController.message!.interestBalance}', // Set the default value here
+                                              value:
+                                                  '${payoutController.message!.interestBalance}', // Set the default value here
                                               isExpanded: true,
                                               underline: Container(),
                                             );
                                           },
                                         ),
                                       ),
-
-
 
                                       SizedBox(
                                         height: 24.h,
@@ -548,7 +548,8 @@ class _PayoutScreenState extends State<PayoutScreen> {
                                           return null;
                                         },
                                         inputFormatters: [
-                                          FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,5}')),
+                                          FilteringTextInputFormatter.allow(
+                                              RegExp(r'^\d+\.?\d{0,5}')),
                                         ],
                                         controller: amountController,
                                         keyboardType: TextInputType.number,
@@ -580,147 +581,192 @@ class _PayoutScreenState extends State<PayoutScreen> {
                                         onTap: () {
                                           if (formKey.currentState!
                                               .validate()) {
-                                        if(selectedTabIndex==-1){
-                                            print("please select index");
-                                            final backgroundColor = Colors.red;
-                                            final snackBar = SnackBar(
-                                              content: Text(
-                                                "Please select a gateway first",
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 14.sp
+                                            if (selectedTabIndex == -1) {
+                                              print("please select index");
+                                              final backgroundColor =
+                                                  Colors.red;
+                                              final snackBar = SnackBar(
+                                                content: Text(
+                                                  "Please select a gateway first",
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 14.sp),
                                                 ),
-                                              ),
-                                              backgroundColor: backgroundColor,
-                                              duration: const Duration(seconds: 2),
-                                              behavior: SnackBarBehavior.floating,
-                                              margin: const EdgeInsets.all(5),
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(8),
-                                              ),
-                                              elevation: 10,
-                                            );
-                                            ScaffoldMessenger.of(context).removeCurrentSnackBar();
-                                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                                          }else{
-                                          if(double.parse(amountController.text) <= double.parse(minAmount)){
-                                            final backgroundColor = Colors.red;
-                                            final snackBar = SnackBar(
-                                              content: Text(
-                                                "Minimum amount is $minAmount",
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 14.sp
+                                                backgroundColor:
+                                                    backgroundColor,
+                                                duration:
+                                                    const Duration(seconds: 2),
+                                                behavior:
+                                                    SnackBarBehavior.floating,
+                                                margin: const EdgeInsets.all(5),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
                                                 ),
-                                              ),
-                                              backgroundColor: backgroundColor,
-                                              duration: const Duration(seconds: 2),
-                                              behavior: SnackBarBehavior.floating,
-                                              margin: const EdgeInsets.all(5),
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(8),
-                                              ),
-                                              elevation: 10,
-                                            );
-                                            ScaffoldMessenger.of(context).removeCurrentSnackBar();
-                                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                                          }
-                                          else if(double.parse(amountController.text) > double.parse(maxAmount)){
-                                            final backgroundColor = Colors.red;
-                                            final snackBar = SnackBar(
-                                              content: Text(
-                                                "Maximum amount is $maxAmount",
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 14.sp
-                                                ),
-                                              ),
-                                              backgroundColor: backgroundColor,
-                                              duration: const Duration(seconds: 2),
-                                              behavior: SnackBarBehavior.floating,
-                                              margin: const EdgeInsets.all(5),
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(8),
-                                              ),
-                                              elevation: 10,
-                                            );
-                                            ScaffoldMessenger.of(context).removeCurrentSnackBar();
-                                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                                          }
-                                          else if(double.parse(amountController.text) > payoutController.message!.depositAmount && walletType == "balance")
-                                          {
-                                            final backgroundColor = Colors.red;
-                                            final snackBar = SnackBar(
-                                              content: Text(
-                                                "You do not have sufficient funds to process the withdrawal",
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 14.sp
-                                                ),
-                                              ),
-                                              backgroundColor: backgroundColor,
-                                              duration: const Duration(seconds: 2),
-                                              behavior: SnackBarBehavior.floating,
-                                              margin: const EdgeInsets.all(5),
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(8),
-                                              ),
-                                              elevation: 10,
-                                            );
-                                            ScaffoldMessenger.of(context).removeCurrentSnackBar();
-                                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                                          }
-
-                                          else if(double.parse(amountController.text) > payoutController.message!.interestAmount && walletType != "balance")
-                                          {
-                                            final backgroundColor = Colors.red;
-                                            final snackBar = SnackBar(
-                                              content: Text(
-                                                "You do not have sufficient funds to process the withdrawal",
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 14.sp
-                                                ),
-                                              ),
-                                              backgroundColor: backgroundColor,
-                                              duration: const Duration(seconds: 2),
-                                              behavior: SnackBarBehavior.floating,
-                                              margin: const EdgeInsets.all(5),
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(8),
-                                              ),
-                                              elevation: 10,
-                                            );
-                                            ScaffoldMessenger.of(context).removeCurrentSnackBar();
-                                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                                          }
-
-                                          else{
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    PayoutPreviewScreen(
+                                                elevation: 10,
+                                              );
+                                              ScaffoldMessenger.of(context)
+                                                  .removeCurrentSnackBar();
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(snackBar);
+                                            } else {
+                                              if (double.parse(
+                                                      amountController.text) <=
+                                                  double.parse(minAmount)) {
+                                                final backgroundColor =
+                                                    Colors.red;
+                                                final snackBar = SnackBar(
+                                                  content: Text(
+                                                    "Minimum amount is $minAmount",
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 14.sp),
+                                                  ),
+                                                  backgroundColor:
+                                                      backgroundColor,
+                                                  duration: const Duration(
+                                                      seconds: 2),
+                                                  behavior:
+                                                      SnackBarBehavior.floating,
+                                                  margin:
+                                                      const EdgeInsets.all(5),
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                  ),
+                                                  elevation: 10,
+                                                );
+                                                ScaffoldMessenger.of(context)
+                                                    .removeCurrentSnackBar();
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(snackBar);
+                                              } else if (double.parse(
+                                                      amountController.text) >
+                                                  double.parse(maxAmount)) {
+                                                final backgroundColor =
+                                                    Colors.red;
+                                                final snackBar = SnackBar(
+                                                  content: Text(
+                                                    "Maximum amount is $maxAmount",
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 14.sp),
+                                                  ),
+                                                  backgroundColor:
+                                                      backgroundColor,
+                                                  duration: const Duration(
+                                                      seconds: 2),
+                                                  behavior:
+                                                      SnackBarBehavior.floating,
+                                                  margin:
+                                                      const EdgeInsets.all(5),
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                  ),
+                                                  elevation: 10,
+                                                );
+                                                ScaffoldMessenger.of(context)
+                                                    .removeCurrentSnackBar();
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(snackBar);
+                                              } else if (double.parse(
+                                                          amountController
+                                                              .text) >
+                                                      payoutController.message!
+                                                          .depositAmount &&
+                                                  walletType == "balance") {
+                                                final backgroundColor =
+                                                    Colors.red;
+                                                final snackBar = SnackBar(
+                                                  content: Text(
+                                                    "You do not have sufficient funds to process the withdrawal",
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 14.sp),
+                                                  ),
+                                                  backgroundColor:
+                                                      backgroundColor,
+                                                  duration: const Duration(
+                                                      seconds: 2),
+                                                  behavior:
+                                                      SnackBarBehavior.floating,
+                                                  margin:
+                                                      const EdgeInsets.all(5),
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                  ),
+                                                  elevation: 10,
+                                                );
+                                                ScaffoldMessenger.of(context)
+                                                    .removeCurrentSnackBar();
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(snackBar);
+                                              } else if (double.parse(
+                                                          amountController
+                                                              .text) >
+                                                      payoutController.message!
+                                                          .interestAmount &&
+                                                  walletType != "balance") {
+                                                final backgroundColor =
+                                                    Colors.red;
+                                                final snackBar = SnackBar(
+                                                  content: Text(
+                                                    "You do not have sufficient funds to process the withdrawal",
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 14.sp),
+                                                  ),
+                                                  backgroundColor:
+                                                      backgroundColor,
+                                                  duration: const Duration(
+                                                      seconds: 2),
+                                                  behavior:
+                                                      SnackBarBehavior.floating,
+                                                  margin:
+                                                      const EdgeInsets.all(5),
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                  ),
+                                                  elevation: 10,
+                                                );
+                                                ScaffoldMessenger.of(context)
+                                                    .removeCurrentSnackBar();
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(snackBar);
+                                              } else {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        PayoutPreviewScreen(
                                                       data: data,
-                                                      amount: amountController.text
+                                                      amount: amountController
+                                                          .text
                                                           .toString(),
                                                       selectedType: walletType,
                                                       depositAmount:
-                                                      payoutController.message!
-                                                          .depositAmount,
+                                                          payoutController
+                                                              .message!
+                                                              .depositAmount,
                                                       interestAmount:
-                                                      payoutController.message!
-                                                          .interestAmount,
+                                                          payoutController
+                                                              .message!
+                                                              .interestAmount,
                                                       currencySymbol: currency,
                                                       percentageCharge:
-                                                      percentageCharge,
+                                                          percentageCharge,
                                                     ),
-                                              ),
-                                            );
-                                          }
-
-                                        }
-
+                                                  ),
+                                                );
+                                              }
+                                            }
                                           }
                                         },
                                         child: Container(

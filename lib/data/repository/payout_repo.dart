@@ -7,7 +7,6 @@ import '../datasource/remote/exception/api_error_handler.dart';
 import '../model/base_model/api_response.dart';
 import 'package:dio/dio.dart' as dio;
 
-
 class PayoutRepo {
   final DioClient dioClient;
   final SharedPreferences sharedPreferences;
@@ -22,7 +21,7 @@ class PayoutRepo {
         options: Options(headers: {
           "Content-Type": "application/json",
           "Authorization":
-          "Bearer ${ sharedPreferences.getString(AppConstants.token)}",
+              "Bearer ${sharedPreferences.getString(AppConstants.token)}",
         }),
       );
       return ApiResponse.withSuccess(response);
@@ -31,19 +30,16 @@ class PayoutRepo {
     }
   }
 
-
   ///Get Bank Payout Form Data
   Future<ApiResponse> getPayoutBankFormData(dynamic bankName) async {
     try {
       Response response = await dioClient.post(
         "${AppConstants.getPayoutBankFormUri}",
-        data: {
-          "bankName" : bankName
-        },
+        data: {"bankName": bankName},
         options: Options(headers: {
           "Content-Type": "application/json",
           "Authorization":
-          "Bearer ${ sharedPreferences.getString(AppConstants.token)}",
+              "Bearer ${sharedPreferences.getString(AppConstants.token)}",
         }),
       );
       return ApiResponse.withSuccess(response);
@@ -57,13 +53,11 @@ class PayoutRepo {
     try {
       Response response = await dioClient.post(
         "${AppConstants.getPayoutBankPayStackUri}",
-        data: {
-          "currencyCode" : currencyCode
-        },
+        data: {"currencyCode": currencyCode},
         options: Options(headers: {
           "Content-Type": "application/json",
           "Authorization":
-          "Bearer ${ sharedPreferences.getString(AppConstants.token)}",
+              "Bearer ${sharedPreferences.getString(AppConstants.token)}",
         }),
       );
       return ApiResponse.withSuccess(response);
@@ -76,19 +70,18 @@ class PayoutRepo {
 
   /// PayoutRequest
   Future<ApiResponse> payoutRequest(
-      dynamic walletType,
-      dynamic gateway,
-      dynamic amount,
-      List<dynamic> fieldNames,
-      List<dynamic> fieldValues,
-      {
-        dynamic currencyCode,
-        dynamic recipientType,
-        dynamic selectBank,
-      }
-      ) async {
+    dynamic walletType,
+    dynamic gateway,
+    dynamic amount,
+    List<dynamic> fieldNames,
+    List<dynamic> fieldValues, {
+    dynamic currencyCode,
+    dynamic recipientType,
+    dynamic selectBank,
+  }) async {
     try {
-      dio.FormData formData = dio.FormData();  // Create FormData for file uploads
+      dio.FormData formData =
+          dio.FormData(); // Create FormData for file uploads
 
       formData.fields.add(MapEntry("wallet_type", walletType.toString()));
       formData.fields.add(MapEntry("gateway", gateway.toString()));
@@ -133,11 +126,11 @@ class PayoutRepo {
       Response response = await dioClient.post(
         AppConstants.payoutRequestUri,
         data: formData,
-        options: Options(
-            headers: {
-              'Content-Type': 'multipart/form-data',
-              "Authorization": "Bearer ${sharedPreferences.getString(AppConstants.token)}",
-            }),
+        options: Options(headers: {
+          'Content-Type': 'multipart/form-data',
+          "Authorization":
+              "Bearer ${sharedPreferences.getString(AppConstants.token)}",
+        }),
       );
 
       return ApiResponse.withSuccess(response);
@@ -150,25 +143,25 @@ class PayoutRepo {
     // Add your logic here to determine if the filePath represents an image file.
     // You can check the file extension, MIME type, or any other method that suits your needs.
     // For simplicity, this example assumes that any string ending with ".jpg" or ".png" is an image file.
-    return filePath.endsWith(".jpg") || filePath.endsWith(".png") || filePath.endsWith(".jpeg") ;
+    return filePath.endsWith(".jpg") ||
+        filePath.endsWith(".png") ||
+        filePath.endsWith(".jpeg");
   }
-
 
   /// FlutterWave PayoutRequest
   Future<ApiResponse> flutterWavePayoutRequest(
-      dynamic walletType,
-      dynamic gateway,
-      dynamic amount,
-      List<dynamic> fieldNames,
-      List<dynamic> fieldValues,
-      {
-        dynamic currencyCode,
-        dynamic bank,
-        dynamic transferName,
-      }
-      ) async {
+    dynamic walletType,
+    dynamic gateway,
+    dynamic amount,
+    List<dynamic> fieldNames,
+    List<dynamic> fieldValues, {
+    dynamic currencyCode,
+    dynamic bank,
+    dynamic transferName,
+  }) async {
     try {
-      dio.FormData formData = dio.FormData();  // Create FormData for file uploads
+      dio.FormData formData =
+          dio.FormData(); // Create FormData for file uploads
 
       formData.fields.add(MapEntry("wallet_type", walletType.toString()));
       formData.fields.add(MapEntry("gateway", gateway.toString()));
@@ -213,11 +206,11 @@ class PayoutRepo {
       Response response = await dioClient.post(
         AppConstants.flutterWaveUri,
         data: formData,
-        options: Options(
-            headers: {
-              'Content-Type': 'multipart/form-data',
-              "Authorization": "Bearer ${sharedPreferences.getString(AppConstants.token)}",
-            }),
+        options: Options(headers: {
+          'Content-Type': 'multipart/form-data',
+          "Authorization":
+              "Bearer ${sharedPreferences.getString(AppConstants.token)}",
+        }),
       );
 
       return ApiResponse.withSuccess(response);
@@ -225,5 +218,4 @@ class PayoutRepo {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
     }
   }
-
 }

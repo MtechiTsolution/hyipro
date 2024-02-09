@@ -1,10 +1,11 @@
-class AppConstants{
+class AppConstants {
   static const String appName = 'Hyip Pro';
   static const String token = '';
 
   ///Base URL
   //static const String baseUri = 'https://agro-hyip.bugfinder.net';
   static const String baseUri = 'https://gms-world.app/';
+  //static const String baseUri = 'http://192.168.1.18/hyp/';
 
   ///End Point
   static const String dashBoardUri = '/api/dashboard';
@@ -32,9 +33,12 @@ class AppConstants{
   static const String enableTwoFactorUri = '/api/2FA-security/enable';
   static const String disableTwoFactorUri = '/api/2FA-security/disable';
   static const String accountImageUpload = '/api/profile/image/upload';
-  static const String accountInformationUpdate = '/api/profile/information/update';
-  static const String identityVerificationUri = '/api/profile/identity-verification/submit';
-  static const String addressVerificationUri = '/api/profile/address-verification/submit';
+  static const String accountInformationUpdate =
+      '/api/profile/information/update';
+  static const String identityVerificationUri =
+      '/api/profile/identity-verification/submit';
+  static const String addressVerificationUri =
+      '/api/profile/address-verification/submit';
   static const String viewTicketUri = '/api/support-ticket/view/';
   static const String replyTicketUri = '/api/support-ticket/reply';
   static const String payoutUri = '/api/payout';
@@ -44,13 +48,15 @@ class AppConstants{
   static const String paymentMethodUri = '/api/payment';
   static const String manualPaymentSubmitUri = '/api/manual/payment/submit';
   static const String paymentDoneUri = '/api/payment/done';
-  static const String flutterWaveUri = '/api/payout/flutterwave/submit/1Y4W9GFDCKY8';
+  static const String flutterWaveUri =
+      '/api/payout/flutterwave/submit/1Y4W9GFDCKY8';
   static const String pusherConfigUri = '/api/pusher/config';
   static const String appConfigUri = '/api/app/config';
   static const String cardPayments = '/api/card/payment';
   static const String otherPayments = '/api/other/payment';
   static const String languageUri = '/api/language';
-  static const String recoveryPasswordGetEmailUri = '/api/recovery-pass/get-email';
+  static const String recoveryPasswordGetEmailUri =
+      '/api/recovery-pass/get-email';
   static const String recoveryPassCodeUri = '/api/recovery-pass/get-code';
   static const String recoveryUpdatePassCodeUri = '/api/update-pass';
   static const String appStepsUri = '/api/app/steps';
@@ -60,5 +66,4 @@ class AppConstants{
   static const String mailVerifyUri = '/api/mail-verify';
   static const String smsVerifyUri = '/api/sms-verify';
   static const String resendCode = '/api/resend-code?';
-
 }

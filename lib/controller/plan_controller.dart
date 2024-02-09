@@ -12,8 +12,7 @@ import '../data/model/response_model/plan_model.dart';
 import '../data/repository/plan_repo.dart';
 import '../view/widgets/app_plan_purchase.dart';
 
-class PlanController extends GetxController{
-
+class PlanController extends GetxController {
   final PlanRepo planRepo;
 
   PlanController({required this.planRepo});
@@ -32,7 +31,6 @@ class PlanController extends GetxController{
   bool get isBuyPlanLoading => _isBuyPlanLoading;
   bool get isLoading => _isLoading;
 
-
   PlanModel planModel = PlanModel();
 
   /// Get Plan Data
@@ -41,31 +39,28 @@ class PlanController extends GetxController{
     update();
     ApiResponse apiResponse = await planRepo.getPlanData();
 
-    if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
+    if (apiResponse.response != null &&
+        apiResponse.response!.statusCode == 200) {
       _isLoading = false;
       update();
       if (apiResponse.response!.data != null) {
-        _message=null;
+        _message = null;
         update();
         if (apiResponse.response!.data != null) {
           if (apiResponse.response!.data["message"] ==
               "Email Verification Required") {
             Get.offAllNamed(MailVerificationScreen.routeName);
-          }
-          else if (apiResponse.response!.data["message"] ==
+          } else if (apiResponse.response!.data["message"] ==
               "Mobile Verification Required") {
             Get.offAllNamed(SmsVerificationScreen.routeName);
-          }
-          else if (apiResponse.response!.data["message"] ==
+          } else if (apiResponse.response!.data["message"] ==
               "Two FA Verification Required") {
             Get.offAllNamed(TwoFactorVerificationScreen.routeName);
-          }
-          else if (apiResponse.response!.data["message"] ==
+          } else if (apiResponse.response!.data["message"] ==
               "Your account has been suspend") {
             Get.find<AuthController>().removeUserToken();
             await Get.offNamedUntil(LoginScreen.routeName, (route) => false);
-          }
-          else {
+          } else {
             planModel = PlanModel.fromJson(apiResponse.response!.data!);
             _message = planModel.message;
             update();
@@ -79,50 +74,48 @@ class PlanController extends GetxController{
   }
 
   /// Buy Plan
-  Future<dynamic> buyPlanWallet(dynamic balanceType, dynamic amount, dynamic planId,) async {
+  Future<dynamic> buyPlanWallet(
+    dynamic balanceType,
+    dynamic amount,
+    dynamic planId,
+  ) async {
     _isBuyPlanLoading = true;
     update();
-    ApiResponse apiResponse = await planRepo.buyInvestmentPlan(balanceType, amount, planId);
+    ApiResponse apiResponse =
+        await planRepo.buyInvestmentPlan(balanceType, amount, planId);
 
-    if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
+    if (apiResponse.response != null &&
+        apiResponse.response!.statusCode == 200) {
       _isBuyPlanLoading = false;
       update();
       if (apiResponse.response!.data != null) {
-
         if (apiResponse.response!.data != null) {
           if (apiResponse.response!.data["message"] ==
               "Email Verification Required") {
             Get.offAllNamed(MailVerificationScreen.routeName);
-          }
-          else if (apiResponse.response!.data["message"] ==
+          } else if (apiResponse.response!.data["message"] ==
               "Mobile Verification Required") {
             Get.offAllNamed(SmsVerificationScreen.routeName);
-          }
-          else if (apiResponse.response!.data["message"] ==
+          } else if (apiResponse.response!.data["message"] ==
               "Two FA Verification Required") {
             Get.offAllNamed(TwoFactorVerificationScreen.routeName);
-          }
-          else if (apiResponse.response!.data["message"] ==
+          } else if (apiResponse.response!.data["message"] ==
               "Your account has been suspend") {
             Get.find<AuthController>().removeUserToken();
             await Get.offNamedUntil(LoginScreen.routeName, (route) => false);
-          }
-          else {
+          } else {
             apiCallStatus = apiResponse.response!.data['status'];
             dynamic msg = apiResponse.response!.data['message'];
 
             if (apiCallStatus == "success") {
               Get.back();
-            } else {
-
-            }
+            } else {}
             Get.toNamed(InvestHistoryScreen.routeName);
             Get.snackbar(
               'Message',
               '${msg}',
-              backgroundColor: apiCallStatus == "success"
-                  ? Colors.green
-                  : Colors.red,
+              backgroundColor:
+                  apiCallStatus == "success" ? Colors.green : Colors.red,
               colorText: Colors.white,
               duration: const Duration(seconds: 2),
               snackPosition: SnackPosition.BOTTOM,
@@ -138,7 +131,6 @@ class PlanController extends GetxController{
             update();
           }
         }
-
       }
     } else {
       _isBuyPlanLoading = false;
@@ -152,6 +144,4 @@ class PlanController extends GetxController{
     getPlanData();
     super.onInit();
   }
-
-
 }

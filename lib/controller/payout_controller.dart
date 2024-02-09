@@ -21,7 +21,6 @@ import '../view/verify_required/two_factor_verification_screen.dart';
 import 'auth_controller.dart';
 
 class PayoutController extends GetxController {
-
   final PayoutRepo payoutRepo;
 
   PayoutController({required this.payoutRepo});
@@ -40,7 +39,6 @@ class PayoutController extends GetxController {
   PayStackBankData? _messagePayStackBankData;
 
   PayStackBankData? get messagePayStackBankData => _messagePayStackBankData;
-
 
   bool _isLoading = false;
 
@@ -62,7 +60,6 @@ class PayoutController extends GetxController {
   PayoutBankFormModel payoutBankFormModel = PayoutBankFormModel();
   PayStackBankDataModel payStackBankDataModel = PayStackBankDataModel();
 
-
   var selectedCurrencyController = TextEditingController();
   dynamic selectedCurrency;
 
@@ -81,9 +78,8 @@ class PayoutController extends GetxController {
 
   // Declare a map to store the form fields for each gateway
   final Map<String, RxList<Widget>> gatewayFormFields = {};
-  final Map<String,
-      List<DropdownMenuItem<String>>> gatewaySupportedCurrencies = {};
-
+  final Map<String, List<DropdownMenuItem<String>>> gatewaySupportedCurrencies =
+      {};
 
   // Observable variable for pickedImage
   dynamic pickedImage;
@@ -95,7 +91,7 @@ class PayoutController extends GetxController {
     if (storageStatus.isGranted) {
       final picker = ImagePicker();
       pickedImage = await picker.pickImage(source: ImageSource.gallery);
-      if(pickedImage!=null){
+      if (pickedImage != null) {
         update();
         if (kDebugMode) {
           print("Image Path${pickedImage!.path}");
@@ -103,14 +99,12 @@ class PayoutController extends GetxController {
       }
       // Refresh the widget to show the selected image
     }
-
   }
 
   selectionClear() {
     selectedCurrency = null;
     update();
   }
-
 
   dynamic fieldNames = [];
   dynamic fieldValues = [];
@@ -130,25 +124,26 @@ class PayoutController extends GetxController {
       if (apiResponse.response!.data != null) {
         _message = null;
         update();
-        if(apiResponse.response!.data["message"]=="Email Verification Required"){
+        if (apiResponse.response!.data["message"] ==
+            "Email Verification Required") {
           Get.offAllNamed(MailVerificationScreen.routeName);
-        }
-        else if(apiResponse.response!.data["message"]=="Mobile Verification Required"){
+        } else if (apiResponse.response!.data["message"] ==
+            "Mobile Verification Required") {
           Get.offAllNamed(SmsVerificationScreen.routeName);
-        }
-        else if(apiResponse.response!.data["message"]=="Two FA Verification Required"){
+        } else if (apiResponse.response!.data["message"] ==
+            "Two FA Verification Required") {
           Get.offAllNamed(TwoFactorVerificationScreen.routeName);
-        }
-        else if(apiResponse.response!.data["message"]=="Your account has been suspend"){
+        } else if (apiResponse.response!.data["message"] ==
+            "Your account has been suspend") {
           Get.find<AuthController>().removeUserToken();
           await Get.offNamedUntil(LoginScreen.routeName, (route) => false);
-        }
-        else{
+        } else {
           payoutModel = PayoutModel.fromJson(apiResponse.response!.data!);
           _message = payoutModel.message;
 
           bankNameFlutterWave = _message!.gateways![2].bankName;
-          supportedCurrencyFlutterWave = _message!.gateways![2].supportedCurrency;
+          supportedCurrencyFlutterWave =
+              _message!.gateways![2].supportedCurrency;
 
           if (kDebugMode) {
             print(bankNameFlutterWave);
@@ -159,10 +154,8 @@ class PayoutController extends GetxController {
           gatewayFormFields.clear();
           selectedCurrency = null;
 
-
           for (var gateway in payoutModel.message!.gateways!) {
             final dynamicForm = gateway.dynamicForm;
-
 
             if (dynamicForm != null && dynamicForm is Map<String, dynamic>) {
               RxList<Widget> formFields = <Widget>[].obs;
@@ -184,19 +177,21 @@ class PayoutController extends GetxController {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(height: 8.h,),
-                        Text(fieldData["field_level"] ?? "${fieldData["label"]}",
+                        SizedBox(
+                          height: 8.h,
+                        ),
+                        Text(
+                            fieldData["field_level"] ?? "${fieldData["label"]}",
                             style: GoogleFonts.niramit(
                                 fontSize: 14.sp,
                                 color: AppColors.getTextDarkLight(),
-                                fontWeight: FontWeight.w400
-                            )
+                                fontWeight: FontWeight.w400)),
+                        SizedBox(
+                          height: 8.h,
                         ),
-                        SizedBox(height: 8.h,),
-
                         TextFormField(
                           controller: textControllers[fieldName],
-                          onChanged: (value){
+                          onChanged: (value) {
                             for (var fieldName in textControllers.keys) {
                               fieldValue = textControllers[fieldName]!.text;
                               fieldNames.add(fieldName);
@@ -208,170 +203,184 @@ class PayoutController extends GetxController {
                               print(fieldNames);
                               print(fieldValues);
                             }
-
                           },
                           decoration: InputDecoration(
-                            hintText: validation=="required"?
-                            "": "optional",
+                            hintText:
+                                validation == "required" ? "" : "optional",
                             hintStyle: GoogleFonts.publicSans(
                               fontSize: 13.sp,
                             ),
-                            contentPadding: EdgeInsets.only(
-                                left: 12, top: 10, bottom: 12),
+                            contentPadding:
+                                EdgeInsets.only(left: 12, top: 10, bottom: 12),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(
                                   8.0), // Set the border radius here
-                              borderSide: BorderSide
-                                  .none, // Remove the default border
+                              borderSide:
+                                  BorderSide.none, // Remove the default border
                             ),
                             fillColor: AppColors.getTextFieldDarkLight(),
                             filled: true,
                           ),
                           // Add validation logic here based on fieldData["validation"]
                         ),
-                        SizedBox(height: 12.h,),
+                        SizedBox(
+                          height: 12.h,
+                        ),
                       ],
                     ),
                   );
-
-                }
-
-                else if (fieldType == "file") {
+                } else if (fieldType == "file") {
                   formFields.add(
-                    StatefulBuilder(
-                        builder: (context,setState) {
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(height: 20.h,),
-                              // Replace this with your file picker widget
-                              Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Text("${fieldData["field_level"]}",
-                                    style: TextStyle(fontSize: 16.sp),)),
-                              SizedBox(height: 8.h,),
-                              Container(
-                                height: 60.h,
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                  color: AppColors.getTextFieldDarkLight(),
+                    StatefulBuilder(builder: (context, setState) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: 20.h,
+                          ),
+                          // Replace this with your file picker widget
+                          Align(
+                              alignment: Alignment.topLeft,
+                              child: Text(
+                                "${fieldData["field_level"]}",
+                                style: TextStyle(fontSize: 16.sp),
+                              )),
+                          SizedBox(
+                            height: 8.h,
+                          ),
+                          Container(
+                            height: 60.h,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: AppColors.getTextFieldDarkLight(),
+                            ),
+                            child: Row(
+                              children: [
+                                MaterialButton(
+                                  onPressed: () {
+                                    pickImage().then((values) {
+                                      if (pickedImage != null) {
+                                        selectedFilePath = pickedImage.path;
+                                        fieldNames.add(fieldName);
+                                        fieldValues.add(selectedFilePath);
+                                      }
+                                      setState(() {});
+                                      update();
+                                    });
+                                  },
+                                  child: Text(
+                                    "Choose Files",
+                                    style: GoogleFonts.publicSans(
+                                      fontSize: 13.sp,
+                                    ),
+                                  ),
                                 ),
-                                child: Row(
-                                  children: [
-                                    MaterialButton(
-                                      onPressed: (){
-                                        pickImage().then((values) {
-                                          if (pickedImage != null) {
-                                            selectedFilePath = pickedImage.path;
-                                            fieldNames.add(fieldName);
-                                            fieldValues.add(selectedFilePath);
-                                          }
-                                          setState(() {});
-                                          update();
-                                        });
-                                      },
-                                      child: Text(
-                                        "Choose Files",
+                                SizedBox(width: 5.w),
+                                Container(
+                                  height: 60,
+                                  width: 1,
+                                  color: AppColors.appBg3,
+                                ),
+                                SizedBox(width: 13.w),
+                                selectedFilePath != null
+                                    ? Text(
+                                        "1 File Selected",
+                                        style: GoogleFonts.publicSans(
+                                            color: AppColors
+                                                .appDashBoardTransactionGreen,
+                                            fontWeight: FontWeight.w500),
+                                      )
+                                    : Text(
+                                        "No File Selected",
                                         style: GoogleFonts.publicSans(
                                           fontSize: 13.sp,
-                                        ),),
-                                    ),
-                                    SizedBox(width: 5.w),
-                                    Container(
-                                      height: 60,
-                                      width: 1,
-                                      color: AppColors.appBg3,
-                                    ),
-                                    SizedBox(width: 13.w),
-                                    selectedFilePath!=null?
-                                    Text("1 File Selected",style: GoogleFonts.publicSans(
-                                        color: AppColors.appDashBoardTransactionGreen,
-                                        fontWeight: FontWeight.w500
-                                    ),): Text("No File Selected",style: GoogleFonts.publicSans(
-                                      fontSize: 13.sp,
-                                    ),),
-                                  ],
-                                ),
-                              ),
-                              // GestureDetector(
-                              //   onTap: () {
-                              //     pickImage().then((values) {
-                              //       if (pickedImage != null) {
-                              //         selectedFilePath = pickedImage.path;
-                              //         fieldNames.add(fieldName);
-                              //         fieldValues.add(selectedFilePath);
-                              //       }
-                              //       setState(() {});
-                              //       update();
-                              //     });
-                              //   },
-                              //   child: selectedFilePath == null
-                              //       ? Stack(
-                              //         children: [
-                              //           Image.asset(
-                              //     "assets/images/default_img.png",
-                              //     height: 100.h,
-                              //     width: 100.w,
-                              //   ),
-                              //           Positioned(
-                              //               bottom: 0,
-                              //               left: 5,
-                              //               right: 5,
-                              //               child: Container(
-                              //                 height: 20.h,
-                              //             color: AppColors.appPrimaryColor,
-                              //             child: Center(
-                              //               child: Text(
-                              //                 "Upload Image",
-                              //                 style: GoogleFonts.niramit(
-                              //                   fontWeight: FontWeight.w500,
-                              //                   fontSize: 12.sp,
-                              //                   color: AppColors.appWhiteColor
-                              //                 ),
-                              //               ),
-                              //             ),
-                              //           ))
-                              //         ],
-                              //       )
-                              //       : Image.file(
-                              //     File(selectedFilePath),
-                              //     height: 180.0,
-                              //     width: 180.0,
-                              //     fit: BoxFit.cover,
-                              //   ),
-                              // ),
-                              // Add spacing or additional widgets if needed
-                              SizedBox(height: 10.h,),
-                            ],
-                          );
-                        }
-                    ),
+                                        ),
+                                      ),
+                              ],
+                            ),
+                          ),
+                          // GestureDetector(
+                          //   onTap: () {
+                          //     pickImage().then((values) {
+                          //       if (pickedImage != null) {
+                          //         selectedFilePath = pickedImage.path;
+                          //         fieldNames.add(fieldName);
+                          //         fieldValues.add(selectedFilePath);
+                          //       }
+                          //       setState(() {});
+                          //       update();
+                          //     });
+                          //   },
+                          //   child: selectedFilePath == null
+                          //       ? Stack(
+                          //         children: [
+                          //           Image.asset(
+                          //     "assets/images/default_img.png",
+                          //     height: 100.h,
+                          //     width: 100.w,
+                          //   ),
+                          //           Positioned(
+                          //               bottom: 0,
+                          //               left: 5,
+                          //               right: 5,
+                          //               child: Container(
+                          //                 height: 20.h,
+                          //             color: AppColors.appPrimaryColor,
+                          //             child: Center(
+                          //               child: Text(
+                          //                 "Upload Image",
+                          //                 style: GoogleFonts.niramit(
+                          //                   fontWeight: FontWeight.w500,
+                          //                   fontSize: 12.sp,
+                          //                   color: AppColors.appWhiteColor
+                          //                 ),
+                          //               ),
+                          //             ),
+                          //           ))
+                          //         ],
+                          //       )
+                          //       : Image.file(
+                          //     File(selectedFilePath),
+                          //     height: 180.0,
+                          //     width: 180.0,
+                          //     fit: BoxFit.cover,
+                          //   ),
+                          // ),
+                          // Add spacing or additional widgets if needed
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                        ],
+                      );
+                    }),
                   );
-                }
-
-                else if (fieldType == "textarea") {
+                } else if (fieldType == "textarea") {
                   textAreaControllers[fieldName] = TextEditingController();
                   formFields.add(
                     Form(
-
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(height: 6.h,),
-                          Text(fieldData["field_level"] ?? "${fieldData["label"]}",
+                          SizedBox(
+                            height: 6.h,
+                          ),
+                          Text(
+                              fieldData["field_level"] ??
+                                  "${fieldData["label"]}",
                               style: GoogleFonts.niramit(
                                   fontSize: 14.sp,
                                   color: AppColors.getTextDarkLight(),
-                                  fontWeight: FontWeight.w400
-                              )
+                                  fontWeight: FontWeight.w400)),
+                          SizedBox(
+                            height: 8.h,
                           ),
-                          SizedBox(height: 8.h,),
                           TextFormField(
                             controller: textAreaControllers[fieldName],
-                            onChanged: (value){
+                            onChanged: (value) {
                               for (var fieldName in textAreaControllers.keys) {
-                                textAreaFieldValue = textAreaControllers[fieldName]!.text;
+                                textAreaFieldValue =
+                                    textAreaControllers[fieldName]!.text;
                                 fieldNames.add(fieldName);
                                 fieldValues.add(textAreaFieldValue);
                                 // print("Field $fieldName: $fieldValue");
@@ -381,15 +390,14 @@ class PayoutController extends GetxController {
                                 print(fieldNames);
                                 print(fieldValues);
                               }
-
                             },
                             keyboardType: TextInputType.multiline,
                             textInputAction: TextInputAction.done,
                             minLines: 1,
                             maxLines: 5,
                             decoration: InputDecoration(
-                              hintText: validation=="required"?
-                              "": "optional",
+                              hintText:
+                                  validation == "required" ? "" : "optional",
                               hintStyle: GoogleFonts.publicSans(
                                 fontSize: 13.sp,
                               ),
@@ -403,20 +411,18 @@ class PayoutController extends GetxController {
                               ),
                               fillColor: AppColors.getTextFieldDarkLight(),
                               filled: true,
-
                             ),
                             // Add validation logic here based on fieldData["validation"]
                           ),
-                          SizedBox(height: 12.h,),
+                          SizedBox(
+                            height: 12.h,
+                          ),
                         ],
                       ),
                     ),
                   );
                 }
-
-
-              }
-              );
+              });
 
               // Store the form fields for the current gateway
               gatewayFormFields[gateway.name.toString()] = formFields;
@@ -431,7 +437,8 @@ class PayoutController extends GetxController {
                       value: currency,
                       child: Text(
                         currency,
-                        style: TextStyle(color: Colors.black87,
+                        style: TextStyle(
+                            color: Colors.black87,
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w400),
                       ),
@@ -452,7 +459,6 @@ class PayoutController extends GetxController {
             }
           }
         }
-
       } else {
         _isLoading = false;
         update();
@@ -460,41 +466,40 @@ class PayoutController extends GetxController {
     }
   }
 
-
   ///Get Bank Data
-  Future<dynamic> getPayoutBankFormData(
-      dynamic bankName
-      ) async {
+  Future<dynamic> getPayoutBankFormData(dynamic bankName) async {
     _isLoadingPayoutBank = true;
     update();
     ApiResponse apiResponse = await payoutRepo.getPayoutBankFormData(bankName);
 
-    if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
+    if (apiResponse.response != null &&
+        apiResponse.response!.statusCode == 200) {
       _isLoadingPayoutBank = false;
       update();
       if (apiResponse.response!.data != null) {
         _messageBankData = null;
         inputFieldsData = null;
         update();
-        if(apiResponse.response!.data["message"]=="Email Verification Required"){
+        if (apiResponse.response!.data["message"] ==
+            "Email Verification Required") {
           Get.offAllNamed(MailVerificationScreen.routeName);
-        }
-        else if(apiResponse.response!.data["message"]=="Mobile Verification Required"){
+        } else if (apiResponse.response!.data["message"] ==
+            "Mobile Verification Required") {
           Get.offAllNamed(SmsVerificationScreen.routeName);
-        }
-        else if(apiResponse.response!.data["message"]=="Two FA Verification Required"){
+        } else if (apiResponse.response!.data["message"] ==
+            "Two FA Verification Required") {
           Get.offAllNamed(TwoFactorVerificationScreen.routeName);
-        }
-        else if(apiResponse.response!.data["message"]=="Your account has been suspend"){
+        } else if (apiResponse.response!.data["message"] ==
+            "Your account has been suspend") {
           Get.find<AuthController>().removeUserToken();
           await Get.offNamedUntil(LoginScreen.routeName, (route) => false);
-        }
-        else{
+        } else {
           inputFieldsData = apiResponse.response!.data["message"]["input_form"];
           if (kDebugMode) {
             print(inputFieldsData);
           }
-          payoutBankFormModel = PayoutBankFormModel.fromJson(apiResponse.response!.data!);
+          payoutBankFormModel =
+              PayoutBankFormModel.fromJson(apiResponse.response!.data!);
           _messageBankData = payoutBankFormModel.message;
         }
       }
@@ -505,37 +510,38 @@ class PayoutController extends GetxController {
   }
 
   ///Get PayStack Dropdown Data
-  Future<dynamic> getPayStackBankData(
-      dynamic currencyCode
-      ) async {
+  Future<dynamic> getPayStackBankData(dynamic currencyCode) async {
     _isLoadingPayStack = true;
     update();
-    ApiResponse apiResponse = await payoutRepo.getPayStackDropDownData(currencyCode);
+    ApiResponse apiResponse =
+        await payoutRepo.getPayStackDropDownData(currencyCode);
 
-    if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
+    if (apiResponse.response != null &&
+        apiResponse.response!.statusCode == 200) {
       _isLoadingPayStack = false;
       update();
       if (apiResponse.response!.data != null) {
         _messagePayStackBankData = null;
-        if(apiResponse.response!.data["message"]=="Email Verification Required"){
+        if (apiResponse.response!.data["message"] ==
+            "Email Verification Required") {
           Get.offAllNamed(MailVerificationScreen.routeName);
-        }
-        else if(apiResponse.response!.data["message"]=="Mobile Verification Required"){
+        } else if (apiResponse.response!.data["message"] ==
+            "Mobile Verification Required") {
           Get.offAllNamed(SmsVerificationScreen.routeName);
-        }
-        else if(apiResponse.response!.data["message"]=="Two FA Verification Required"){
+        } else if (apiResponse.response!.data["message"] ==
+            "Two FA Verification Required") {
           Get.offAllNamed(TwoFactorVerificationScreen.routeName);
-        }
-        else if(apiResponse.response!.data["message"]=="Your account has been suspend"){
+        } else if (apiResponse.response!.data["message"] ==
+            "Your account has been suspend") {
           Get.find<AuthController>().removeUserToken();
           await Get.offNamedUntil(LoginScreen.routeName, (route) => false);
-        }
-        else{
+        } else {
           update();
           if (kDebugMode) {
             print(inputFieldsData);
           }
-          payStackBankDataModel = PayStackBankDataModel.fromJson(apiResponse.response!.data!);
+          payStackBankDataModel =
+              PayStackBankDataModel.fromJson(apiResponse.response!.data!);
           _messagePayStackBankData = payStackBankDataModel.message;
         }
       }
@@ -545,7 +551,6 @@ class PayoutController extends GetxController {
     }
   }
 
-
   /// Payout Request
   Future<dynamic> payoutRequest(
       BuildContext context,
@@ -554,41 +559,50 @@ class PayoutController extends GetxController {
       dynamic amount,
       List<dynamic> fieldNames,
       List<dynamic> fieldValues,
-      {dynamic currencyCode,dynamic recipientType,dynamic selectBank}
-      ) async {
+      {dynamic currencyCode,
+      dynamic recipientType,
+      dynamic selectBank}) async {
     _isLoadingPayoutRequest = true;
     update();
-    ApiResponse apiResponse = await payoutRepo.payoutRequest(walletType, gateway, amount,fieldNames,fieldValues,currencyCode: currencyCode,recipientType: recipientType,selectBank: selectBank);
+    ApiResponse apiResponse = await payoutRepo.payoutRequest(
+        walletType, gateway, amount, fieldNames, fieldValues,
+        currencyCode: currencyCode,
+        recipientType: recipientType,
+        selectBank: selectBank);
 
-    if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
+    if (apiResponse.response != null &&
+        apiResponse.response!.statusCode == 200) {
       _isLoadingPayoutRequest = false;
       update();
       if (apiResponse.response!.data != null) {
-
-        if(apiResponse.response!.data["message"]=="Email Verification Required"){
+        if (apiResponse.response!.data["message"] ==
+            "Email Verification Required") {
           Get.offAllNamed(MailVerificationScreen.routeName);
-        }
-        else if(apiResponse.response!.data["message"]=="Mobile Verification Required"){
+        } else if (apiResponse.response!.data["message"] ==
+            "Mobile Verification Required") {
           Get.offAllNamed(SmsVerificationScreen.routeName);
-        }
-        else if(apiResponse.response!.data["message"]=="Two FA Verification Required"){
+        } else if (apiResponse.response!.data["message"] ==
+            "Two FA Verification Required") {
           Get.offAllNamed(TwoFactorVerificationScreen.routeName);
-        }
-        else if(apiResponse.response!.data["message"]=="Your account has been suspend"){
+        } else if (apiResponse.response!.data["message"] ==
+            "Your account has been suspend") {
           Get.find<AuthController>().removeUserToken();
           await Get.offNamedUntil(LoginScreen.routeName, (route) => false);
-        }
-        else{
+        } else {
           Map map = apiResponse.response!.data;
           dynamic msg;
           msg = map["message"];
           dynamic status;
           status = map["status"];
 
-          if(status=="success"){
-            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> PayoutHistoryScreen(
-              status: "true",
-            )), (route) => false);
+          if (status == "success") {
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => PayoutHistoryScreen(
+                          status: "true",
+                        )),
+                (route) => false);
             showDialog(
               context: context,
               builder: (BuildContext context) {
@@ -596,7 +610,7 @@ class PayoutController extends GetxController {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
-                  content:   Container(
+                  content: Container(
                     height: 260.h,
                     width: 260.w,
                     child: Padding(
@@ -604,7 +618,9 @@ class PayoutController extends GetxController {
                       child: Column(
                         children: [
                           Lottie.asset("assets/images/success.json"),
-                          SizedBox(height: 8.h,),
+                          SizedBox(
+                            height: 8.h,
+                          ),
                           Text(
                             "Withdraw request send",
                             style: GoogleFonts.publicSans(
@@ -613,12 +629,14 @@ class PayoutController extends GetxController {
                               color: AppColors.getTextDarkLight(),
                             ),
                           ),
-                          SizedBox(height: 20.h,),
+                          SizedBox(
+                            height: 20.h,
+                          ),
                           Align(
                             alignment: Alignment.center,
                             child: Padding(
-                              padding:
-                              const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 30, vertical: 5),
                               child: InkWell(
                                 onTap: () {
                                   Navigator.pop(context);
@@ -627,7 +645,8 @@ class PayoutController extends GetxController {
                                   width: 100.w,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(5),
-                                    color: AppColors.appDashBoardTransactionGreen,
+                                    color:
+                                        AppColors.appDashBoardTransactionGreen,
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
@@ -654,8 +673,7 @@ class PayoutController extends GetxController {
                 );
               },
             );
-          }
-          else{
+          } else {
             Get.snackbar(
               'Message',
               '${msg}',
@@ -674,62 +692,64 @@ class PayoutController extends GetxController {
             print(inputFieldsData);
           }
         }
-
       }
     } else {
       _isLoadingPayoutRequest = false;
       update();
     }
   }
-
 
   /// FlutterWave Payout Request
   Future<dynamic> flutterWavePayoutRequest(
-      BuildContext context,
-      dynamic walletType,
-      dynamic gateway,
-      dynamic amount,
-      List<dynamic> fieldNames,
-      List<dynamic> fieldValues,
-      {
-        dynamic currencyCode,
-        dynamic bank,
-        dynamic transferName,
-      }
-      ) async {
+    BuildContext context,
+    dynamic walletType,
+    dynamic gateway,
+    dynamic amount,
+    List<dynamic> fieldNames,
+    List<dynamic> fieldValues, {
+    dynamic currencyCode,
+    dynamic bank,
+    dynamic transferName,
+  }) async {
     _isLoadingPayoutRequest = true;
     update();
-    ApiResponse apiResponse = await payoutRepo.flutterWavePayoutRequest(walletType, gateway, amount, fieldNames, fieldValues,currencyCode: currencyCode,transferName: transferName,bank: bank);
+    ApiResponse apiResponse = await payoutRepo.flutterWavePayoutRequest(
+        walletType, gateway, amount, fieldNames, fieldValues,
+        currencyCode: currencyCode, transferName: transferName, bank: bank);
 
-    if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
+    if (apiResponse.response != null &&
+        apiResponse.response!.statusCode == 200) {
       _isLoadingPayoutRequest = false;
       update();
       if (apiResponse.response!.data != null) {
-
-        if(apiResponse.response!.data["message"]=="Email Verification Required"){
+        if (apiResponse.response!.data["message"] ==
+            "Email Verification Required") {
           Get.offAllNamed(MailVerificationScreen.routeName);
-        }
-        else if(apiResponse.response!.data["message"]=="Mobile Verification Required"){
+        } else if (apiResponse.response!.data["message"] ==
+            "Mobile Verification Required") {
           Get.offAllNamed(SmsVerificationScreen.routeName);
-        }
-        else if(apiResponse.response!.data["message"]=="Two FA Verification Required"){
+        } else if (apiResponse.response!.data["message"] ==
+            "Two FA Verification Required") {
           Get.offAllNamed(TwoFactorVerificationScreen.routeName);
-        }
-        else if(apiResponse.response!.data["message"]=="Your account has been suspend"){
+        } else if (apiResponse.response!.data["message"] ==
+            "Your account has been suspend") {
           Get.find<AuthController>().removeUserToken();
           await Get.offNamedUntil(LoginScreen.routeName, (route) => false);
-        }
-        else{
+        } else {
           Map map = apiResponse.response!.data;
           dynamic msg;
           msg = map["message"];
           dynamic status;
           status = map["status"];
 
-          if(status=="success"){
-            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> PayoutHistoryScreen(
-              status: "true",
-            )), (route) => false);
+          if (status == "success") {
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => PayoutHistoryScreen(
+                          status: "true",
+                        )),
+                (route) => false);
             showDialog(
               context: context,
               builder: (BuildContext context) {
@@ -737,7 +757,7 @@ class PayoutController extends GetxController {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
-                  content:   Container(
+                  content: Container(
                     height: 260.h,
                     width: 260.w,
                     child: Padding(
@@ -745,7 +765,9 @@ class PayoutController extends GetxController {
                       child: Column(
                         children: [
                           Lottie.asset("assets/images/success.json"),
-                          SizedBox(height: 8.h,),
+                          SizedBox(
+                            height: 8.h,
+                          ),
                           Text(
                             "Withdraw request send",
                             style: GoogleFonts.publicSans(
@@ -754,12 +776,14 @@ class PayoutController extends GetxController {
                               color: AppColors.getTextDarkLight(),
                             ),
                           ),
-                          SizedBox(height: 20.h,),
+                          SizedBox(
+                            height: 20.h,
+                          ),
                           Align(
                             alignment: Alignment.center,
                             child: Padding(
-                              padding:
-                              const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 30, vertical: 5),
                               child: InkWell(
                                 onTap: () {
                                   Navigator.pop(context);
@@ -768,7 +792,8 @@ class PayoutController extends GetxController {
                                   width: 100.w,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(5),
-                                    color: AppColors.appDashBoardTransactionGreen,
+                                    color:
+                                        AppColors.appDashBoardTransactionGreen,
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
@@ -795,8 +820,7 @@ class PayoutController extends GetxController {
                 );
               },
             );
-          }
-          else{
+          } else {
             Get.snackbar(
               'Message',
               '${msg}',
@@ -821,7 +845,6 @@ class PayoutController extends GetxController {
       update();
     }
   }
-
 
   @override
   void onInit() {
@@ -829,7 +852,4 @@ class PayoutController extends GetxController {
     getPayoutData();
     super.onInit();
   }
-
-
-
 }

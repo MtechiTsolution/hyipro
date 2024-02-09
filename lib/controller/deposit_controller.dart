@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
@@ -39,14 +38,12 @@ import 'package:razorpay_flutter/razorpay_flutter.dart';
 import '../view/screens/auth/login_screen.dart';
 import '../view/widgets/app_payment_success.dart';
 
-class DepositController extends GetxController{
-
+class DepositController extends GetxController {
   final DepositRepo? depositScreenRepo;
 
   DepositController({this.depositScreenRepo});
 
   final amountController = TextEditingController();
-
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
@@ -67,7 +64,6 @@ class DepositController extends GetxController{
   List<Gateway>? get gateways => _gateways;
 
   PaymentMethodModel paymentMethodModel = PaymentMethodModel();
-
 
   PaystackPlugin payStackPlugin = PaystackPlugin();
 
@@ -96,17 +92,16 @@ class DepositController extends GetxController{
     update();
   }
 
-
   @override
   void onInit() {
     // TODO: implement onInit
-    selectedOption =null;
+    selectedOption = null;
     getPaymentMethodData();
     razorpay = Razorpay();
     razorpay!.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     razorpay!.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     razorpay!.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
-    plugin.initialize(publicKey: publicKeyPayStack??"${publicKeyTest}");
+    plugin.initialize(publicKey: publicKeyPayStack ?? "${publicKeyTest}");
     Get.find<MyAccountController>().getAccountData();
     initMonnifySdk();
     super.onInit();
@@ -117,7 +112,6 @@ class DepositController extends GetxController{
     super.onClose();
     razorpay!.clear();
   }
-
 
   dynamic fieldNames = [];
   dynamic fieldValuesList = [];
@@ -165,7 +159,6 @@ class DepositController extends GetxController{
   dynamic calculateTotalAmount;
   dynamic calculateCharge;
 
-
   /// All Secret Key
   Future<void> getPaymentMethodData() async {
     try {
@@ -173,49 +166,51 @@ class DepositController extends GetxController{
       update();
       ApiResponse apiResponse = await depositScreenRepo!.getPaymentMethodData();
 
-      if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
+      if (apiResponse.response != null &&
+          apiResponse.response!.statusCode == 200) {
         _isLoading = false;
 
         if (apiResponse.response!.data != null) {
           _message = null;
 
-          if(apiResponse.response!.data["message"]=="Email Verification Required"){
+          if (apiResponse.response!.data["message"] ==
+              "Email Verification Required") {
             Get.offAllNamed(MailVerificationScreen.routeName);
-          }
-          else if(apiResponse.response!.data["message"]=="Mobile Verification Required"){
+          } else if (apiResponse.response!.data["message"] ==
+              "Mobile Verification Required") {
             Get.offAllNamed(SmsVerificationScreen.routeName);
-          }
-          else if(apiResponse.response!.data["message"]=="Two FA Verification Required"){
+          } else if (apiResponse.response!.data["message"] ==
+              "Two FA Verification Required") {
             Get.offAllNamed(TwoFactorVerificationScreen.routeName);
-          }
-          else if(apiResponse.response!.data["message"]=="Your account has been suspend"){
+          } else if (apiResponse.response!.data["message"] ==
+              "Your account has been suspend") {
             Get.find<AuthController>().removeUserToken();
             await Get.offNamedUntil(LoginScreen.routeName, (route) => false);
-          }
-          else{
-            paymentMethodModel = PaymentMethodModel.fromJson(apiResponse.response!.data!);
+          } else {
+            paymentMethodModel =
+                PaymentMethodModel.fromJson(apiResponse.response!.data!);
             _message = paymentMethodModel.message;
             _gateways = _message!.gateways;
 
+            print("length xyz ${_message!.gateways!.length}");
 
             formFields.clear();
             textControllers.clear();
             fieldValuesList.clear();
 
             if (_gateways != null && _gateways!.isNotEmpty) {
-              final gateway = _gateways![1]; // Replace with the desired gateway index
+              final gateway =
+                  _gateways![0]; // Replace with the desired gateway index
 
               if (gateway.parameters != null) {
                 gateway.parameters!.forEach((key, value) {
                   if (value is Map<String, dynamic>) {
-
                     String fieldName = value['field_name'];
 
                     if (kDebugMode) {
                       print(value['type']);
                       print(fieldName);
                     }
-
 
                     if (kDebugMode) {
                       print("Checking key>>>>>>");
@@ -225,7 +220,8 @@ class DepositController extends GetxController{
                       //Stripe
                       if (gateway.code == "stripe") {
                         stripeSecretKey = gateway.parameters!['secret_key'];
-                        stripePublisherKey = gateway.parameters!['publishable_key'];
+                        stripePublisherKey =
+                            gateway.parameters!['publishable_key'];
 
                         if (kDebugMode) {
                           print('Stripe Secret Key: $stripeSecretKey');
@@ -249,10 +245,13 @@ class DepositController extends GetxController{
                         midPaytm = gateway.parameters!['MID'];
                         merchantKeyPaytm = gateway.parameters!['merchant_key'];
                         websitePaytm = gateway.parameters!['WEBSITE'];
-                        industryTypePaytm = gateway.parameters!['INDUSTRY_TYPE_ID'];
+                        industryTypePaytm =
+                            gateway.parameters!['INDUSTRY_TYPE_ID'];
                         channelIdPaytm = gateway.parameters!['CHANNEL_ID'];
-                        transactionUrlPaytm = gateway.parameters!['transaction_url'];
-                        transactionStatusUrlPaytm = gateway.parameters!['transaction_status_url'];
+                        transactionUrlPaytm =
+                            gateway.parameters!['transaction_url'];
+                        transactionStatusUrlPaytm =
+                            gateway.parameters!['transaction_status_url'];
 
                         if (kDebugMode) {
                           print('Paytm MID: $midPaytm');
@@ -262,9 +261,12 @@ class DepositController extends GetxController{
 
                       //FlutterWave
                       if (gateway.code == "flutterwave") {
-                        publicKeyFlutterWave = gateway.parameters!['public_key'];
-                        secretKeyFlutterWave = gateway.parameters!['secret_key'];
-                        encryptedKeyFlutterWave = gateway.parameters!['encryption_key'];
+                        publicKeyFlutterWave =
+                            gateway.parameters!['public_key'];
+                        secretKeyFlutterWave =
+                            gateway.parameters!['secret_key'];
+                        encryptedKeyFlutterWave =
+                            gateway.parameters!['encryption_key'];
 
                         if (kDebugMode) {
                           print('FlutterWave publicKey: $publicKeyFlutterWave');
@@ -298,24 +300,22 @@ class DepositController extends GetxController{
                       if (gateway.code == "monnify") {
                         apiKeyMonnify = gateway.parameters!['api_key'];
                         secretKeyMonnify = gateway.parameters!['secret_key'];
-                        contactCodeMonnfiy = gateway.parameters!['contract_code'];
+                        contactCodeMonnfiy =
+                            gateway.parameters!['contract_code'];
 
                         if (kDebugMode) {
                           print('Monnify Api Key: $apiKeyMonnify');
                         }
                       }
-
-
                     }
-
 
                     // Outside the function, declare a map to store text editing controllers
                     Map<dynamic, TextEditingController> textControllers = {};
                     dynamic fieldValue;
 
-                    Map<dynamic, TextEditingController> textAreaControllers = {};
+                    Map<dynamic, TextEditingController> textAreaControllers =
+                        {};
                     dynamic textAreaFieldValue;
-
 
                     if (value['type'] == 'text') {
                       textControllers[fieldName] = TextEditingController();
@@ -323,12 +323,17 @@ class DepositController extends GetxController{
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(height: 10.h,),
-                            Text(value['field_level'], style: TextStyle(fontSize: 16.sp)),
-                            SizedBox(height: 10.h,),
+                            SizedBox(
+                              height: 10.h,
+                            ),
+                            Text(value['field_level'],
+                                style: TextStyle(fontSize: 16.sp)),
+                            SizedBox(
+                              height: 10.h,
+                            ),
                             TextFormField(
                               controller: textControllers[fieldName],
-                              onChanged: (value){
+                              onChanged: (value) {
                                 for (var fieldName in textControllers.keys) {
                                   fieldValue = textControllers[fieldName]!.text;
                                   fieldNames.add(fieldName);
@@ -340,11 +345,11 @@ class DepositController extends GetxController{
                                   print(fieldNames);
                                   print(fieldValuesList);
                                 }
-
                               },
                               decoration: InputDecoration(
-                                hintText: value['validation']=="required"?
-                                "": "optional",
+                                hintText: value['validation'] == "required"
+                                    ? ""
+                                    : "optional",
                                 hintStyle: GoogleFonts.publicSans(
                                   fontSize: 13.sp,
                                 ),
@@ -361,7 +366,9 @@ class DepositController extends GetxController{
                               ),
                               // Add validation logic here based on fieldData["validation"]
                             ),
-                            SizedBox(height: 10.h,),
+                            SizedBox(
+                              height: 10.h,
+                            ),
                           ],
                         ),
                       );
@@ -371,14 +378,21 @@ class DepositController extends GetxController{
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(height: 10.h,),
-                            Text(value['field_level'], style: TextStyle(fontSize: 16.sp)),
-                            SizedBox(height: 10.h,),
+                            SizedBox(
+                              height: 10.h,
+                            ),
+                            Text(value['field_level'],
+                                style: TextStyle(fontSize: 16.sp)),
+                            SizedBox(
+                              height: 10.h,
+                            ),
                             TextFormField(
                               controller: textAreaControllers[fieldName],
-                              onChanged: (value){
-                                for (var fieldName in textAreaControllers.keys) {
-                                  textAreaFieldValue = textAreaControllers[fieldName]!.text;
+                              onChanged: (value) {
+                                for (var fieldName
+                                    in textAreaControllers.keys) {
+                                  textAreaFieldValue =
+                                      textAreaControllers[fieldName]!.text;
                                   fieldNames.add(fieldName);
                                   fieldValuesList.add(textAreaFieldValue);
                                   // print("Field $fieldName: $fieldValue");
@@ -388,14 +402,14 @@ class DepositController extends GetxController{
                                   print(fieldNames);
                                   print(fieldValuesList);
                                 }
-
                               },
                               minLines: 3,
                               maxLines: null,
                               textInputAction: TextInputAction.done,
                               decoration: InputDecoration(
-                                hintText: value['validation']=="required"?
-                                "": "optional",
+                                hintText: value['validation'] == "required"
+                                    ? ""
+                                    : "optional",
                                 hintStyle: GoogleFonts.publicSans(
                                   fontSize: 13.sp,
                                 ),
@@ -412,23 +426,27 @@ class DepositController extends GetxController{
                               ),
                               // Add validation logic here based on fieldData["validation"]
                             ),
-                            SizedBox(height: 10.h,),
+                            SizedBox(
+                              height: 10.h,
+                            ),
                           ],
                         ),
                       );
-                    }
-
-
-                    else if (value['type'] == 'file') {
+                    } else if (value['type'] == 'file') {
                       formFields.add(
                         StatefulBuilder(
                           builder: (context, setState) {
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                SizedBox(height: 10.h,),
-                                Text(value['field_level'], style: TextStyle(fontSize: 16.sp)),
-                                SizedBox(height: 10.h,),
+                                SizedBox(
+                                  height: 10.h,
+                                ),
+                                Text(value['field_level'],
+                                    style: TextStyle(fontSize: 16.sp)),
+                                SizedBox(
+                                  height: 10.h,
+                                ),
                                 Container(
                                   height: 60.h,
                                   width: double.infinity,
@@ -439,21 +457,23 @@ class DepositController extends GetxController{
                                   child: Row(
                                     children: [
                                       MaterialButton(
-                                        onPressed: (){
+                                        onPressed: () {
                                           pickImage().then((values) {
                                             if (pickedImage != null) {
-                                              selectedFilePath = pickedImage.path;
+                                              selectedFilePath =
+                                                  pickedImage.path;
                                               fieldNames.add(fieldName);
-                                              fieldValuesList.add(selectedFilePath);
+                                              fieldValuesList
+                                                  .add(selectedFilePath);
                                             }
                                             setState(() {});
                                             update();
                                           });
                                         },
-                                        child: Text(
-                                            "Choose Files",
+                                        child: Text("Choose Files",
                                             style: GoogleFonts.publicSans(
-                                              fontSize: 13.sp,)),
+                                              fontSize: 13.sp,
+                                            )),
                                       ),
                                       SizedBox(width: 5.w),
                                       Container(
@@ -462,14 +482,19 @@ class DepositController extends GetxController{
                                         color: AppColors.appBg3,
                                       ),
                                       SizedBox(width: 13.w),
-                                      selectedFilePath!=null?
-                                      Text("1 File Selected",style: GoogleFonts.publicSans(
-                                          color: AppColors.appDashBoardTransactionGreen,
-                                          fontWeight: FontWeight.w500
-                                      ),): Text("No File Selected",style:
-                                      GoogleFonts.publicSans(
-                                          fontSize: 13.sp
-                                      ),),
+                                      selectedFilePath != null
+                                          ? Text(
+                                              "1 File Selected",
+                                              style: GoogleFonts.publicSans(
+                                                  color: AppColors
+                                                      .appDashBoardTransactionGreen,
+                                                  fontWeight: FontWeight.w500),
+                                            )
+                                          : Text(
+                                              "No File Selected",
+                                              style: GoogleFonts.publicSans(
+                                                  fontSize: 13.sp),
+                                            ),
                                     ],
                                   ),
                                 ),
@@ -520,7 +545,9 @@ class DepositController extends GetxController{
                                 //     fit: BoxFit.cover,
                                 //   ),
                                 // ),
-                                SizedBox(height: 10.h,),
+                                SizedBox(
+                                  height: 10.h,
+                                ),
                               ],
                             );
                           },
@@ -536,22 +563,21 @@ class DepositController extends GetxController{
               update();
             }
           }
-
         }
       } else {
+        print("length a-loading");
         _isLoading = false;
         _message = null;
         update();
       }
     } catch (error) {
       // Handle error
+      print("length a-error $error");
       _isLoading = false;
       _message = null;
       update();
     }
   }
-
-
 
   /// manualPayment Submit
   Future<dynamic> manualPaymentRequest(
@@ -560,36 +586,37 @@ class DepositController extends GetxController{
       dynamic planId,
       List<dynamic> fieldNames,
       List<dynamic> fieldValues,
-      BuildContext context
-      ) async {
+      BuildContext context) async {
     _isLoadingManualPay = true;
     update();
-    ApiResponse apiResponse = await depositScreenRepo!.manualPaymentRepo(gateway, amount, planId, fieldNames, fieldValues);
+    ApiResponse apiResponse = await depositScreenRepo!
+        .manualPaymentRepo(gateway, amount, planId, fieldNames, fieldValues);
 
-    if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
+    if (apiResponse.response != null &&
+        apiResponse.response!.statusCode == 200) {
       _isLoadingManualPay = false;
       update();
       if (apiResponse.response!.data != null) {
-        if(apiResponse.response!.data["message"]=="Email Verification Required"){
+        if (apiResponse.response!.data["message"] ==
+            "Email Verification Required") {
           Get.offAllNamed(MailVerificationScreen.routeName);
-        }
-        else if(apiResponse.response!.data["message"]=="Mobile Verification Required"){
+        } else if (apiResponse.response!.data["message"] ==
+            "Mobile Verification Required") {
           Get.offAllNamed(SmsVerificationScreen.routeName);
-        }
-        else if(apiResponse.response!.data["message"]=="Two FA Verification Required"){
+        } else if (apiResponse.response!.data["message"] ==
+            "Two FA Verification Required") {
           Get.offAllNamed(TwoFactorVerificationScreen.routeName);
-        }
-        else if(apiResponse.response!.data["message"]=="Your account has been suspend"){
+        } else if (apiResponse.response!.data["message"] ==
+            "Your account has been suspend") {
           Get.find<AuthController>().removeUserToken();
           await Get.offNamedUntil(LoginScreen.routeName, (route) => false);
-        }
-        else{
+        } else {
           Map map = apiResponse.response!.data;
           dynamic msg;
           msg = map["message"];
           dynamic status;
           status = map["status"];
-          if(status!="success"){
+          if (status != "success") {
             Get.snackbar(
               'Message',
               '$msg',
@@ -602,11 +629,16 @@ class DepositController extends GetxController{
               barBlur: 10,
             );
           }
-          if(status=="success"){
-            Get.find<DepositHistoryController>().getDepositHistorySearchData("", "", "",page: 1);
-            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> DepositHistoryScreen(
-              status: "true",
-            )), (route) => false);
+          if (status == "success") {
+            Get.find<DepositHistoryController>()
+                .getDepositHistorySearchData("", "", "", page: 1);
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => DepositHistoryScreen(
+                          status: "true",
+                        )),
+                (route) => false);
             showDialog(
               context: context,
               builder: (BuildContext context) {
@@ -614,7 +646,7 @@ class DepositController extends GetxController{
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
-                  content:   Container(
+                  content: Container(
                     height: 260.h,
                     width: 260.w,
                     child: Padding(
@@ -622,7 +654,9 @@ class DepositController extends GetxController{
                       child: Column(
                         children: [
                           Lottie.asset("assets/images/success.json"),
-                          SizedBox(height: 8.h,),
+                          SizedBox(
+                            height: 8.h,
+                          ),
                           Text(
                             "Deposit request send",
                             style: GoogleFonts.publicSans(
@@ -631,12 +665,14 @@ class DepositController extends GetxController{
                               color: AppColors.getTextDarkLight(),
                             ),
                           ),
-                          SizedBox(height: 20.h,),
+                          SizedBox(
+                            height: 20.h,
+                          ),
                           Align(
                             alignment: Alignment.center,
                             child: Padding(
-                              padding:
-                              const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 30, vertical: 5),
                               child: InkWell(
                                 onTap: () {
                                   Navigator.pop(context);
@@ -645,7 +681,8 @@ class DepositController extends GetxController{
                                   width: 100.w,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(5),
-                                    color: AppColors.appDashBoardTransactionGreen,
+                                    color:
+                                        AppColors.appDashBoardTransactionGreen,
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
@@ -682,22 +719,25 @@ class DepositController extends GetxController{
     }
   }
 
-
-
   //Total Amount Calculate
-  calculateTotal(dynamic amount,dynamic paymentMethod){
+  calculateTotal(dynamic amount, dynamic paymentMethod) {
     update();
-    if(paymentMethod=="stripe"){
+    if (paymentMethod == "stripe") {
       double conversionRate = double.parse(selectedOption.conventionRate);
-      String formattedRate = conversionRate.toStringAsFixed(2); // Round to 2 decimal places
+      String formattedRate =
+          conversionRate.toStringAsFixed(2); // Round to 2 decimal places
 
       double convertedAmount = double.parse(amount) * conversionRate;
       int totalCents = (convertedAmount * 100).toInt(); // Convert to cents
 
-      double amountWithPercentageCharge = totalCents * (double.parse(selectedOption.percentageCharge) / 100);
-      double totalAmountWithFixCharge = amountWithPercentageCharge + double.parse(selectedOption.fixedCharge) + totalCents;
+      double amountWithPercentageCharge =
+          totalCents * (double.parse(selectedOption.percentageCharge) / 100);
+      double totalAmountWithFixCharge = amountWithPercentageCharge +
+          double.parse(selectedOption.fixedCharge) +
+          totalCents;
 
-      int totalAmountAsInt = totalAmountWithFixCharge.toInt(); // Convert to integer
+      int totalAmountAsInt =
+          totalAmountWithFixCharge.toInt(); // Convert to integer
 
       if (kDebugMode) {
         print("Formatted Rate: $formattedRate");
@@ -709,19 +749,22 @@ class DepositController extends GetxController{
       }
 
       return totalAmountAsInt.toString();
-    }
-
-    else if(paymentMethod=="razorpay"){
+    } else if (paymentMethod == "razorpay") {
       double conversionRate = double.parse(selectedOption.conventionRate);
-      String formattedRate = conversionRate.toStringAsFixed(2); // Round to 2 decimal places
+      String formattedRate =
+          conversionRate.toStringAsFixed(2); // Round to 2 decimal places
 
       double convertedAmount = double.parse(amount) * conversionRate;
       int totalCents = (convertedAmount * 100).toInt(); // Convert to cents
 
-      double amountWithPercentageCharge = totalCents * (double.parse(selectedOption.percentageCharge) / 100);
-      double totalAmountWithFixCharge = amountWithPercentageCharge + double.parse(selectedOption.fixedCharge) + totalCents;
+      double amountWithPercentageCharge =
+          totalCents * (double.parse(selectedOption.percentageCharge) / 100);
+      double totalAmountWithFixCharge = amountWithPercentageCharge +
+          double.parse(selectedOption.fixedCharge) +
+          totalCents;
 
-      int totalAmountAsInt = totalAmountWithFixCharge.toInt(); // Convert to integer
+      int totalAmountAsInt =
+          totalAmountWithFixCharge.toInt(); // Convert to integer
 
       if (kDebugMode) {
         print("Formatted Rate: $formattedRate");
@@ -739,21 +782,26 @@ class DepositController extends GetxController{
   dynamic totalStripePay;
   dynamic totalRazorPay;
   //showCalculateTotal
-  showCalculateTotal(dynamic amount,dynamic paymentMethod){
+  showCalculateTotal(dynamic amount, dynamic paymentMethod) {
     update();
-    if(paymentMethod=="stripe"){
+    if (paymentMethod == "stripe") {
       double conversionRate = double.parse(selectedOption.conventionRate);
-      String formattedRate = conversionRate.toStringAsFixed(2); // Round to 2 decimal places
+      String formattedRate =
+          conversionRate.toStringAsFixed(2); // Round to 2 decimal places
 
       double convertedAmount = double.parse(amount) * conversionRate;
       int totalCents = (convertedAmount * 100).toInt(); // Convert to cents
 
-      double amountWithPercentageCharge = totalCents * (double.parse(selectedOption.percentageCharge) / 100);
-      double totalAmountWithFixCharge = amountWithPercentageCharge + double.parse(selectedOption.fixedCharge) + totalCents;
+      double amountWithPercentageCharge =
+          totalCents * (double.parse(selectedOption.percentageCharge) / 100);
+      double totalAmountWithFixCharge = amountWithPercentageCharge +
+          double.parse(selectedOption.fixedCharge) +
+          totalCents;
 
-      int totalAmountAsInt = totalAmountWithFixCharge.toInt(); // Convert to integer
+      int totalAmountAsInt =
+          totalAmountWithFixCharge.toInt(); // Convert to integer
 
-      totalStripePay = totalAmountAsInt/100;
+      totalStripePay = totalAmountAsInt / 100;
 
       if (kDebugMode) {
         print("check....$totalStripePay");
@@ -769,21 +817,21 @@ class DepositController extends GetxController{
       }
 
       return totalStripePay.toString();
-    }
-
-    else if(paymentMethod=="razorpay"){
-      print("check"+selectedOption.conventionRate);
-      print("check"+selectedOption.name);
+    } else if (paymentMethod == "razorpay") {
+      print("check" + selectedOption.conventionRate);
+      print("check" + selectedOption.name);
       double conversionRate = double.parse(selectedOption.conventionRate);
-
 
       double convertedAmount = double.parse(amount) * conversionRate;
       dynamic totalCents = convertedAmount; // Convert to cents
 
-      double amountWithPercentageCharge = totalCents/100 * double.parse(selectedOption.percentageCharge);
-      double totalAmountWithFixCharge = amountWithPercentageCharge + double.parse(selectedOption.fixedCharge) ;
+      double amountWithPercentageCharge =
+          totalCents / 100 * double.parse(selectedOption.percentageCharge);
+      double totalAmountWithFixCharge =
+          amountWithPercentageCharge + double.parse(selectedOption.fixedCharge);
 
-      int totalAmountAsInt = totalAmountWithFixCharge.toInt(); // Convert to integer
+      int totalAmountAsInt =
+          totalAmountWithFixCharge.toInt(); // Convert to integer
 
       totalRazorPay = totalAmountWithFixCharge;
 
@@ -803,29 +851,28 @@ class DepositController extends GetxController{
     }
   }
 
-
   dynamic url;
 
   /// manualPayment Submit
   Future<dynamic> sendOtherPaymentRequest(
-      dynamic amount,
-      dynamic gatewayId,
-      ) async {
+    dynamic amount,
+    dynamic gatewayId,
+  ) async {
     _isLoadingOtherPay = true;
     update();
-    ApiResponse apiResponse = await depositScreenRepo!.sendOtherPaymentRequest(amount, gatewayId);
+    ApiResponse apiResponse =
+        await depositScreenRepo!.sendOtherPaymentRequest(amount, gatewayId);
 
-    if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
+    if (apiResponse.response != null &&
+        apiResponse.response!.statusCode == 200) {
       _isLoadingOtherPay = false;
       update();
       if (apiResponse.response!.data != null) {
-
         Map map = apiResponse.response!.data;
         url = map["message"]["url"];
         print("Check>>>$url");
 
         update();
-
       }
     } else {
       _isLoadingOtherPay = false;
@@ -838,12 +885,15 @@ class DepositController extends GetxController{
   dynamic stripePaymentData;
   var stripe = Stripe.instance;
 
-  Future<void> stripeDepositRequest(dynamic planId,BuildContext context) async {
+  Future<void> stripeDepositRequest(
+      dynamic planId, BuildContext context) async {
     try {
       if (kDebugMode) {
         print(selectedOption.currency ?? '');
       }
-      stripePaymentData = await stripePaymentCreate(calculateTotal(amountController.text.toString(),'stripe'), '${selectedOption.currency}');
+      stripePaymentData = await stripePaymentCreate(
+          calculateTotal(amountController.text.toString(), 'stripe'),
+          '${selectedOption.currency}');
       await stripe.initPaymentSheet(
         paymentSheetParameters: SetupPaymentSheetParameters(
           paymentIntentClientSecret: stripePaymentData['client_secret'],
@@ -851,7 +901,7 @@ class DepositController extends GetxController{
           merchantDisplayName: 'Test',
         ),
       );
-      displayPaymentSheet(planId,context);
+      displayPaymentSheet(planId, context);
       update();
     } catch (e, s) {
       if (kDebugMode) {
@@ -860,7 +910,7 @@ class DepositController extends GetxController{
     }
   }
 
-  displayPaymentSheet(dynamic planId,BuildContext context) async {
+  displayPaymentSheet(dynamic planId, BuildContext context) async {
     try {
       await stripe.presentPaymentSheet().then((newValue) {
         if (kDebugMode) {
@@ -870,14 +920,21 @@ class DepositController extends GetxController{
           print('payment intent $stripePaymentData');
         }
 
-        Get.find<PaymentDoneController>().paymentDoneRequest(selectedOption.id, amountController.text.toString(),planId).then((value) {
+        Get.find<PaymentDoneController>()
+            .paymentDoneRequest(
+                selectedOption.id, amountController.text.toString(), planId)
+            .then((value) {
           if (kDebugMode) {
             print("Success");
           }
         }).then((value) {
-          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> DepositHistoryScreen(
-            status: "true",
-          )), (route) => false);
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => DepositHistoryScreen(
+                        status: "true",
+                      )),
+              (route) => false);
           Get.dialog(AppPaymentSuccess());
         });
         stripePaymentData = null;
@@ -902,9 +959,13 @@ class DepositController extends GetxController{
     }
   }
 
-  final secretKeyStripe = "sk_test_51NayeVFRHqwLPZjYZ1dVv7StS1oClKjDotCAe0aq0U6Ltk8TSqpOy29GXR6VnLY4526oZYSD8TGDaoNbUeDvk4Y500FAGkLmOR";
+  final secretKeyStripe =
+      "sk_test_51NayeVFRHqwLPZjYZ1dVv7StS1oClKjDotCAe0aq0U6Ltk8TSqpOy29GXR6VnLY4526oZYSD8TGDaoNbUeDvk4Y500FAGkLmOR";
 
-  stripePaymentCreate(String amount, String currency,) async {
+  stripePaymentCreate(
+    String amount,
+    String currency,
+  ) async {
     try {
       Map<String, dynamic> body = {
         'amount': amount,
@@ -929,6 +990,7 @@ class DepositController extends GetxController{
       return {};
     }
   }
+
   ///End Implementation**********/
 
   ///RazorPay Payment Integration
@@ -940,8 +1002,11 @@ class DepositController extends GetxController{
     if (kDebugMode) {
       print(isPaymentSuccess.value);
     }
-    if(isPaymentSuccess.value==true){
-      Get.find<PaymentDoneController>().paymentDoneRequest(selectedOption.id,amountController.text.toString(),'').then((value) {
+    if (isPaymentSuccess.value == true) {
+      Get.find<PaymentDoneController>()
+          .paymentDoneRequest(
+              selectedOption.id, amountController.text.toString(), '')
+          .then((value) {
         if (kDebugMode) {
           print("Success");
         }
@@ -951,6 +1016,7 @@ class DepositController extends GetxController{
       });
     }
   }
+
   void _handlePaymentError(PaymentFailureResponse response) {
     // Handle payment failure
   }
@@ -961,14 +1027,10 @@ class DepositController extends GetxController{
     final options = {
       // Replace with your actual Razorpay key
       'key': 'rzp_test_kKtwjQz2zCm6Qp',
-      'amount': calculateTotal(amountController.text.toString(),'razorpay'),
+      'amount': calculateTotal(amountController.text.toString(), 'razorpay'),
       'name': 'Test',
       'description': 'Test Payment',
-      'prefill':
-      {
-        'contact': '1234567890',
-        'email': 'test@gmail.com'
-      },
+      'prefill': {'contact': '1234567890', 'email': 'test@gmail.com'},
       'external': {
         'wallets': ['paytm']
       },
@@ -984,26 +1046,27 @@ class DepositController extends GetxController{
     }
   }
 
-
   ///End Implementation**********/
-
 
   ///FlutterWave Payment Integration
   ///Start Implementation*********
-  flutterWavePaymentRequest(BuildContext context,dynamic planId)  {
-    handleFlutterWavePaymentInitialization(context,planId);
+  flutterWavePaymentRequest(BuildContext context, dynamic planId) {
+    handleFlutterWavePaymentInitialization(context, planId);
   }
 
-  handleFlutterWavePaymentInitialization(BuildContext context,dynamic planId) async {
+  handleFlutterWavePaymentInitialization(
+      BuildContext context, dynamic planId) async {
     final Customer customer = Customer(
-        email: "${Get.find<MyAccountController>().myAccountModel.message!.userEmail??"test@gmail.com"}",
-        name: '${Get.find<MyAccountController>().myAccountModel.message!.username??"test"}',
-        phoneNumber: '123456789'
-    );
+        email:
+            "${Get.find<MyAccountController>().myAccountModel.message!.userEmail ?? "test@gmail.com"}",
+        name:
+            '${Get.find<MyAccountController>().myAccountModel.message!.username ?? "test"}',
+        phoneNumber: '123456789');
 
     final Flutterwave flutterWave = Flutterwave(
         context: context,
-        publicKey: "${publicKeyFlutterWave??"FLWPUBK_TEST-1aa1ec3eda9729965fecb62eff8268c7-X"}",
+        publicKey:
+            "${publicKeyFlutterWave ?? "FLWPUBK_TEST-1aa1ec3eda9729965fecb62eff8268c7-X"}",
         currency: '${selectedOption.currency}',
         redirectUrl: '${AppConstants.badgesUri}',
         amount: calculateFlutterWaveAmount(amountController.text.toString()),
@@ -1011,22 +1074,30 @@ class DepositController extends GetxController{
         paymentOptions: "card, payattitude, barter, bank transfer, ussd",
         customization: Customization(title: "Payment"),
         isTestMode: true,
-        txRef: getRandomString(15)
-    );
+        txRef: getRandomString(15));
     final ChargeResponse response = await flutterWave.charge();
     if (response != null) {
       if (kDebugMode) {
         print("${response.toJson()['success']}");
       }
-      if(response.toJson()['success']==true){
-        Get.find<PaymentDoneController>().paymentDoneRequest(selectedOption.id, calculateTotal(amountController.text.toString(),'razorpay'),planId).then((value) {
+      if (response.toJson()['success'] == true) {
+        Get.find<PaymentDoneController>()
+            .paymentDoneRequest(
+                selectedOption.id,
+                calculateTotal(amountController.text.toString(), 'razorpay'),
+                planId)
+            .then((value) {
           if (kDebugMode) {
             print("Success");
           }
         }).then((value) {
-          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> DepositHistoryScreen(
-            status: "true",
-          )), (route) => false);
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => DepositHistoryScreen(
+                        status: "true",
+                      )),
+              (route) => false);
           Get.dialog(AppPaymentSuccess());
         });
       }
@@ -1037,17 +1108,22 @@ class DepositController extends GetxController{
     }
   }
 
-  calculateFlutterWaveAmount(dynamic amount){
+  calculateFlutterWaveAmount(dynamic amount) {
     double conversionRate = double.parse(selectedOption.conventionRate);
-    String formattedRate = conversionRate.toStringAsFixed(2); // Round to 2 decimal places
+    String formattedRate =
+        conversionRate.toStringAsFixed(2); // Round to 2 decimal places
 
     double convertedAmount = double.parse(amount) * conversionRate;
     int totalCents = (convertedAmount * 100).toInt(); // Convert to cents
 
-    double amountWithPercentageCharge = totalCents * (double.parse(selectedOption.percentageCharge) / 100);
-    double totalAmountWithFixCharge = amountWithPercentageCharge + double.parse(selectedOption.fixedCharge) + totalCents;
+    double amountWithPercentageCharge =
+        totalCents * (double.parse(selectedOption.percentageCharge) / 100);
+    double totalAmountWithFixCharge = amountWithPercentageCharge +
+        double.parse(selectedOption.fixedCharge) +
+        totalCents;
 
-    int totalAmountAsInt = totalAmountWithFixCharge.toInt(); // Convert to integer
+    int totalAmountAsInt =
+        totalAmountWithFixCharge.toInt(); // Convert to integer
 
     if (kDebugMode) {
       print("Formatted Rate: $formattedRate");
@@ -1068,7 +1144,9 @@ class DepositController extends GetxController{
   Future<void> initMonnifySdk() async {
     try {
       if (await MonnifyFlutterSdkPlus.initialize(
-          '${apiKeyMonnify??"MK_TEST_LB5KJDYD65"}', '${contactCodeMonnfiy??"5566252118"}', ApplicationMode.TEST)) {
+          '${apiKeyMonnify ?? "MK_TEST_LB5KJDYD65"}',
+          '${contactCodeMonnfiy ?? "5566252118"}',
+          ApplicationMode.TEST)) {
         if (kDebugMode) {
           print("SDK initialized!");
         }
@@ -1085,16 +1163,17 @@ class DepositController extends GetxController{
     }
   }
 
-  Future<void> monnifyPaymentRequest(dynamic planId,BuildContext context) async {
+  Future<void> monnifyPaymentRequest(
+      dynamic planId, BuildContext context) async {
     TransactionResponse transactionResponse;
     update();
     try {
       transactionResponse =
-      await MonnifyFlutterSdkPlus.initializePayment(Transaction(
+          await MonnifyFlutterSdkPlus.initializePayment(Transaction(
         calculateMonnifyAmount(amountController.text),
         '${selectedOption.currency}',
-        "${Get.find<MyAccountController>().myAccountModel.message!.username??"Test Name"}",
-        "${Get.find<MyAccountController>().myAccountModel.message!.userEmail??"mail.cus@tome.er"}",
+        "${Get.find<MyAccountController>().myAccountModel.message!.username ?? "Test Name"}",
+        "${Get.find<MyAccountController>().myAccountModel.message!.userEmail ?? "mail.cus@tome.er"}",
         getRandomString(15),
         "Payment",
         metaData: {"ip": "196.168.45.22", "device": "mobile"},
@@ -1104,20 +1183,27 @@ class DepositController extends GetxController{
       if (kDebugMode) {
         print("Checked>>> ${transactionResponse.transactionStatus}");
       }
-      if(transactionResponse.transactionStatus=="PAID"){
-        Get.find<PaymentDoneController>().paymentDoneRequest(selectedOption.id, amountController.text.toString(),planId).then((value) {
+      if (transactionResponse.transactionStatus == "PAID") {
+        Get.find<PaymentDoneController>()
+            .paymentDoneRequest(
+                selectedOption.id, amountController.text.toString(), planId)
+            .then((value) {
           if (kDebugMode) {
             print("Success");
           }
         }).then((value) {
-          Get.find<DepositHistoryController>().getDepositHistorySearchData("", "", "",page: 1);
-          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> DepositHistoryScreen(
-            status: "true",
-          )), (route) => false);
+          Get.find<DepositHistoryController>()
+              .getDepositHistorySearchData("", "", "", page: 1);
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => DepositHistoryScreen(
+                        status: "true",
+                      )),
+              (route) => false);
           Get.dialog(AppPaymentSuccess());
         });
       }
-
     } on PlatformException catch (e, s) {
       if (kDebugMode) {
         print("Error initializing payment");
@@ -1144,17 +1230,22 @@ class DepositController extends GetxController{
         length, (_) => chars.codeUnitAt(ranDom.nextInt(chars.length))));
   }
 
-  calculateMonnifyAmount(dynamic amount){
+  calculateMonnifyAmount(dynamic amount) {
     double conversionRate = double.parse(selectedOption.conventionRate);
-    String formattedRate = conversionRate.toStringAsFixed(2); // Round to 2 decimal places
+    String formattedRate =
+        conversionRate.toStringAsFixed(2); // Round to 2 decimal places
 
     double convertedAmount = double.parse(amount) * conversionRate;
     int totalCents = (convertedAmount * 100).toInt(); // Convert to cents
 
-    double amountWithPercentageCharge = totalCents * (double.parse(selectedOption.percentageCharge) / 100);
-    double totalAmountWithFixCharge = amountWithPercentageCharge + double.parse(selectedOption.fixedCharge) + totalCents;
+    double amountWithPercentageCharge =
+        totalCents * (double.parse(selectedOption.percentageCharge) / 100);
+    double totalAmountWithFixCharge = amountWithPercentageCharge +
+        double.parse(selectedOption.fixedCharge) +
+        totalCents;
 
-    int totalAmountAsInt = totalAmountWithFixCharge.toInt(); // Convert to integer
+    int totalAmountAsInt =
+        totalAmountWithFixCharge.toInt(); // Convert to integer
 
     if (kDebugMode) {
       print("Formatted Rate: $formattedRate");
@@ -1173,7 +1264,6 @@ class DepositController extends GetxController{
   ///payUMoney Payment Integration
   ///Start Implementation*********
 
-
   ///End Implementation**********/
 
   ///paytm Payment Integration
@@ -1187,12 +1277,12 @@ class DepositController extends GetxController{
   bool restrictAppInvoke = false;
   bool enableAssist = true;
 
-  Future<void> paytmPaymentRequest(dynamic planId,BuildContext context) async {
+  Future<void> paytmPaymentRequest(dynamic planId, BuildContext context) async {
     if (txnToken.isEmpty) {
       return;
     }
     var sendMap = <String, dynamic>{
-      "mid": midPaytm??mid,
+      "mid": midPaytm ?? mid,
       "orderId": orderId,
       "amount": calculatePaytmAmount(amountController.text).toString(),
       "txnToken": txnToken,
@@ -1206,28 +1296,34 @@ class DepositController extends GetxController{
     }
     try {
       var response = AllInOneSdk.startTransaction(
-          midPaytm??mid,
+          midPaytm ?? mid,
           orderId,
           calculatePaytmAmount(amountController.text).toString(),
           txnToken,
           callbackUrl,
           isStaging,
           restrictAppInvoke,
-          enableAssist
-      );
+          enableAssist);
       response.then((value) {
         if (kDebugMode) {
           print(value);
         }
         result = value.toString();
-        Get.find<PaymentDoneController>().paymentDoneRequest(selectedOption.id, calculatePaytmAmount(amountController.text.toString()),planId).then((value) {
+        Get.find<PaymentDoneController>()
+            .paymentDoneRequest(selectedOption.id,
+                calculatePaytmAmount(amountController.text.toString()), planId)
+            .then((value) {
           if (kDebugMode) {
             print("Success");
           }
         }).then((value) {
-          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> DepositHistoryScreen(
-            status: "true",
-          )), (route) => false);
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => DepositHistoryScreen(
+                        status: "true",
+                      )),
+              (route) => false);
           Get.dialog(AppPaymentSuccess());
         });
         update();
@@ -1245,17 +1341,22 @@ class DepositController extends GetxController{
     }
   }
 
-  calculatePaytmAmount(dynamic amount){
+  calculatePaytmAmount(dynamic amount) {
     double conversionRate = double.parse(selectedOption.conventionRate);
-    String formattedRate = conversionRate.toStringAsFixed(2); // Round to 2 decimal places
+    String formattedRate =
+        conversionRate.toStringAsFixed(2); // Round to 2 decimal places
 
     double convertedAmount = double.parse(amount) * conversionRate;
     int totalCents = (convertedAmount * 100).toInt(); // Convert to cents
 
-    double amountWithPercentageCharge = totalCents * (double.parse(selectedOption.percentageCharge) / 100);
-    double totalAmountWithFixCharge = amountWithPercentageCharge + double.parse(selectedOption.fixedCharge) + totalCents;
+    double amountWithPercentageCharge =
+        totalCents * (double.parse(selectedOption.percentageCharge) / 100);
+    double totalAmountWithFixCharge = amountWithPercentageCharge +
+        double.parse(selectedOption.fixedCharge) +
+        totalCents;
 
-    int totalAmountAsInt = totalAmountWithFixCharge.toInt(); // Convert to integer
+    int totalAmountAsInt =
+        totalAmountWithFixCharge.toInt(); // Convert to integer
 
     if (kDebugMode) {
       print("Formatted Rate: $formattedRate");
@@ -1273,59 +1374,75 @@ class DepositController extends GetxController{
 
   /// PayStack Integration
 
-  dynamic publicKeyTest = 'pk_test_51196e34a819c61757bcd439fd5bfb0fe8a7b99a'; //pass in the public test key here
+  dynamic publicKeyTest =
+      'pk_test_51196e34a819c61757bcd439fd5bfb0fe8a7b99a'; //pass in the public test key here
   final plugin = PaystackPlugin();
 
-  void _showMessage(String message,BuildContext context) {
+  void _showMessage(String message, BuildContext context) {
     final snackBar = SnackBar(content: Text(message));
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
+
   String _getReference() {
     var platform = (Platform.isIOS) ? 'iOS' : 'Android';
     final thisDate = DateTime.now().millisecondsSinceEpoch;
     return 'ChargedFrom${platform}_$thisDate';
   }
 
-  payStackPaymentRequest(BuildContext context,dynamic planId) async {
+  payStackPaymentRequest(BuildContext context, dynamic planId) async {
     var charge = Charge()
       ..amount = int.parse(calculatePayStackAmount(amountController.text))
       ..reference = _getReference()
       ..putCustomField('custom_id',
           '846gey6w') //to pass extra parameters to be retrieved on the response from Paystack
-      ..email = '${Get.find<MyAccountController>().myAccountModel.message!.userEmail??"test@email.com"}';
+      ..email =
+          '${Get.find<MyAccountController>().myAccountModel.message!.userEmail ?? "test@email.com"}';
     CheckoutResponse response = await plugin.checkout(
       context,
       method: CheckoutMethod.card,
       charge: charge,
     );
     if (response.status == true) {
-      Get.find<PaymentDoneController>().paymentDoneRequest(selectedOption.id, amountController.text.toString(),planId).then((value) {
+      Get.find<PaymentDoneController>()
+          .paymentDoneRequest(
+              selectedOption.id, amountController.text.toString(), planId)
+          .then((value) {
         if (kDebugMode) {
           print("Success");
         }
       }).then((value) {
-        Get.find<DepositHistoryController>().getDepositHistorySearchData("", "", "",page: 1);
-        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> DepositHistoryScreen(
-          status: "true",
-        )), (route) => false);
+        Get.find<DepositHistoryController>()
+            .getDepositHistorySearchData("", "", "", page: 1);
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+                builder: (context) => DepositHistoryScreen(
+                      status: "true",
+                    )),
+            (route) => false);
         Get.dialog(AppPaymentSuccess());
       });
     } else {
-      _showMessage('Payment Failed!!!',context);
+      _showMessage('Payment Failed!!!', context);
     }
   }
 
-  calculatePayStackAmount(dynamic amount){
+  calculatePayStackAmount(dynamic amount) {
     double conversionRate = double.parse(selectedOption.conventionRate);
-    String formattedRate = conversionRate.toStringAsFixed(2); // Round to 2 decimal places
+    String formattedRate =
+        conversionRate.toStringAsFixed(2); // Round to 2 decimal places
 
     double convertedAmount = double.parse(amount) * conversionRate;
     int totalCents = (convertedAmount * 100).toInt(); // Convert to cents
 
-    double amountWithPercentageCharge = totalCents * (double.parse(selectedOption.percentageCharge) / 100);
-    double totalAmountWithFixCharge = amountWithPercentageCharge + double.parse(selectedOption.fixedCharge) + totalCents;
+    double amountWithPercentageCharge =
+        totalCents * (double.parse(selectedOption.percentageCharge) / 100);
+    double totalAmountWithFixCharge = amountWithPercentageCharge +
+        double.parse(selectedOption.fixedCharge) +
+        totalCents;
 
-    int totalAmountAsInt = totalAmountWithFixCharge.toInt(); // Convert to integer
+    int totalAmountAsInt =
+        totalAmountWithFixCharge.toInt(); // Convert to integer
 
     if (kDebugMode) {
       print("Formatted Rate: $formattedRate");
@@ -1341,11 +1458,13 @@ class DepositController extends GetxController{
 
   /// Paypal Integration
   /// Function to handle PayPal checkout
-  void payPalPaymentRequest(dynamic planId,BuildContext context) {
+  void payPalPaymentRequest(dynamic planId, BuildContext context) {
     Get.to(PaypalCheckout(
       sandboxMode: true,
-      clientId: "${clientIdPaypal??"Aa3Uh9sLX7mAZZSfo3OHkcE4Y9QZbaZep3qIsGC9bvXFeeLvnibTmVAcZSCYGAQ_h_BG0rq6KXucyuyr"}",
-      secretKey: "${secretKeyPaypal??"EAkhsEdCVbeWQEGeQ4JWY2pVCyDISSU3-pXwbYnk1vzkPRy-PRsf7Pd9QId5_kxNxSfsaaSYP3hhICU6"}",
+      clientId:
+          "${clientIdPaypal ?? "Aa3Uh9sLX7mAZZSfo3OHkcE4Y9QZbaZep3qIsGC9bvXFeeLvnibTmVAcZSCYGAQ_h_BG0rq6KXucyuyr"}",
+      secretKey:
+          "${secretKeyPaypal ?? "EAkhsEdCVbeWQEGeQ4JWY2pVCyDISSU3-pXwbYnk1vzkPRy-PRsf7Pd9QId5_kxNxSfsaaSYP3hhICU6"}",
       returnURL: "success.snippetcoder.com",
       cancelURL: "cancel.snippetcoder.com",
       transactions: [
@@ -1367,14 +1486,21 @@ class DepositController extends GetxController{
         if (kDebugMode) {
           print("onSuccess: $params");
         }
-        Get.find<PaymentDoneController>().paymentDoneRequest(selectedOption.id, calculatePaypalAmount(amountController.text.toString()),planId).then((value) {
+        Get.find<PaymentDoneController>()
+            .paymentDoneRequest(selectedOption.id,
+                calculatePaypalAmount(amountController.text.toString()), planId)
+            .then((value) {
           if (kDebugMode) {
             print("Success");
           }
         }).then((value) {
-          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> DepositHistoryScreen(
-            status: "true",
-          )), (route) => false);
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => DepositHistoryScreen(
+                        status: "true",
+                      )),
+              (route) => false);
           Get.dialog(AppPaymentSuccess());
         });
       },
@@ -1393,17 +1519,22 @@ class DepositController extends GetxController{
     update();
   }
 
-  calculatePaypalAmount(dynamic amount){
+  calculatePaypalAmount(dynamic amount) {
     double conversionRate = double.parse(selectedOption.conventionRate);
-    String formattedRate = conversionRate.toStringAsFixed(2); // Round to 2 decimal places
+    String formattedRate =
+        conversionRate.toStringAsFixed(2); // Round to 2 decimal places
 
     double convertedAmount = double.parse(amount) * conversionRate;
     int totalCents = (convertedAmount * 100).toInt(); // Convert to cents
 
-    double amountWithPercentageCharge = totalCents * (double.parse(selectedOption.percentageCharge) / 100);
-    double totalAmountWithFixCharge = amountWithPercentageCharge + double.parse(selectedOption.fixedCharge) + totalCents;
+    double amountWithPercentageCharge =
+        totalCents * (double.parse(selectedOption.percentageCharge) / 100);
+    double totalAmountWithFixCharge = amountWithPercentageCharge +
+        double.parse(selectedOption.fixedCharge) +
+        totalCents;
 
-    int totalAmountAsInt = totalAmountWithFixCharge.toInt(); // Convert to integer
+    int totalAmountAsInt =
+        totalAmountWithFixCharge.toInt(); // Convert to integer
 
     if (kDebugMode) {
       print("Formatted Rate: $formattedRate");
@@ -1414,8 +1545,209 @@ class DepositController extends GetxController{
       print("Total Amount as Integer: $totalAmountAsInt");
     }
 
-    return (totalAmountAsInt/100).toString();
+    return (totalAmountAsInt / 100).toString();
   }
 
+  testing(gateway) {
+    formFields.clear();
+    if (gateway.parameters != null) {
+      gateway.parameters!.forEach((key, value) {
+        if (value is Map<String, dynamic>) {
+          String fieldName = value['field_name'];
 
+          // Outside the function, declare a map to store text editing controllers
+          Map<dynamic, TextEditingController> textControllers = {};
+          dynamic fieldValue;
+
+          Map<dynamic, TextEditingController> textAreaControllers = {};
+          dynamic textAreaFieldValue;
+
+          if (value['type'] == 'text') {
+            textControllers[fieldName] = TextEditingController();
+            formFields.add(
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  Text(value['field_level'], style: TextStyle(fontSize: 16.sp)),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  TextFormField(
+                    controller: textControllers[fieldName],
+                    onChanged: (value) {
+                      for (var fieldName in textControllers.keys) {
+                        fieldValue = textControllers[fieldName]!.text;
+                        fieldNames.add(fieldName);
+                        fieldValuesList.add(fieldValue);
+                        // print("Field $fieldName: $fieldValue");
+                        update();
+                      }
+                      if (kDebugMode) {
+                        print(fieldNames);
+                        print(fieldValuesList);
+                      }
+                    },
+                    decoration: InputDecoration(
+                      hintText:
+                          value['validation'] == "required" ? "" : "optional",
+                      hintStyle: GoogleFonts.publicSans(
+                        fontSize: 13.sp,
+                      ),
+                      contentPadding:
+                          EdgeInsets.only(left: 12, top: 10, bottom: 12),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(
+                            8.0), // Set the border radius here
+                        borderSide:
+                            BorderSide.none, // Remove the default border
+                      ),
+                      fillColor: AppColors.getTextFieldDarkLight(),
+                      filled: true,
+                    ),
+                    // Add validation logic here based on fieldData["validation"]
+                  ),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                ],
+              ),
+            );
+          } else if (value['type'] == 'textarea') {
+            textAreaControllers[fieldName] = TextEditingController();
+            formFields.add(
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  Text(value['field_level'], style: TextStyle(fontSize: 16.sp)),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  TextFormField(
+                    controller: textAreaControllers[fieldName],
+                    onChanged: (value) {
+                      for (var fieldName in textAreaControllers.keys) {
+                        textAreaFieldValue =
+                            textAreaControllers[fieldName]!.text;
+                        fieldNames.add(fieldName);
+                        fieldValuesList.add(textAreaFieldValue);
+                        // print("Field $fieldName: $fieldValue");
+                        update();
+                      }
+                      if (kDebugMode) {
+                        print(fieldNames);
+                        print(fieldValuesList);
+                      }
+                    },
+                    minLines: 3,
+                    maxLines: null,
+                    textInputAction: TextInputAction.done,
+                    decoration: InputDecoration(
+                      hintText:
+                          value['validation'] == "required" ? "" : "optional",
+                      hintStyle: GoogleFonts.publicSans(
+                        fontSize: 13.sp,
+                      ),
+                      contentPadding:
+                          EdgeInsets.only(left: 12, top: 10, bottom: 12),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(
+                            8.0), // Set the border radius here
+                        borderSide:
+                            BorderSide.none, // Remove the default border
+                      ),
+                      fillColor: AppColors.getTextFieldDarkLight(),
+                      filled: true,
+                    ),
+                    // Add validation logic here based on fieldData["validation"]
+                  ),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                ],
+              ),
+            );
+          } else if (value['type'] == 'file') {
+            formFields.add(
+              StatefulBuilder(
+                builder: (context, setState) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      Text(value['field_level'],
+                          style: TextStyle(fontSize: 16.sp)),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      Container(
+                        height: 60.h,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: AppColors.getTextFieldDarkLight(),
+                        ),
+                        child: Row(
+                          children: [
+                            MaterialButton(
+                              onPressed: () {
+                                pickImage().then((values) {
+                                  if (pickedImage != null) {
+                                    selectedFilePath = pickedImage.path;
+                                    fieldNames.add(fieldName);
+                                    fieldValuesList.add(selectedFilePath);
+                                  }
+                                  setState(() {});
+                                  update();
+                                });
+                              },
+                              child: Text("Choose Files",
+                                  style: GoogleFonts.publicSans(
+                                    fontSize: 13.sp,
+                                  )),
+                            ),
+                            SizedBox(width: 5.w),
+                            Container(
+                              height: 60,
+                              width: 1,
+                              color: AppColors.appBg3,
+                            ),
+                            SizedBox(width: 13.w),
+                            selectedFilePath != null
+                                ? Text(
+                                    "1 File Selected",
+                                    style: GoogleFonts.publicSans(
+                                        color: AppColors
+                                            .appDashBoardTransactionGreen,
+                                        fontWeight: FontWeight.w500),
+                                  )
+                                : Text(
+                                    "No File Selected",
+                                    style:
+                                        GoogleFonts.publicSans(fontSize: 13.sp),
+                                  ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                    ],
+                  );
+                },
+              ),
+            );
+          }
+        }
+      });
+    }
+    return formFields;
+  }
 }

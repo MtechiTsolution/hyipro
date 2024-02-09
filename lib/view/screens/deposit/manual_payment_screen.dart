@@ -11,6 +11,7 @@ import 'package:hyip_pro/utils/colors/app_colors.dart';
 
 class DepositPreviewScreen extends StatefulWidget {
   static const String routeName = "/depositPreviewScreen";
+  dynamic selectedind;
   dynamic gateway;
   dynamic amount;
   dynamic planId;
@@ -22,6 +23,7 @@ class DepositPreviewScreen extends StatefulWidget {
   dynamic conventionRate;
   DepositPreviewScreen(
       {super.key,
+      this.selectedind,
       this.gateway,
       this.amount,
       this.conversionRate,
@@ -41,6 +43,7 @@ class _DepositPreviewScreenState extends State<DepositPreviewScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print('ppcs ${widget.gateway}');
     return GetBuilder<DepositController>(builder: (depositController) {
       return Scaffold(
         backgroundColor: AppColors.getBackgroundDarkLight(),
@@ -62,7 +65,10 @@ class _DepositPreviewScreenState extends State<DepositPreviewScreen> {
           automaticallyImplyLeading: false,
           title: Text(
             "${selectedLanguageStorage.read("languageData")["Deposit Preview"] ?? "Deposit Preview"}",
-            style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w500, color: AppColors.getTextDarkLight()),
+            style: TextStyle(
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w500,
+                color: AppColors.getTextDarkLight()),
           ),
         ),
         body: ListView(
@@ -84,7 +90,9 @@ class _DepositPreviewScreenState extends State<DepositPreviewScreen> {
                         Center(
                           child: Text(
                             "Please Follow The Instruction Below",
-                            style: GoogleFonts.publicSans(color: AppColors.appDashBoardTransactionPending),
+                            style: GoogleFonts.publicSans(
+                                color:
+                                    AppColors.appDashBoardTransactionPending),
                           ),
                         ),
                         SizedBox(
@@ -95,7 +103,9 @@ class _DepositPreviewScreenState extends State<DepositPreviewScreen> {
                           child: Center(
                             child: Text(
                               "You have requested to deposit ${Get.find<DepositController>().amountController.text} USD , Please pay ${double.parse(widget.amount).toStringAsFixed(2)} for successful payment",
-                              style: GoogleFonts.publicSans(color: AppColors.getTextDarkLight(), fontSize: 15.sp),
+                              style: GoogleFonts.publicSans(
+                                  color: AppColors.getTextDarkLight(),
+                                  fontSize: 15.sp),
                               textAlign: TextAlign.center,
                             ),
                           ),
@@ -120,13 +130,17 @@ class _DepositPreviewScreenState extends State<DepositPreviewScreen> {
                               //   textAlign: TextAlign.justify,
                               //   style: TextStyle(fontSize: 14.sp),
                               // ),
-                              HtmlWidget(depositController.message!.gateways![1].note.toString()),
+                              HtmlWidget(depositController
+                                  .message!.gateways![widget.selectedind].note
+                                  .toString()),
                               SizedBox(
                                 height: 5.h,
                               ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                children: depositController.formFields, // Use the list of form fields here
+                                children: depositController.testing(
+                                    depositController.gateways![widget
+                                        .selectedind]), // Use the list of form fields here
                               ),
                             ],
                           ),
@@ -158,14 +172,17 @@ class _DepositPreviewScreenState extends State<DepositPreviewScreen> {
                       child: Container(
                         height: 50.h,
                         width: double.infinity,
-                        decoration:
-                            BoxDecoration(color: AppColors.appPrimaryColor, borderRadius: BorderRadius.circular(32)),
+                        decoration: BoxDecoration(
+                            color: AppColors.appPrimaryColor,
+                            borderRadius: BorderRadius.circular(32)),
                         child: Center(
                             child: depositController.isLoadingManualPay == false
                                 ? Text(
                                     "Pay Now",
                                     style: TextStyle(
-                                        color: AppColors.appWhiteColor, fontSize: 16.sp, fontWeight: FontWeight.w500),
+                                        color: AppColors.appWhiteColor,
+                                        fontSize: 16.sp,
+                                        fontWeight: FontWeight.w500),
                                   )
                                 : const CircularProgressIndicator(
                                     color: AppColors.appWhiteColor,

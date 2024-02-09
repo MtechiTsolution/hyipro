@@ -18,8 +18,9 @@ dynamic selectedOption;
 class DepositScreen extends StatefulWidget {
   dynamic amount;
   dynamic planID;
+  dynamic isfixed;
   static const String routeName = "/depositScreen";
-  DepositScreen({super.key, this.amount, this.planID});
+  DepositScreen({super.key, this.amount, this.planID, this.isfixed = false});
 
   @override
   State<DepositScreen> createState() => _DepositScreenState();
@@ -69,7 +70,9 @@ class _DepositScreenState extends State<DepositScreen> {
   @override
   void initState() {
     // TODO: implement initState
-    widget.amount != null ? Get.find<DepositController>().amountController.text = widget.amount : "";
+    widget.amount != null
+        ? Get.find<DepositController>().amountController.text = widget.amount
+        : "";
     super.initState();
   }
 
@@ -98,7 +101,9 @@ class _DepositScreenState extends State<DepositScreen> {
           title: Text(
             "${selectedLanguageStorage.read("languageData")["Deposit"] ?? "Deposit"}",
             style: GoogleFonts.publicSans(
-                fontWeight: FontWeight.w600, fontSize: 20.sp, color: AppColors.getTextDarkLight()),
+                fontWeight: FontWeight.w600,
+                fontSize: 20.sp,
+                color: AppColors.getTextDarkLight()),
           ),
         ),
         body: ListView(
@@ -113,8 +118,10 @@ class _DepositScreenState extends State<DepositScreen> {
                   Container(
                     height: 180.h,
                     width: double.infinity,
-                    decoration:
-                        BoxDecoration(color: Get.isDarkMode ? AppColors.appContainerBgColor : AppColors.appBrandColor3),
+                    decoration: BoxDecoration(
+                        color: Get.isDarkMode
+                            ? AppColors.appContainerBgColor
+                            : AppColors.appBrandColor3),
                     child: Padding(
                       padding: EdgeInsets.only(top: 24.h, left: 24.w),
                       child: depositController.isLoading == false
@@ -132,7 +139,8 @@ class _DepositScreenState extends State<DepositScreen> {
                                           "${selectedLanguageStorage.read("languageData")["Select Payment Method"] ?? "Select Payment Method"}",
                                           style: GoogleFonts.niramit(
                                               fontSize: 18.sp,
-                                              color: AppColors.getTextDarkLight(),
+                                              color:
+                                                  AppColors.getTextDarkLight(),
                                               fontWeight: FontWeight.w400),
                                         ),
                                       ),
@@ -141,14 +149,20 @@ class _DepositScreenState extends State<DepositScreen> {
                                         child: TextFormField(
                                           onChanged: (value) {
                                             // Filter the gateways based on the search value
-                                            List<Gateway> filteredGateways = depositController.message!.gateways!
-                                                .where((gateway) =>
-                                                    gateway.name!.toLowerCase().contains(value.toLowerCase()))
-                                                .toList();
+                                            List<Gateway> filteredGateways =
+                                                depositController
+                                                    .message!.gateways!
+                                                    .where((gateway) => gateway
+                                                        .name!
+                                                        .toLowerCase()
+                                                        .contains(value
+                                                            .toLowerCase()))
+                                                    .toList();
 
                                             // Update the state with the filtered gateways
                                             setState(() {
-                                              filteredGatewaysList = filteredGateways;
+                                              filteredGatewaysList =
+                                                  filteredGateways;
                                               selectedTabIndex = -1;
                                             });
                                           },
@@ -158,7 +172,8 @@ class _DepositScreenState extends State<DepositScreen> {
                                               hintStyle: GoogleFonts.niramit(
                                                   fontSize: 14.sp,
                                                   fontWeight: FontWeight.w400,
-                                                  color: AppColors.appBlackColor30)),
+                                                  color: AppColors
+                                                      .appBlackColor30)),
                                         ),
                                       )
                                     ],
@@ -176,13 +191,18 @@ class _DepositScreenState extends State<DepositScreen> {
                                     shrinkWrap: true,
                                     itemCount: filteredGatewaysList.isNotEmpty
                                         ? filteredGatewaysList.length
-                                        : depositController.message!.gateways!.length,
+                                        : depositController
+                                            .message?.gateways!.length,
                                     scrollDirection: Axis.horizontal,
                                     itemBuilder: (context, index) {
+                                      print(
+                                          "length abc ${depositController.message?.gateways!.length}");
                                       // Use the filtered gateways if available, otherwise use all gateways
-                                      var gateway = filteredGatewaysList.isNotEmpty
-                                          ? filteredGatewaysList[index]
-                                          : depositController.message!.gateways![index];
+                                      var gateway =
+                                          filteredGatewaysList.isNotEmpty
+                                              ? filteredGatewaysList[index]
+                                              : depositController
+                                                  .message?.gateways![index];
 
                                       return GestureDetector(
                                         onTap: () {
@@ -191,16 +211,23 @@ class _DepositScreenState extends State<DepositScreen> {
 
                                             setState(() {
                                               selectedOption = gateway;
-                                              selectedOptionCode = gateway.code;
+                                              selectedOptionCode =
+                                                  gateway!.code;
                                               fixedCharge = gateway.fixedCharge;
-                                              percentageCharge = gateway.percentageCharge;
+                                              percentageCharge =
+                                                  gateway.percentageCharge;
                                               paymentMethod = gateway.name;
                                               currency = gateway.currency;
                                               minAmount = gateway.minAmount;
                                               maxAmount = gateway.maxAmount;
-                                              conversionRate = gateway.conventionRate;
-                                              checkCrypto = gateway.currencies != null ? gateway.currencies["1"] : null;
-                                              print("Check Crypto>>> ${checkCrypto}");
+                                              conversionRate =
+                                                  gateway.conventionRate;
+                                              checkCrypto =
+                                                  gateway.currencies != null
+                                                      ? gateway.currencies["1"]
+                                                      : null;
+                                              print(
+                                                  "Check Crypto>>> ${checkCrypto}");
                                             });
                                           });
                                         },
@@ -212,15 +239,19 @@ class _DepositScreenState extends State<DepositScreen> {
                                                 height: 57.h,
                                                 width: 85.w,
                                                 decoration: BoxDecoration(
-                                                  color: index != selectedTabIndex
+                                                  color: index !=
+                                                          selectedTabIndex
                                                       ? AppColors.appWhiteColor
-                                                      : AppColors.appBrandColor2,
-                                                  borderRadius: BorderRadius.circular(12),
+                                                      : AppColors
+                                                          .appBrandColor2,
+                                                  borderRadius:
+                                                      BorderRadius.circular(12),
                                                 ),
                                                 child: Padding(
-                                                  padding: const EdgeInsets.all(6.0),
+                                                  padding:
+                                                      const EdgeInsets.all(6.0),
                                                   child: Image.network(
-                                                    "${gateway.image}",
+                                                    gateway!.image,
                                                     height: 14.h,
                                                     width: 85.w,
                                                   ),
@@ -232,10 +263,12 @@ class _DepositScreenState extends State<DepositScreen> {
                                                   right: 0.w,
                                                   child: CircleAvatar(
                                                     radius: 10,
-                                                    backgroundColor: AppColors.appPrimaryColor,
+                                                    backgroundColor: AppColors
+                                                        .appPrimaryColor,
                                                     child: Icon(
                                                       Icons.check,
-                                                      color: AppColors.appWhiteColor,
+                                                      color: AppColors
+                                                          .appWhiteColor,
                                                       size: 16.sp,
                                                     ),
                                                   ),
@@ -267,7 +300,9 @@ class _DepositScreenState extends State<DepositScreen> {
                         Text(
                           "${selectedLanguageStorage.read("languageData")["Amount"] ?? "Amount"}",
                           style: GoogleFonts.niramit(
-                              fontWeight: FontWeight.w400, fontSize: 18.sp, color: AppColors.getTextDarkLight()),
+                              fontWeight: FontWeight.w400,
+                              fontSize: 18.sp,
+                              color: AppColors.getTextDarkLight()),
                         ),
                         SizedBox(
                           height: 12.h,
@@ -283,24 +318,34 @@ class _DepositScreenState extends State<DepositScreen> {
                             setState(() {});
                           },
                           inputFormatters: [
-                            FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,5}')),
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r'^\d+\.?\d{0,5}')),
                           ],
+                          readOnly: widget.isfixed,
                           keyboardType: TextInputType.number,
                           controller: depositController.amountController,
                           decoration: InputDecoration(
-                              contentPadding: EdgeInsets.only(left: 12, top: 10, bottom: 12),
+                              contentPadding: EdgeInsets.only(
+                                  left: 12, top: 10, bottom: 12),
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8.0), // Set the border radius here
-                                borderSide: BorderSide.none, // Remove the default border
+                                borderRadius: BorderRadius.circular(
+                                    8.0), // Set the border radius here
+                                borderSide: BorderSide
+                                    .none, // Remove the default border
                               ),
                               fillColor: AppColors.getTextFieldDarkLight(),
                               filled: true,
                               hintText:
                                   "${selectedLanguageStorage.read("languageData")["Enter Amount"] ?? "Enter Amount"}",
                               hintStyle: GoogleFonts.niramit(
-                                  fontWeight: FontWeight.w400, fontSize: 16.sp, color: AppColors.appBlackColor30)),
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 16.sp,
+                                  color: AppColors.appBlackColor30)),
                         ),
-                        fixedCharge != null && depositController.amountController.text.toString().isNotEmpty
+                        fixedCharge != null &&
+                                depositController.amountController.text
+                                    .toString()
+                                    .isNotEmpty
                             ? Padding(
                                 padding: const EdgeInsets.only(top: 24),
                                 child: Column(
@@ -324,29 +369,39 @@ class _DepositScreenState extends State<DepositScreen> {
                                       child: Container(
                                         width: double.infinity,
                                         decoration: BoxDecoration(
-                                            color: AppColors.getBackgroundDarkLight(),
-                                            borderRadius: BorderRadius.circular(16)),
+                                            color: AppColors
+                                                .getBackgroundDarkLight(),
+                                            borderRadius:
+                                                BorderRadius.circular(16)),
                                         child: Padding(
-                                          padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.h),
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 24.w, vertical: 20.h),
                                           child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
                                               Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
                                                 children: [
                                                   Text(
                                                     "${selectedLanguageStorage.read("languageData")["Payment Method"] ?? "Payment Method"}",
                                                     style: GoogleFonts.niramit(
                                                         fontSize: 16.sp,
-                                                        fontWeight: FontWeight.w400,
-                                                        color: AppColors.appBlackColor50),
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        color: AppColors
+                                                            .appBlackColor50),
                                                   ),
                                                   Text(
                                                     "${paymentMethod}",
                                                     style: GoogleFonts.niramit(
                                                         fontSize: 16.sp,
-                                                        fontWeight: FontWeight.w400,
-                                                        color: AppColors.appBlackColor50),
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        color: AppColors
+                                                            .appBlackColor50),
                                                   ),
                                                 ],
                                               ),
@@ -354,21 +409,27 @@ class _DepositScreenState extends State<DepositScreen> {
                                                 height: 12.h,
                                               ),
                                               Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
                                                 children: [
                                                   Text(
                                                     "${selectedLanguageStorage.read("languageData")["Amount"] ?? "Amount"}",
                                                     style: GoogleFonts.niramit(
                                                         fontSize: 16.sp,
-                                                        fontWeight: FontWeight.w400,
-                                                        color: AppColors.appBlackColor50),
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        color: AppColors
+                                                            .appBlackColor50),
                                                   ),
                                                   Text(
                                                     "${depositController.message!.baseSymbol}${depositController.amountController.text}",
                                                     style: GoogleFonts.niramit(
                                                       fontSize: 16.sp,
-                                                      fontWeight: FontWeight.w400,
-                                                      color: AppColors.appBlackColor50,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      color: AppColors
+                                                          .appBlackColor50,
                                                     ),
                                                   ),
                                                 ],
@@ -377,21 +438,27 @@ class _DepositScreenState extends State<DepositScreen> {
                                                 height: 12.h,
                                               ),
                                               Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
                                                 children: [
                                                   Text(
                                                     "${selectedLanguageStorage.read("languageData")["Charge"] ?? "Charge"}",
                                                     style: GoogleFonts.niramit(
                                                         fontSize: 16.sp,
-                                                        fontWeight: FontWeight.w400,
-                                                        color: AppColors.appBlackColor50),
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        color: AppColors
+                                                            .appBlackColor50),
                                                   ),
                                                   Text(
                                                     "${depositController.message!.baseSymbol}${(double.parse(fixedCharge) + (double.parse(depositController.amountController.text) * double.parse(percentageCharge) / 100))}",
                                                     style: GoogleFonts.niramit(
                                                         fontSize: 16.sp,
-                                                        fontWeight: FontWeight.w400,
-                                                        color: AppColors.appBlackColor50),
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        color: AppColors
+                                                            .appBlackColor50),
                                                   ),
                                                 ],
                                               ),
@@ -400,46 +467,64 @@ class _DepositScreenState extends State<DepositScreen> {
                                                 height: 12.h,
                                               ),
                                               Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
                                                 children: [
                                                   Text(
                                                     "${selectedLanguageStorage.read("languageData")["Total Payable"] ?? "Total Payable"}",
                                                     style: GoogleFonts.niramit(
                                                         fontSize: 16.sp,
-                                                        fontWeight: FontWeight.w400,
-                                                        color: AppColors.appBlackColor50),
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        color: AppColors
+                                                            .appBlackColor50),
                                                   ),
                                                   Text(
                                                     "${depositController.message!.baseSymbol}${double.parse(depositController.amountController.text) + (double.parse(fixedCharge) + (double.parse(depositController.amountController.text) * double.parse(percentageCharge) / 100))}",
                                                     style: GoogleFonts.niramit(
                                                         fontSize: 16.sp,
-                                                        fontWeight: FontWeight.w400,
-                                                        color: AppColors.appBlackColor50),
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        color: AppColors
+                                                            .appBlackColor50),
                                                   ),
                                                 ],
                                               ),
 
                                               checkCrypto == null
                                                   ? Padding(
-                                                      padding: const EdgeInsets.only(top: 12),
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              top: 12),
                                                       child: Column(
                                                         children: [
                                                           Row(
-                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
                                                             children: [
                                                               Text(
                                                                 "${selectedLanguageStorage.read("languageData")["Conversion Rate:"] ?? "Conversion Rate:"}",
                                                                 style: GoogleFonts.niramit(
-                                                                    fontSize: 16.sp,
-                                                                    fontWeight: FontWeight.w400,
-                                                                    color: AppColors.appBlackColor50),
+                                                                    fontSize:
+                                                                        16.sp,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w400,
+                                                                    color: AppColors
+                                                                        .appBlackColor50),
                                                               ),
                                                               Text(
                                                                 "1 ${depositController.message!.baseCurrency} = ${double.parse(conversionRate)} ${currency}",
                                                                 style: GoogleFonts.niramit(
-                                                                    fontSize: 16.sp,
-                                                                    fontWeight: FontWeight.w400,
-                                                                    color: AppColors.appBlackColor50),
+                                                                    fontSize:
+                                                                        16.sp,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w400,
+                                                                    color: AppColors
+                                                                        .appBlackColor50),
                                                               ),
                                                             ],
                                                           ),
@@ -447,21 +532,33 @@ class _DepositScreenState extends State<DepositScreen> {
                                                             height: 12.h,
                                                           ),
                                                           Row(
-                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
                                                             children: [
                                                               Text(
                                                                 "${selectedLanguageStorage.read("languageData")["In ${currency}"] ?? "In ${currency}"}",
                                                                 style: GoogleFonts.niramit(
-                                                                    fontSize: 16.sp,
-                                                                    fontWeight: FontWeight.w400,
-                                                                    color: AppColors.appBlackColor50),
+                                                                    fontSize:
+                                                                        16.sp,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w400,
+                                                                    color: AppColors
+                                                                        .appBlackColor50),
                                                               ),
                                                               Text(
                                                                 "${(double.parse(conversionRate) * (double.parse(depositController.amountController.text) + (double.parse(fixedCharge) + (double.parse(depositController.amountController.text) * double.parse(percentageCharge) / 100))))}",
-                                                                style: GoogleFonts.niramit(
-                                                                  fontSize: 16.sp,
-                                                                  fontWeight: FontWeight.w400,
-                                                                  color: AppColors.appBlackColor50,
+                                                                style:
+                                                                    GoogleFonts
+                                                                        .niramit(
+                                                                  fontSize:
+                                                                      16.sp,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  color: AppColors
+                                                                      .appBlackColor50,
                                                                 ),
                                                               ),
                                                             ],
@@ -470,14 +567,19 @@ class _DepositScreenState extends State<DepositScreen> {
                                                       ),
                                                     )
                                                   : Padding(
-                                                      padding: const EdgeInsets.only(top: 12),
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              top: 12),
                                                       child: Container(
                                                         child: Text(
                                                             "Conversion with $currency and final value will Show on next step",
                                                             style: GoogleFonts.niramit(
                                                                 fontSize: 16.sp,
-                                                                fontWeight: FontWeight.w400,
-                                                                color: AppColors.appBlackColor50)),
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                                color: AppColors
+                                                                    .appBlackColor50)),
                                                       ),
                                                     ),
 
@@ -520,58 +622,75 @@ class _DepositScreenState extends State<DepositScreen> {
                                       final snackBar = SnackBar(
                                         content: Text(
                                           "Please select a gateway first",
-                                          style: TextStyle(color: Colors.white, fontSize: 14.sp),
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 14.sp),
                                         ),
                                         backgroundColor: backgroundColor,
                                         duration: const Duration(seconds: 2),
                                         behavior: SnackBarBehavior.floating,
                                         margin: const EdgeInsets.all(5),
                                         shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(8),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
                                         ),
                                         elevation: 10,
                                       );
-                                      ScaffoldMessenger.of(context).removeCurrentSnackBar();
-                                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                      ScaffoldMessenger.of(context)
+                                          .removeCurrentSnackBar();
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(snackBar);
                                     } else {
-                                      if (double.parse(depositController.amountController.text) <
+                                      if (double.parse(depositController
+                                              .amountController.text) <
                                           double.parse(minAmount)) {
                                         final backgroundColor = Colors.red;
                                         final snackBar = SnackBar(
                                           content: Text(
                                             "Minimum amount is $minAmount",
-                                            style: TextStyle(color: Colors.white, fontSize: 14.sp),
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 14.sp),
                                           ),
                                           backgroundColor: backgroundColor,
                                           duration: const Duration(seconds: 2),
                                           behavior: SnackBarBehavior.floating,
                                           margin: const EdgeInsets.all(5),
                                           shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(8),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
                                           ),
                                           elevation: 10,
                                         );
-                                        ScaffoldMessenger.of(context).removeCurrentSnackBar();
-                                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                                      } else if (double.parse(depositController.amountController.text) >
+                                        ScaffoldMessenger.of(context)
+                                            .removeCurrentSnackBar();
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(snackBar);
+                                      } else if (double.parse(depositController
+                                              .amountController.text) >
                                           double.parse(maxAmount)) {
                                         final backgroundColor = Colors.red;
                                         final snackBar = SnackBar(
                                           content: Text(
                                             "Maximum amount is $maxAmount",
-                                            style: TextStyle(color: Colors.white, fontSize: 14.sp),
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 14.sp),
                                           ),
                                           backgroundColor: backgroundColor,
                                           duration: const Duration(seconds: 2),
                                           behavior: SnackBarBehavior.floating,
                                           margin: const EdgeInsets.all(5),
                                           shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(8),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
                                           ),
                                           elevation: 10,
                                         );
-                                        ScaffoldMessenger.of(context).removeCurrentSnackBar();
-                                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                        ScaffoldMessenger.of(context)
+                                            .removeCurrentSnackBar();
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(snackBar);
                                       } else {
                                         ///Stripe
                                         if (selectedOptionCode == "stripe") {
@@ -579,80 +698,104 @@ class _DepositScreenState extends State<DepositScreen> {
                                             print("Stripe");
                                           }
                                           _startLoading();
-                                          depositController.stripeDepositRequest(widget.planID, context);
+                                          depositController
+                                              .stripeDepositRequest(
+                                                  widget.planID, context);
                                         }
 
                                         ///RazorPay
-                                        else if (selectedOptionCode == "razorpay") {
+                                        else if (selectedOptionCode ==
+                                            "razorpay") {
                                           if (kDebugMode) {
                                             print("razorpay");
                                           }
-                                          depositController.razorPayPaymentRequest();
+                                          depositController
+                                              .razorPayPaymentRequest();
                                         }
 
                                         ///FlutterWave
-                                        else if (selectedOptionCode == "flutterwave") {
+                                        else if (selectedOptionCode ==
+                                            "flutterwave") {
                                           if (kDebugMode) {
                                             print("flutterWave");
                                           }
-                                          depositController.flutterWavePaymentRequest(context, widget.planID);
+                                          depositController
+                                              .flutterWavePaymentRequest(
+                                                  context, widget.planID);
                                         }
 
                                         ///Paypal
-                                        else if (selectedOptionCode == "paypal") {
+                                        else if (selectedOptionCode ==
+                                            "paypal") {
                                           if (kDebugMode) {
                                             print("Paypal");
                                           }
-                                          depositController.payPalPaymentRequest(widget.planID, context);
+                                          depositController
+                                              .payPalPaymentRequest(
+                                                  widget.planID, context);
                                         }
 
                                         ///PayStack
-                                        else if (selectedOptionCode == "paystack") {
+                                        else if (selectedOptionCode ==
+                                            "paystack") {
                                           if (kDebugMode) {
                                             print("paystack");
                                           }
-                                          depositController.payStackPaymentRequest(context, widget.planID);
+                                          depositController
+                                              .payStackPaymentRequest(
+                                                  context, widget.planID);
                                         }
 
                                         ///Paytm
-                                        else if (selectedOptionCode == "paytm") {
+                                        else if (selectedOptionCode ==
+                                            "paytm") {
                                           if (kDebugMode) {
                                             print("paytm");
                                           }
-                                          depositController.paytmPaymentRequest(widget.planID, context);
+                                          depositController.paytmPaymentRequest(
+                                              widget.planID, context);
                                         }
 
                                         ///Monnify
-                                        else if (selectedOptionCode == "monnify") {
+                                        else if (selectedOptionCode ==
+                                            "monnify") {
                                           if (kDebugMode) {
                                             print("monnify");
                                           }
-                                          depositController.monnifyPaymentRequest(widget.planID, context);
+                                          depositController
+                                              .monnifyPaymentRequest(
+                                                  widget.planID, context);
                                         }
 
                                         ///Authorize net
-                                        else if (selectedOptionCode == "authorizenet") {
+                                        else if (selectedOptionCode ==
+                                            "authorizenet") {
                                           if (kDebugMode) {
                                             print("authorizenet");
                                           }
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                  builder: (context) => SecurioPayAuthorizenetPayScreen(
-                                                        gatewayName: "authorizenet",
+                                                  builder: (context) =>
+                                                      SecurioPayAuthorizenetPayScreen(
+                                                        gatewayName:
+                                                            "authorizenet",
                                                       )));
                                         }
 
                                         ///SecurionPay
-                                        else if (selectedOptionCode == "securionpay") {
+                                        else if (selectedOptionCode ==
+                                            "securionpay") {
                                           if (kDebugMode) {
                                             print("securionpay");
                                           }
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                  builder: (context) => SecurioPayAuthorizenetPayScreen(
-                                                        gatewayName: "securionpay",
+                                                  builder: (context) =>
+                                                      SecurioPayAuthorizenetPayScreen(
+                                                        gatewayName:
+                                                            "securionpay",
                                                       )));
                                         }
 
@@ -661,48 +804,77 @@ class _DepositScreenState extends State<DepositScreen> {
                                           if (kDebugMode) {
                                             print("Check>>>${widget.planID}");
                                           }
+
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                  builder: (context) => DepositPreviewScreen(
-                                                        gateway: selectedOption.id,
-                                                        amount:
-                                                            ((double.parse(depositController.amountController.text) *
-                                                                        double.parse(conversionRate)) +
-                                                                    ((double.parse(fixedCharge) +
-                                                                            (double.parse(depositController
-                                                                                    .amountController.text
-                                                                                    .toString()) *
-                                                                                double.parse(percentageCharge) /
-                                                                                100)) *
-                                                                        double.parse(conversionRate)))
-                                                                .toStringAsFixed(8),
+                                                  builder: (context) =>
+                                                      DepositPreviewScreen(
+                                                        selectedind:
+                                                            selectedTabIndex,
+                                                        gateway:
+                                                            selectedOption.id,
+                                                        amount: ((double.parse(depositController
+                                                                        .amountController
+                                                                        .text) *
+                                                                    double.parse(
+                                                                        conversionRate)) +
+                                                                ((double.parse(
+                                                                            fixedCharge) +
+                                                                        (double.parse(depositController.amountController.text.toString()) *
+                                                                            double.parse(
+                                                                                percentageCharge) /
+                                                                            100)) *
+                                                                    double.parse(
+                                                                        conversionRate)))
+                                                            .toStringAsFixed(8),
                                                         planId: widget.planID,
-                                                        conversionRate: selectedOption.conventionRate,
-                                                        charge: selectedOption.fixedCharge,
-                                                        percentageCharge: selectedOption.percentageCharge,
-                                                        currency: selectedOption.currency,
-                                                        currencySymbol: selectedOption.symbol,
-                                                        conventionRate: selectedOption.conventionRate,
+                                                        conversionRate:
+                                                            selectedOption
+                                                                .conventionRate,
+                                                        charge: selectedOption
+                                                            .fixedCharge,
+                                                        percentageCharge:
+                                                            selectedOption
+                                                                .percentageCharge,
+                                                        currency: selectedOption
+                                                            .currency,
+                                                        currencySymbol:
+                                                            selectedOption
+                                                                .symbol,
+                                                        conventionRate:
+                                                            selectedOption
+                                                                .conventionRate,
                                                       )));
                                         } else {
                                           depositController
                                               .sendOtherPaymentRequest(
-                                                  ((double.parse(depositController.amountController.text) *
-                                                              double.parse(conversionRate)) +
-                                                          ((double.parse(fixedCharge) +
-                                                                  (double.parse(depositController.amountController.text
+                                                  ((double.parse(depositController
+                                                                  .amountController
+                                                                  .text) *
+                                                              double.parse(
+                                                                  conversionRate)) +
+                                                          ((double.parse(
+                                                                      fixedCharge) +
+                                                                  (double.parse(depositController
+                                                                          .amountController
+                                                                          .text
                                                                           .toString()) *
-                                                                      double.parse(percentageCharge) /
+                                                                      double.parse(
+                                                                          percentageCharge) /
                                                                       100)) *
-                                                              double.parse(conversionRate)))
+                                                              double.parse(
+                                                                  conversionRate)))
                                                       .toStringAsFixed(8),
                                                   selectedOption.id)
                                               .then((value) {
                                             Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                builder: (context) => CheckoutWebView(url: depositController.url),
+                                                builder: (context) =>
+                                                    CheckoutWebView(
+                                                        url: depositController
+                                                            .url),
                                               ),
                                             );
                                           });
@@ -716,12 +888,15 @@ class _DepositScreenState extends State<DepositScreen> {
                                   height: 52.h,
                                   width: double.infinity,
                                   decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(32), color: AppColors.appPrimaryColor),
+                                      borderRadius: BorderRadius.circular(32),
+                                      color: AppColors.appPrimaryColor),
                                   child: Center(
                                     child: Text(
                                       "Pay Now",
                                       style: GoogleFonts.niramit(
-                                          fontWeight: FontWeight.w500, fontSize: 20.sp, color: AppColors.appWhiteColor),
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 20.sp,
+                                          color: AppColors.appWhiteColor),
                                     ),
                                   ),
                                 )

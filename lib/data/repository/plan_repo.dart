@@ -19,7 +19,7 @@ class PlanRepo {
         options: Options(headers: {
           "Content-Type": "application/json",
           "Authorization":
-          "Bearer ${ sharedPreferences.getString(AppConstants.token)}",
+              "Bearer ${sharedPreferences.getString(AppConstants.token)}",
         }),
       );
       return ApiResponse.withSuccess(response);
@@ -30,22 +30,22 @@ class PlanRepo {
 
   /// Buy Plan Wallet
   Future<ApiResponse> buyInvestmentPlan(
-      dynamic balanceType,
-      dynamic amount,
-      dynamic planId,
-      ) async {
+    dynamic balanceType,
+    dynamic amount,
+    dynamic planId,
+  ) async {
     try {
       Response response = await dioClient.post(
         "${AppConstants.buyPlanWalletUri}",
         queryParameters: {
-          "balance_type" : balanceType,
-          "amount" : amount,
-          "plan_id" : planId,
+          "balance_type": balanceType,
+          "amount": amount,
+          "plan_id": planId,
         },
         options: Options(headers: {
           "Content-Type": "application/json",
           "Authorization":
-          "Bearer ${ sharedPreferences.getString(AppConstants.token)}",
+              "Bearer ${sharedPreferences.getString(AppConstants.token)}",
         }),
       );
       return ApiResponse.withSuccess(response);
