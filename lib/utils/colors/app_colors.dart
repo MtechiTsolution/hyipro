@@ -41,7 +41,8 @@ class AppColors{
   static const appFillColor = Color(0xffF3FAFC);
   static const appBrandColor2 = Color(0xffFFF0DD);
   static const appBrandColor3 = Color(0xffECF8F7);
-  static const appBrandDeep = Color(0xff93C3C0);
+ // static const appBrandDeep = Color(0xff93C3C0);
+  static const appBrandDeep = Color(0xffF29339);
   static const appBg1 = Color(0xffE1ECFA);
   static const appBg2 = Color(0xffF9E3FF);
   static const appBg3 = Color(0xffE1ECFA);
@@ -52,8 +53,10 @@ class AppColors{
   static const appRed50 = Color(0xffF5B7B8);
   static const appGreen50 = Color(0xffB0D3D2);
   static Color appTicketCloseColor = Color(0xffF87474).withOpacity(0.1);
-  static Color appTicketOpenColor = Color(0xff93C3C0).withOpacity(0.1);
-  static Color appTicketReplyColor = Color(0xff93C3C0).withOpacity(0.1);
+//  static Color appTicketOpenColor = Color(0xff93C3C0).withOpacity(0.1);
+  static Color appTicketOpenColor = Color(0xffF29339).withOpacity(0.1);
+//  static Color appTicketReplyColor = Color(0xff93C3C0).withOpacity(0.1);
+  static Color appTicketReplyColor = Color(0xffF29339).withOpacity(0.1);
   static const appBlackColor80 = Color(0xff42394D);
   static const appBlackColor60 = Color(0xff716B79);
   static const appBlackColor50 = Color(0xff88838F);
