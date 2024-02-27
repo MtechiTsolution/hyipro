@@ -505,15 +505,16 @@ class PlanScreen extends StatelessWidget {
                                                                   if (_formKey
                                                                       .currentState!
                                                                       .validate()) {
-                                                                    if (double.parse(planController
-                                                                            .amountCtrl
-                                                                            .text) <
-                                                                        double.parse(planController
+                                                                    if (planController
                                                                             .message!
                                                                             .plans![
                                                                                 index]
-                                                                            .min
-                                                                            .toString())) {
+                                                                            .price!
+                                                                            .contains(
+                                                                                '-') &&
+                                                                        double.parse(planController.amountCtrl.text) <
+                                                                            double.parse(planController.message!.plans![index].min
+                                                                                .toString())) {
                                                                       final snackBar =
                                                                           SnackBar(
                                                                         content:
@@ -545,14 +546,15 @@ class PlanScreen extends StatelessWidget {
                                                                               context)
                                                                           .showSnackBar(
                                                                               snackBar);
-                                                                    } else if (double.parse(planController
-                                                                            .amountCtrl
-                                                                            .text) >
-                                                                        double.parse(planController
+                                                                    } else if (planController
                                                                             .message!
-                                                                            .plans![index]
-                                                                            .max
-                                                                            .toString())) {
+                                                                            .plans![
+                                                                                index]
+                                                                            .price!
+                                                                            .contains(
+                                                                                '-') &&
+                                                                        double.parse(planController.amountCtrl.text) >
+                                                                            double.parse(planController.message!.plans![index].max.toString())) {
                                                                       final snackBar =
                                                                           SnackBar(
                                                                         content:

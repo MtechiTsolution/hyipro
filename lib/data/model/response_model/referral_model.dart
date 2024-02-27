@@ -4,7 +4,8 @@
 
 import 'dart:convert';
 
-ReferralModel referralModelFromJson(String str) => ReferralModel.fromJson(json.decode(str));
+ReferralModel referralModelFromJson(String str) =>
+    ReferralModel.fromJson(json.decode(str));
 
 String referralModelToJson(ReferralModel data) => json.encode(data.toJson());
 
@@ -18,14 +19,16 @@ class ReferralModel {
   });
 
   factory ReferralModel.fromJson(Map<String, dynamic> json) => ReferralModel(
-    status: json["status"],
-    message: json["message"] == null ? null : ReferralData.fromJson(json["message"]),
-  );
+        status: json["status"],
+        message: json["message"] == null
+            ? null
+            : ReferralData.fromJson(json["message"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "status": status,
-    "message": message?.toJson(),
-  };
+        "status": status,
+        "message": message?.toJson(),
+      };
 }
 
 class ReferralData {
@@ -38,14 +41,18 @@ class ReferralData {
   });
 
   factory ReferralData.fromJson(Map<String, dynamic> json) => ReferralData(
-    referralLink: json["referralLink"],
-      referrals: Map.from(json["referrals"]!).map((k, v) => MapEntry<dynamic, List<Referral>>(k, List<Referral>.from(v.map((x) => Referral.fromJson(x))??{}))),
-  );
+        referralLink: json["referralLink"],
+        referrals: Map.from(json["referrals"]!).map((k, v) =>
+            MapEntry<dynamic, List<Referral>>(k,
+                List<Referral>.from(v.map((x) => Referral.fromJson(x)) ?? {}))),
+      );
 
   Map<String, dynamic> toJson() => {
-    "referralLink": referralLink,
-    "referrals": Map.from(referrals!).map((k, v) => MapEntry<String, dynamic>(k, List<dynamic>.from(v.map((x) => x.toJson())))),
-  };
+        "referralLink": referralLink,
+        "referrals": Map.from(referrals!).map((k, v) =>
+            MapEntry<String, dynamic>(
+                k, List<dynamic>.from(v.map((x) => x.toJson())))),
+      };
 }
 
 class Referral {
@@ -56,6 +63,7 @@ class Referral {
   String? email;
   String? phoneCode;
   String? phone;
+  String? total_invest;
   int? referralId;
   DateTime? createdAt;
   String? fullname;
@@ -69,6 +77,7 @@ class Referral {
     this.email,
     this.phoneCode,
     this.phone,
+    this.total_invest,
     this.referralId,
     this.createdAt,
     this.fullname,
@@ -76,30 +85,33 @@ class Referral {
   });
 
   factory Referral.fromJson(Map<String, dynamic> json) => Referral(
-    id: json["id"],
-    firstname: json["firstname"],
-    lastname: json["lastname"],
-    username: json["username"],
-    email: json["email"],
-    phoneCode: json["phone_code"],
-    phone: json["phone"],
-    referralId: json["referral_id"],
-    createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
-    fullname: json["fullname"],
-    mobile: json["mobile"],
-  );
+        id: json["id"],
+        firstname: json["firstname"],
+        lastname: json["lastname"],
+        username: json["username"],
+        email: json["email"],
+        phoneCode: json["phone_code"],
+        phone: json["phone"],
+        total_invest: json['total_invest'],
+        referralId: json["referral_id"],
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(json["created_at"]),
+        fullname: json["fullname"],
+        mobile: json["mobile"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "firstname": firstname,
-    "lastname": lastname,
-    "username": username,
-    "email": email,
-    "phone_code": phoneCode,
-    "phone": phone,
-    "referral_id": referralId,
-    "created_at": createdAt?.toIso8601String(),
-    "fullname": fullname,
-    "mobile": mobile,
-  };
+        "id": id,
+        "firstname": firstname,
+        "lastname": lastname,
+        "username": username,
+        "email": email,
+        "phone_code": phoneCode,
+        "phone": phone,
+        "referral_id": referralId,
+        "created_at": createdAt?.toIso8601String(),
+        "fullname": fullname,
+        "mobile": mobile,
+      };
 }

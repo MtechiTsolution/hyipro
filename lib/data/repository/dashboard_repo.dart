@@ -18,7 +18,7 @@ class DashBoardRepo {
         options: Options(headers: {
           "Content-Type": "application/json",
           "Authorization":
-          "Bearer ${ sharedPreferences.getString(AppConstants.token)}",
+              "Bearer ${sharedPreferences.getString(AppConstants.token)}",
         }),
       );
       return ApiResponse.withSuccess(response);

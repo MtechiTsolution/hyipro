@@ -6,8 +6,9 @@ class DashBoardModel {
 
   DashBoardModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    message =
-    json['message'] != null ? new DashBoardData.fromJson(json['message']) : null;
+    message = json['message'] != null
+        ? new DashBoardData.fromJson(json['message'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -28,6 +29,9 @@ class DashBoardData {
   dynamic totalEarn;
   dynamic totalPayout;
   dynamic totalReferralBonus;
+  dynamic total_referrals_investment;
+  dynamic total_investor_referral;
+  dynamic total_referral;
   Roi? roi;
   dynamic investComplete;
   dynamic ticket;
@@ -39,20 +43,20 @@ class DashBoardData {
 
   DashBoardData(
       {this.currency,
-        this.mainBalance,
-        this.interestBalance,
-        this.totalDeposit,
-        this.totalEarn,
-        this.totalPayout,
-        this.totalReferralBonus,
-        this.roi,
-        this.investComplete,
-        this.ticket,
-        this.rankLevel,
-        this.rankName,
-        this.rankImage,
-        this.userImage,
-        this.transaction});
+      this.mainBalance,
+      this.interestBalance,
+      this.totalDeposit,
+      this.totalEarn,
+      this.totalPayout,
+      this.totalReferralBonus,
+      this.roi,
+      this.investComplete,
+      this.ticket,
+      this.rankLevel,
+      this.rankName,
+      this.rankImage,
+      this.userImage,
+      this.transaction});
 
   DashBoardData.fromJson(Map<dynamic, dynamic> json) {
     currency = json['currency'];
@@ -62,6 +66,10 @@ class DashBoardData {
     totalEarn = json['totalEarn'];
     totalPayout = json['totalPayout'];
     totalReferralBonus = json['totalReferralBonus'];
+    total_referrals_investment = json['total_referrals_investment'];
+    total_investor_referral = json['total_investor_referral'];
+    total_referral = json['total_referral'];
+
     roi = json['roi'] != null ? new Roi.fromJson(json['roi']) : null;
     investComplete = json['investComplete'];
     ticket = json['ticket'];
@@ -135,12 +143,12 @@ class Transaction {
 
   Transaction(
       {this.amount,
-        this.charge,
-        this.trxType,
-        this.balanceType,
-        this.remarks,
-        this.trxId,
-        this.time});
+      this.charge,
+      this.trxType,
+      this.balanceType,
+      this.remarks,
+      this.trxId,
+      this.time});
 
   Transaction.fromJson(Map<dynamic, dynamic> json) {
     amount = json['amount'];
@@ -164,4 +172,3 @@ class Transaction {
     return data;
   }
 }
-

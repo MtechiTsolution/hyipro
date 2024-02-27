@@ -4,8 +4,8 @@ class AppConstants {
 
   ///Base URL
   //static const String baseUri = 'https://agro-hyip.bugfinder.net';
-  static const String baseUri = 'https://gms-world.app/';
-  //static const String baseUri = 'http://192.168.1.18/hyp/';
+  static const String baseUri = 'http://192.168.1.5/hyp';
+  //static const String baseUri = 'https://solanatrading.cash';
 
   ///End Point
   static const String dashBoardUri = '/api/dashboard';
