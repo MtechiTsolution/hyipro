@@ -98,7 +98,7 @@ Widget appDrawer() {
                                 height: 40.h,
                                 width: 112.w,
                                 decoration: BoxDecoration(
-                                    color: AppColors.appPrimaryColor,
+                                    color: AppColors.appFillColor,
                                     borderRadius: BorderRadius.circular(8)),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -132,7 +132,7 @@ Widget appDrawer() {
                                 height: 40.h,
                                 width: 112.w,
                                 decoration: BoxDecoration(
-                                    color: AppColors.appPrimaryColor,
+                                    color: AppColors.appFillColor,
                                     borderRadius: BorderRadius.circular(8)),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,

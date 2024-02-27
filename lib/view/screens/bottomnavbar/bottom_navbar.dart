@@ -114,7 +114,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
             bottomNavigationBar: BottomAppBar(
               height: 70.h,
               elevation: 1,
-             // color: AppColors.getAppBarBgDarkLight(),
+              color: AppColors.getAppBarBgDarkLight(),
               notchMargin: 8,
               shape: const CircularNotchedRectangle(
               ),
@@ -127,7 +127,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                       height: 25.h,
                       width: 25.w,
                       color: controller.selectedIndex == 0
-                          ? AppColors.appPrimaryColor
+                          ? AppColors. appWhiteColor
                           : AppColors.appBlackColor50,
                     ),
                     onPressed: () => controller.changeScreen(0),
@@ -138,7 +138,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                       height: 25.h,
                       width: 25.w,
                       color: controller.selectedIndex == 1
-                          ? AppColors.appPrimaryColor
+                          ? AppColors. appWhiteColor
                           : AppColors.appBlackColor50,
                     ),
                     onPressed: () => controller.changeScreen(1),
@@ -150,7 +150,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                       height: 25.h,
                       width: 25.w,
                       color: controller.selectedIndex == 3
-                          ? AppColors.appPrimaryColor
+                          ? AppColors. appWhiteColor
                           : AppColors.appBlackColor50,
                     ),
                     onPressed: () => controller.changeScreen(3),
@@ -161,7 +161,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                       height: 25.h,
                       width: 25.w,
                       color: controller.selectedIndex == 4
-                          ? AppColors.appPrimaryColor
+                          ? AppColors. appWhiteColor
                           : AppColors.appBlackColor50,
                     ),
                     onPressed: () => controller.changeScreen(4),

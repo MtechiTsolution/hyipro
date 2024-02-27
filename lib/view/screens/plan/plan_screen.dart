@@ -233,7 +233,7 @@ class PlanScreen extends StatelessWidget {
                                       height: 42,
                                       width: 162,
                                       decoration: BoxDecoration(
-                                          color: AppColors.appBrandColor3,
+                                          color: AppColors.appFillColor,
                                           borderRadius:
                                               BorderRadius.circular(32)),
                                       child: Center(
@@ -496,8 +496,7 @@ class PlanScreen extends StatelessWidget {
                                                                           32),
                                                               child:
                                                                   MaterialButton(
-                                                                color: AppColors
-                                                                    .appPrimaryColor,
+                                                                    color: AppColors.appBrandColor2,
                                                                 height: 50.h,
                                                                 minWidth: double
                                                                     .infinity,
@@ -676,7 +675,7 @@ class PlanScreen extends StatelessWidget {
                                                                         style:
                                                                             TextStyle(
                                                                           color:
-                                                                              Colors.white,
+                                                                              Colors.black,
                                                                           fontSize:
                                                                               18.sp,
                                                                           fontWeight:
@@ -704,7 +703,7 @@ class PlanScreen extends StatelessWidget {
                                         height: 42.h,
                                         width: 140.w,
                                         decoration: BoxDecoration(
-                                            color: AppColors.appPrimaryColor,
+                                            color: AppColors.appBrandColor2,
                                             borderRadius:
                                                 BorderRadius.circular(32)),
                                         child: Center(
@@ -713,7 +712,7 @@ class PlanScreen extends StatelessWidget {
                                             style: GoogleFonts.niramit(
                                                 fontSize: 16.sp,
                                                 fontWeight: FontWeight.w500,
-                                                color: AppColors.appWhiteColor,
+                                                color: AppColors.appBlackColor,
                                                 height: 1),
                                           ),
                                         ),

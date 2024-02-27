@@ -527,10 +527,15 @@ class RegisterScreen extends StatelessWidget {
               child: Form(
                 key: _formKey,
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SizedBox(
-                      height: 40.h,
+                      height: 20.h,
+                    ),
+                    Image.asset("assets/images/logo.png",
+                      height: 100,
+                      width: 100,
+                      // color: AppColors.appContainerBgColor,
                     ),
                     Text(
                       "${selectedLanguageStorage.read("languageData")["Create Account"]??"Create Account"}",

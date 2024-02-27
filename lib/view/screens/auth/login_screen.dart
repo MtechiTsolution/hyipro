@@ -64,10 +64,15 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Form(
                     key: _formKey,
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         SizedBox(
-                          height: 158.h,
+                          height: 108.h,
+                        ),
+                        Image.asset("assets/images/logo.png",
+                         height: 100,
+                         width: 100,
+                         // color: AppColors.appContainerBgColor,
                         ),
                         Text(
                           "${selectedLanguageStorage.read("languageData")["Log In"]??"Log In"}",
@@ -82,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           height: 12.h,
                         ),
                         Text(
-                          "${selectedLanguageStorage.read("languageData")["Hello there, log in to continue!"]??"Hello there, log in to continue!"}",
+                          "${selectedLanguageStorage.read("languageData")["Welcome! Please log in to proceed further!"]??"Welcome! Please log in to proceed further!"}",
                           textAlign: TextAlign.center,
                           style: GoogleFonts.niramit(
                             fontSize: 16.sp,

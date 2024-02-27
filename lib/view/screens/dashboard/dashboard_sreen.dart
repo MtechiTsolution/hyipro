@@ -61,6 +61,7 @@ class DashBoardScreen extends StatelessWidget {
                       "assets/images/menu.png",
                       height: 28.h,
                       width: 28.w,
+                      color: AppColors. appWhiteColor,
                     )),
                 // InkWell(onTap: () {
                 //   Get.toNamed(NotificationScreen.routeName);
@@ -673,7 +674,7 @@ class DashBoardScreen extends StatelessWidget {
                                               Text(
                                                 "${selectedLanguageStorage.read("languageData")["Team Investment"] ?? "Team Investment"}",
                                                 style: GoogleFonts.niramit(
-                                                    fontSize: 14.sp,
+                                                    fontSize: 12.sp,
                                                     fontWeight: FontWeight.w500,
                                                     color: AppColors
                                                         .appBlackColor50),
@@ -742,7 +743,7 @@ class DashBoardScreen extends StatelessWidget {
                                               Text(
                                                 "${selectedLanguageStorage.read("languageData")["Total referrals"] ?? "Total referrals"}",
                                                 style: GoogleFonts.niramit(
-                                                  fontSize: 14.sp,
+                                                  fontSize: 12.sp,
                                                   fontWeight: FontWeight.w500,
                                                   color:
                                                       AppColors.appBlackColor50,
@@ -791,7 +792,7 @@ class DashBoardScreen extends StatelessWidget {
                                               Text(
                                                 "${dashBoardController.dashBoardModel.message!.total_investor_referral!}",
                                                 style: GoogleFonts.publicSans(
-                                                    fontSize: 15.sp,
+                                                    fontSize: 12.sp,
                                                     fontWeight: FontWeight.w700,
                                                     color: AppColors
                                                         .getTextDarkLight()),

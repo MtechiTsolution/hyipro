@@ -38,7 +38,7 @@ class AppColors{
   static const appContainerBgColor = Color(0xff17212B);
   static const appDefaultDarkMode = Color(0xff0E1621);
   static const appBlackColor = Color(0xff130820);
-  static const appFillColor = Color(0xffF3FAFC);
+  static const appFillColor = Color(0xffBD9172);
   static const appBrandColor2 = Color(0xffFFF0DD);
   static const appBrandColor3 = Color(0xffECF8F7);
  // static const appBrandDeep = Color(0xff93C3C0);
@@ -64,10 +64,12 @@ class AppColors{
   static const appBlackColor30 = Color(0xffB9B5BD);
   static const appBlackColor20 = Color(0xffF5F5F5);
   static const appBlackColor10 = Color(0xffE8E7E9);
-  static Color appPrimaryColor = Color(0xff897EF2);
+  // static Color appPrimaryColor = Color(0xff897EF2);
+  static Color appPrimaryColor = Color(0xffBD9172);
   static Color appMainBalanceIconColor = Color(0xffA2CDCA);
   static Color appTotalDepositIconColor = Color(0xffBD9172);
-  static Color appTotalEarnIconColor = Color(0xff8971AD);
+  static Color appTotalEarnIconColor = Color(0xffBD9172);
+  // static Color appTotalEarnIconColor = Color(0xff8971AD);
   static Color appTotalInvestIconColor = Color(0xff749BCD);
   static Color appTotalPayoutIconColor = Color(0xffBD9172);
   static Color appTotalTicketIconColor = Color(0xff93C3C0);
