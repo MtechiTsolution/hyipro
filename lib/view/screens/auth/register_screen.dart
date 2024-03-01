@@ -492,9 +492,6 @@
 //   }
 // }
 
-
-
-
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -532,13 +529,14 @@ class RegisterScreen extends StatelessWidget {
                     SizedBox(
                       height: 20.h,
                     ),
-                    Image.asset("assets/images/logo.png",
+                    Image.asset(
+                      "assets/images/logo.png",
                       height: 100,
                       width: 100,
                       // color: AppColors.appContainerBgColor,
                     ),
                     Text(
-                      "${selectedLanguageStorage.read("languageData")["Create Account"]??"Create Account"}",
+                      "${selectedLanguageStorage.read("languageData")["Create Account"] ?? "Create Account"}",
                       textAlign: TextAlign.center,
                       style: GoogleFonts.publicSans(
                         fontSize: 24.sp,
@@ -550,7 +548,7 @@ class RegisterScreen extends StatelessWidget {
                       height: 12.h,
                     ),
                     Text(
-                      "${selectedLanguageStorage.read("languageData")["Hello there, Sign Up to continue!"]??"Hello there, Sign Up to continue!"}",
+                      "${selectedLanguageStorage.read("languageData")["Hello there, Sign Up to continue!"] ?? "Hello there, Sign Up to continue!"}",
                       textAlign: TextAlign.center,
                       style: GoogleFonts.niramit(
                         fontSize: 16.sp,
@@ -565,16 +563,17 @@ class RegisterScreen extends StatelessWidget {
                       controller: authController.sponsorTxt,
                       decoration: InputDecoration(
                           contentPadding:
-                          EdgeInsets.only(right: 12, top: 10, bottom: 12),
+                              EdgeInsets.only(right: 12, top: 10, bottom: 12),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(
                                 8.0), // Set the border radius here
                             borderSide:
-                            BorderSide.none, // Remove the default border
+                                BorderSide.none, // Remove the default border
                           ),
                           fillColor: AppColors.getTextFieldDarkLight(),
                           filled: true,
-                          hintText: "${selectedLanguageStorage.read("languageData")["Enter Referral Username (Optional)"]??"Enter Referral Username (Optional)"}",
+                          hintText:
+                              "${selectedLanguageStorage.read("languageData")["Enter Referral Username (Optional)"] ?? "Enter Referral Username (Optional)"}",
                           prefixIcon: Padding(
                             padding: const EdgeInsets.all(16.0),
                             child: Image.asset(
@@ -616,9 +615,9 @@ class RegisterScreen extends StatelessWidget {
                                       authController.selectedCountryCode.value);
                                 }
                                 authController.selectedCountryName.value =
-                                countryCode.name!;
+                                    countryCode.name!;
                                 authController.selectedCountryNameCode.value =
-                                countryCode.code!;
+                                    countryCode.code!;
 
                                 if (kDebugMode) {
                                   print(
@@ -658,7 +657,8 @@ class RegisterScreen extends StatelessWidget {
                                   ),
                                   fillColor: AppColors.getTextFieldDarkLight(),
                                   filled: true,
-                                  hintText: "${selectedLanguageStorage.read("languageData")["Phone Number"]??"Phone Number"}",
+                                  hintText:
+                                      "${selectedLanguageStorage.read("languageData")["Phone Number"] ?? "Phone Number"}",
                                   prefixIcon: Padding(
                                     padding: const EdgeInsets.all(16.0),
                                     child: Image.asset(
@@ -680,6 +680,43 @@ class RegisterScreen extends StatelessWidget {
                     TextFormField(
                       validator: (value) {
                         if (value!.isEmpty) {
+                          return 'Email is required';
+                        }
+                        return null;
+                      },
+                      controller: authController.emailAddressTxt,
+                      decoration: InputDecoration(
+                          contentPadding:
+                              EdgeInsets.only(right: 12, top: 10, bottom: 12),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(
+                                8.0), // Set the border radius here
+                            borderSide:
+                                BorderSide.none, // Remove the default border
+                          ),
+                          fillColor: AppColors.getTextFieldDarkLight(),
+                          filled: true,
+                          hintText:
+                              "${selectedLanguageStorage.read("languageData")["Email Address"] ?? "Email Address"}",
+                          prefixIcon: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Image.asset("assets/images/mail_img.png",
+                                height: 12.h),
+                          ),
+                          hintStyle: GoogleFonts.niramit(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 16.sp,
+                              color: AppColors.appBlackColor30)),
+                    ),
+                    SizedBox(
+                      height: 24.h,
+                    ),
+                    SizedBox(
+                      height: 28.h,
+                    ),
+                    TextFormField(
+                      validator: (value) {
+                        if (value!.isEmpty) {
                           return 'Username is required';
                         }
                         return null;
@@ -687,16 +724,17 @@ class RegisterScreen extends StatelessWidget {
                       controller: authController.userNameTxt,
                       decoration: InputDecoration(
                           contentPadding:
-                          EdgeInsets.only(right: 12, top: 10, bottom: 12),
+                              EdgeInsets.only(right: 12, top: 10, bottom: 12),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(
                                 8.0), // Set the border radius here
                             borderSide:
-                            BorderSide.none, // Remove the default border
+                                BorderSide.none, // Remove the default border
                           ),
                           fillColor: AppColors.getTextFieldDarkLight(),
                           filled: true,
-                          hintText: "${selectedLanguageStorage.read("languageData")["Username"]??"Username"}",
+                          hintText:
+                              "${selectedLanguageStorage.read("languageData")["Username"] ?? "Username"}",
                           prefixIcon: Padding(
                             padding: const EdgeInsets.all(16.0),
                             child: Image.asset(
@@ -720,7 +758,7 @@ class RegisterScreen extends StatelessWidget {
                       },
                       controller: authController.passwordTxt,
                       obscureText:
-                      !authController.isRegisterPasswordVisible.value,
+                          !authController.isRegisterPasswordVisible.value,
                       decoration: InputDecoration(
                           suffixIcon: GestureDetector(
                             onTap: () {
@@ -735,16 +773,17 @@ class RegisterScreen extends StatelessWidget {
                                     : AppColors.appBlackColor50),
                           ),
                           contentPadding:
-                          EdgeInsets.only(right: 12, top: 10, bottom: 12),
+                              EdgeInsets.only(right: 12, top: 10, bottom: 12),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(
                                 8.0), // Set the border radius here
                             borderSide:
-                            BorderSide.none, // Remove the default border
+                                BorderSide.none, // Remove the default border
                           ),
                           fillColor: AppColors.getTextFieldDarkLight(),
                           filled: true,
-                          hintText: "${selectedLanguageStorage.read("languageData")["Password"]??"Password"}",
+                          hintText:
+                              "${selectedLanguageStorage.read("languageData")["Password"] ?? "Password"}",
                           prefixIcon: Padding(
                             padding: const EdgeInsets.all(16.0),
                             child: Image.asset(
@@ -777,7 +816,7 @@ class RegisterScreen extends StatelessWidget {
                             },
                             child: Icon(
                                 authController
-                                    .isRegisterConfirmPasswordVisible.value
+                                        .isRegisterConfirmPasswordVisible.value
                                     ? Icons.visibility
                                     : Icons.visibility_off,
                                 color: Get.isDarkMode
@@ -785,16 +824,17 @@ class RegisterScreen extends StatelessWidget {
                                     : AppColors.appBlackColor50),
                           ),
                           contentPadding:
-                          EdgeInsets.only(right: 12, top: 10, bottom: 12),
+                              EdgeInsets.only(right: 12, top: 10, bottom: 12),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(
                                 8.0), // Set the border radius here
                             borderSide:
-                            BorderSide.none, // Remove the default border
+                                BorderSide.none, // Remove the default border
                           ),
                           fillColor: AppColors.getTextFieldDarkLight(),
                           filled: true,
-                          hintText: "${selectedLanguageStorage.read("languageData")["Confirm Password"]??"Confirm Password"}",
+                          hintText:
+                              "${selectedLanguageStorage.read("languageData")["Confirm Password"] ?? "Confirm Password"}",
                           prefixIcon: Padding(
                             padding: const EdgeInsets.all(16.0),
                             child: Image.asset(
@@ -812,20 +852,25 @@ class RegisterScreen extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         if (_formKey.currentState!.validate()) {
-                          String firstName = authController.firstNameTxt.text.trim();
+                          String firstName =
+                              authController.firstNameTxt.text.trim();
                           if (firstName.isEmpty) {
-                            firstName = "DefaultFirstName"; // Provide a default value or handle it accordingly
+                            firstName =
+                                "DefaultFirstName"; // Provide a default value or handle it accordingly
                           }
 
-                          String lastName = authController.lastNameTxt.text.trim();
+                          String lastName =
+                              authController.lastNameTxt.text.trim();
                           if (lastName.isEmpty) {
-                            lastName = "DefaultLastName"; // Provide a default value or handle it accordingly
+                            lastName =
+                                "DefaultLastName"; // Provide a default value or handle it accordingly
                           }
 
-                          String email = authController.emailAddressTxt.text.trim();
-                          if (email.isEmpty) {
-                            email = "default@example.com"; // Provide a default value or handle it accordingly
-                          }
+                          String email =
+                              authController.emailAddressTxt.text.trim();
+                          // if (email.isEmpty) {
+                          //   email = "default@example.com"; // Provide a default value or handle it accordingly
+                          // }
 
                           authController.register(
                             context,
@@ -833,7 +878,8 @@ class RegisterScreen extends StatelessWidget {
                             lastName,
                             authController.userNameTxt.text.toString(),
                             email,
-                            authController.selectedCountryNameCode.value.toString(),
+                            authController.selectedCountryNameCode.value
+                                .toString(),
                             authController.selectedCountryCode.value.toString(),
                             "${authController.selectedCountryCode.value}${authController.phoneTxt.text.toString()}",
                             authController.passwordTxt.text.toString(),
@@ -849,20 +895,18 @@ class RegisterScreen extends StatelessWidget {
                             color: AppColors.appPrimaryColor,
                             borderRadius: BorderRadius.circular(32)),
                         child: Center(
-                          child:
-                          authController.isLoadingRegister==false ?
-                          Text(
-                            "${selectedLanguageStorage.read("languageData")["Register"]??"Register"}",
-                            style: GoogleFonts.niramit(
-                                fontSize: 20.sp,
-                                color: AppColors.appWhiteColor,
-                                fontWeight: FontWeight.w500,
-                                height: 0.9
-                            ),
-                          ):
-                          const CircularProgressIndicator(
-                            color: AppColors.appWhiteColor,
-                          ),
+                          child: authController.isLoadingRegister == false
+                              ? Text(
+                                  "${selectedLanguageStorage.read("languageData")["Register"] ?? "Register"}",
+                                  style: GoogleFonts.niramit(
+                                      fontSize: 20.sp,
+                                      color: AppColors.appWhiteColor,
+                                      fontWeight: FontWeight.w500,
+                                      height: 0.9),
+                                )
+                              : const CircularProgressIndicator(
+                                  color: AppColors.appWhiteColor,
+                                ),
                         ),
                       ),
                     ),
@@ -873,7 +917,7 @@ class RegisterScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "${selectedLanguageStorage.read("languageData")["Already have an account?"]??"Already have an account?"}",
+                          "${selectedLanguageStorage.read("languageData")["Already have an account?"] ?? "Already have an account?"}",
                           style: GoogleFonts.niramit(
                               fontWeight: FontWeight.w400,
                               fontSize: 16.sp,
@@ -884,7 +928,7 @@ class RegisterScreen extends StatelessWidget {
                             Navigator.pop(context);
                           },
                           child: Text(
-                            "${selectedLanguageStorage.read("languageData")["Login"]??"Login"}",
+                            "${selectedLanguageStorage.read("languageData")["Login"] ?? "Login"}",
                             style: GoogleFonts.niramit(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 16.sp,
@@ -897,9 +941,12 @@ class RegisterScreen extends StatelessWidget {
                 ),
               ),
             ),
-            Get.isDarkMode?
-            Image.asset("assets/images/auth_bottom_shape.png",color: AppColors.appContainerBgColor,):
-            Image.asset("assets/images/auth_bottom_shape.png"),
+            Get.isDarkMode
+                ? Image.asset(
+                    "assets/images/auth_bottom_shape.png",
+                    color: AppColors.appContainerBgColor,
+                  )
+                : Image.asset("assets/images/auth_bottom_shape.png"),
           ],
         ),
       );

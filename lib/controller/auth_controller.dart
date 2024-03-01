@@ -14,11 +14,10 @@ import '../data/datasource/remote/dio/dio_client.dart';
 import '../data/model/base_model/api_response.dart';
 import '../view/screens/auth/code.dart';
 
-class AuthController extends GetxController{
+class AuthController extends GetxController {
   DioClient dioClient;
   final AuthRepo authRepo;
-  AuthController({required this.authRepo,required this.dioClient});
-
+  AuthController({required this.authRepo, required this.dioClient});
 
   bool isLoadingLogin = false;
 
@@ -32,7 +31,6 @@ class AuthController extends GetxController{
 
   Rx<String> selectedCountryName = ''.obs;
   Rx<String> selectedCountryNameCode = ''.obs;
-
 
   var rememberMe = false.obs;
 
@@ -53,7 +51,8 @@ class AuthController extends GetxController{
   }
 
   void toggleRegisterConfirmPasswordVisibility() {
-    isRegisterConfirmPasswordVisible.value = !isRegisterConfirmPasswordVisible.value;
+    isRegisterConfirmPasswordVisible.value =
+        !isRegisterConfirmPasswordVisible.value;
     update();
   }
 
@@ -73,13 +72,10 @@ class AuthController extends GetxController{
   final confirmPasswordTxt = TextEditingController();
   final sponsorTxt = TextEditingController();
 
-
   final loginUserNameTxt = TextEditingController();
   final loginPasswordTxt = TextEditingController();
 
-
   final forgetPasswordTxt = TextEditingController();
-
 
   var firstNameValid = ''.obs;
   var lastNameValid = ''.obs;
@@ -88,26 +84,36 @@ class AuthController extends GetxController{
   var phoneValid = ''.obs;
   var passwordValid = ''.obs;
 
-
-
   Future<dynamic> register(
-      BuildContext context,
-      dynamic firstName,
-      dynamic lastName,
-      dynamic userName,
-      dynamic emailAddress,
-      dynamic countryCode,
-      dynamic phoneCode,
-      dynamic phone,
-      dynamic password,
-      dynamic confirmPassword,
-      dynamic sponsor,
-      ) async {
+    BuildContext context,
+    dynamic firstName,
+    dynamic lastName,
+    dynamic userName,
+    dynamic emailAddress,
+    dynamic countryCode,
+    dynamic phoneCode,
+    dynamic phone,
+    dynamic password,
+    dynamic confirmPassword,
+    dynamic sponsor,
+  ) async {
     isLoadingRegister = true;
     update();
-    ApiResponse apiResponse = await authRepo.register(context, firstName, lastName, userName, emailAddress, countryCode, phoneCode, phone, password, confirmPassword, sponsor);
+    ApiResponse apiResponse = await authRepo.register(
+        context,
+        firstName,
+        lastName,
+        userName,
+        emailAddress,
+        countryCode,
+        phoneCode,
+        phone,
+        password,
+        confirmPassword,
+        sponsor);
 
-    if (apiResponse.response != null &&  apiResponse.response!.statusCode==200) {
+    if (apiResponse.response != null &&
+        apiResponse.response!.statusCode == 200) {
       isLoadingRegister = false;
       Map map = apiResponse.response!.data;
 
@@ -117,7 +123,7 @@ class AuthController extends GetxController{
 
       update();
 
-      try{
+      try {
         token = map["token"];
         msg = map["message"];
         status = map["status"];
@@ -126,16 +132,12 @@ class AuthController extends GetxController{
         if (kDebugMode) {
           print(token);
         }
-        final backgroundColor =
-        status != "success" ? Colors.red : Colors.green;
+        final backgroundColor = status != "success" ? Colors.red : Colors.green;
 
         final snackBar = SnackBar(
           content: Text(
             msg,
-            style: TextStyle(
-                color: Colors.white,
-                fontSize: 14.sp
-            ),
+            style: TextStyle(color: Colors.white, fontSize: 14.sp),
           ),
           backgroundColor: backgroundColor,
           duration: const Duration(seconds: 2),
@@ -149,26 +151,23 @@ class AuthController extends GetxController{
 
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
-        if(token.isNotEmpty){
+        if (token.isNotEmpty) {
           Get.offNamedUntil(BottomNavBar.routeName, (route) => false);
           authRepo.saveUserToken(token);
           // await authRepo.updateToken();
         }
-
-      }catch(e){
+      } catch (e) {
         if (kDebugMode) {
           print("e");
         }
       }
-      if(token.isNotEmpty){
+      if (token != null && token.isNotEmpty) {
         authRepo.saveUserToken(token);
         // await authRepo.updateToken();
       }
       // callback(true, token, temporaryToken, message);
       update();
-    }
-
-    else {
+    } else {
       isLoadingRegister = false;
       update();
     }
@@ -176,15 +175,13 @@ class AuthController extends GetxController{
   }
 
   Future<dynamic> login(
-      BuildContext context,
-      dynamic userName,
-      dynamic password
-      ) async {
+      BuildContext context, dynamic userName, dynamic password) async {
     isLoadingLogin = true;
     update();
     ApiResponse apiResponse = await authRepo.login(context, userName, password);
 
-    if (apiResponse.response != null &&  apiResponse.response!.statusCode==200) {
+    if (apiResponse.response != null &&
+        apiResponse.response!.statusCode == 200) {
       isLoadingLogin = false;
       Map map = apiResponse.response!.data;
 
@@ -192,27 +189,22 @@ class AuthController extends GetxController{
       dynamic msg;
       dynamic status;
 
-
-
-      try{
+      try {
         token = map["token"];
         msg = map["message"];
         status = map["status"];
 
-        if(status!="failed"){
+        if (status != "failed") {
           if (kDebugMode) {
             print(token);
           }
           final backgroundColor =
-          status != "success" ? Colors.red : Colors.green.shade200;
+              status != "success" ? Colors.red : Colors.green.shade200;
 
           final snackBar = SnackBar(
             content: Text(
               msg,
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 14.sp
-              ),
+              style: TextStyle(color: Colors.white, fontSize: 14.sp),
             ),
             backgroundColor: backgroundColor,
             duration: const Duration(seconds: 2),
@@ -226,22 +218,18 @@ class AuthController extends GetxController{
 
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
-          if(token.isNotEmpty){
+          if (token.isNotEmpty) {
             authRepo.saveUserToken(token);
             Get.offNamedUntil(BottomNavBar.routeName, (route) => false);
             // await authRepo.updateToken();
           }
-        }
-        else{
+        } else {
           final backgroundColor =
-          status != "success" ? Colors.red : Colors.green.shade200;
+              status != "success" ? Colors.red : Colors.green.shade200;
           final snackBar = SnackBar(
             content: Text(
               msg,
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 14.sp
-              ),
+              style: TextStyle(color: Colors.white, fontSize: 14.sp),
             ),
             backgroundColor: backgroundColor,
             duration: const Duration(seconds: 2),
@@ -255,17 +243,14 @@ class AuthController extends GetxController{
 
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
         }
-
-      }catch(e){
+      } catch (e) {
         if (kDebugMode) {
           print("e");
         }
       }
 
       update();
-    }
-
-    else {
+    } else {
       isLoadingLogin = false;
       update();
     }
@@ -304,27 +289,30 @@ class AuthController extends GetxController{
     isTimerRunning = false; // Set the timer running flag to false
   }
 
-
-  Future<dynamic> forgetPasswordRequest(BuildContext context,
-      dynamic email,) async {
+  Future<dynamic> forgetPasswordRequest(
+    BuildContext context,
+    dynamic email,
+  ) async {
     isLoadingForgetPassword = true;
     update();
-    ApiResponse apiResponse = await authRepo.forgetPasswordRequest(context, email);
+    ApiResponse apiResponse =
+        await authRepo.forgetPasswordRequest(context, email);
 
-    if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
+    if (apiResponse.response != null &&
+        apiResponse.response!.statusCode == 200) {
       isLoadingForgetPassword = false;
       update();
       if (apiResponse.response!.data != null) {
         dynamic status = apiResponse.response!.data['status'];
-        dynamic msg =
-        status=='success'?
-        apiResponse.response!.data['message']['message']: apiResponse.response!.data['message'];
+        dynamic msg = status == 'success'
+            ? apiResponse.response!.data['message']['message']
+            : apiResponse.response!.data['message'];
 
-        emailForgetPassword =
-        status=='success'?
-        apiResponse.response!.data['message']['email']:"";
+        emailForgetPassword = status == 'success'
+            ? apiResponse.response!.data['message']['email']
+            : "";
 
-        if(status=='success'){
+        if (status == 'success') {
           Get.back();
           Get.bottomSheet(
             Container(
@@ -337,8 +325,7 @@ class AuthController extends GetxController{
                     horizontal: 16.w,
                     vertical: 10.h,
                   ),
-                  child: EnterCode()
-              ),
+                  child: EnterCode()),
             ),
           );
           Get.snackbar(
@@ -354,8 +341,7 @@ class AuthController extends GetxController{
           );
           // Get.toNamed(OtpScreen.routeName);
           startTimer();
-        }
-        else{
+        } else {
           Get.snackbar(
             'Message',
             '$msg',
@@ -378,24 +364,25 @@ class AuthController extends GetxController{
     }
   }
 
-
-
-  Future<dynamic> recoveryPassCodeRequest(BuildContext context,
-      dynamic email,
-      dynamic code,
-      ) async {
+  Future<dynamic> recoveryPassCodeRequest(
+    BuildContext context,
+    dynamic email,
+    dynamic code,
+  ) async {
     isLoadingCode = true;
     update();
-    ApiResponse apiResponse = await authRepo.recoveryPassCodeRequest(context, email, code);
+    ApiResponse apiResponse =
+        await authRepo.recoveryPassCodeRequest(context, email, code);
 
-    if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
+    if (apiResponse.response != null &&
+        apiResponse.response!.statusCode == 200) {
       isLoadingCode = false;
       update();
       if (apiResponse.response!.data != null) {
         dynamic status = apiResponse.response!.data['status'];
         dynamic msg = apiResponse.response!.data['message'];
 
-        if(status=='success'){
+        if (status == 'success') {
           Get.back();
           Get.bottomSheet(
             Container(
@@ -413,8 +400,7 @@ class AuthController extends GetxController{
             ),
           );
           //startTimer();
-        }
-        else{
+        } else {
           Get.snackbar(
             'Message',
             '$msg',
@@ -437,24 +423,26 @@ class AuthController extends GetxController{
     }
   }
 
-
-  Future<dynamic> forgetPassSubmitRequest(BuildContext context,
-      dynamic pass,
-      dynamic passConfirm,
-      dynamic email,
-      ) async {
+  Future<dynamic> forgetPassSubmitRequest(
+    BuildContext context,
+    dynamic pass,
+    dynamic passConfirm,
+    dynamic email,
+  ) async {
     isLoadingSubmit = true;
     update();
-    ApiResponse apiResponse = await authRepo.forgetPasswordSubmitRequest(context, pass, passConfirm, email);
+    ApiResponse apiResponse = await authRepo.forgetPasswordSubmitRequest(
+        context, pass, passConfirm, email);
 
-    if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
+    if (apiResponse.response != null &&
+        apiResponse.response!.statusCode == 200) {
       isLoadingSubmit = false;
       update();
       if (apiResponse.response!.data != null) {
         dynamic status = apiResponse.response!.data['status'];
         dynamic msg = apiResponse.response!.data['message'];
 
-        if(status=='success'){
+        if (status == 'success') {
           // Get.toNamed(LoginScreen.routeName);
           Get.snackbar(
             'Message',
@@ -466,10 +454,8 @@ class AuthController extends GetxController{
             margin: const EdgeInsets.all(10),
             borderRadius: 8,
             barBlur: 10,
-
           );
-        }
-        else{
+        } else {
           Get.snackbar(
             'Message',
             '$msg',
@@ -492,17 +478,15 @@ class AuthController extends GetxController{
     }
   }
 
-
-
   // for user Section
-  dynamic getUserToken(){
+  dynamic getUserToken() {
     update();
     print(authRepo.getUserToken());
     return authRepo.getUserToken();
   }
 
   // remove user Section
-  void removeUserToken(){
+  void removeUserToken() {
     update();
     print("remove");
     print(authRepo.removeUserToken());
@@ -516,9 +500,4 @@ class AuthController extends GetxController{
     dioClient.updateHeader(authRepo.getAuthToken(), '');
     return authRepo.getAuthToken();
   }
-
-
-
-
-
 }

@@ -1,4 +1,3 @@
-
 import 'package:get/get.dart';
 import 'package:hyip_pro/controller/auth_controller.dart';
 import 'package:hyip_pro/data/model/base_model/api_response.dart';
@@ -9,9 +8,7 @@ import 'package:hyip_pro/view/verify_required/sms_verification_screen.dart';
 import 'package:hyip_pro/view/verify_required/two_factor_verification_screen.dart';
 import '../data/model/response_model/dashboard_model.dart';
 
-
-class DashBoardController extends GetxController{
-
+class DashBoardController extends GetxController {
   final DashBoardRepo dashBoardRepo;
 
   DashBoardController({required this.dashBoardRepo});
@@ -43,34 +40,32 @@ class DashBoardController extends GetxController{
     update();
     ApiResponse apiResponse = await dashBoardRepo.getDashBoardData();
 
-    if (apiResponse.response != null && apiResponse.response!.statusCode == 200 ) {
+    if (apiResponse.response != null &&
+        apiResponse.response!.statusCode == 200) {
       _isLoading = false;
-      _message=null;
+      _message = null;
       update();
-      if(apiResponse.response!.data["message"]=="Email Verification Required"){
+      if (apiResponse.response!.data["message"] ==
+          "Email Verification Required") {
         Get.offAllNamed(MailVerificationScreen.routeName);
-      }
-      else if(apiResponse.response!.data["message"]=="Mobile Verification Required"){
+      } else if (apiResponse.response!.data["message"] ==
+          "Mobile Verification Required") {
         Get.offAllNamed(SmsVerificationScreen.routeName);
-      }
-      else if(apiResponse.response!.data["message"]=="Two FA Verification Required"){
+      } else if (apiResponse.response!.data["message"] ==
+          "Two FA Verification Required") {
         Get.offAllNamed(TwoFactorVerificationScreen.routeName);
-      }
-      else if(apiResponse.response!.data["message"]=="Your account has been suspend"){
+      } else if (apiResponse.response!.data["message"] ==
+          "Your account has been suspend") {
         Get.find<AuthController>().removeUserToken();
         await Get.offNamedUntil(LoginScreen.routeName, (route) => false);
+      } else {
+        dashBoardModel = DashBoardModel.fromJson(apiResponse.response!.data!);
+        _message = dashBoardModel.message;
+        update();
       }
-      else{
-          dashBoardModel = DashBoardModel.fromJson(apiResponse.response!.data!);
-          _message = dashBoardModel.message;
-          update();
-      }
-    }
-    else {
+    } else {
       _isLoading = false;
       update();
     }
   }
-
 }
-

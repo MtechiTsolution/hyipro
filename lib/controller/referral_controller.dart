@@ -8,8 +8,7 @@ import 'package:hyip_pro/view/verify_required/mail_verification_screen.dart';
 import 'package:hyip_pro/view/verify_required/sms_verification_screen.dart';
 import 'package:hyip_pro/view/verify_required/two_factor_verification_screen.dart';
 
-class ReferralController extends GetxController{
-
+class ReferralController extends GetxController {
   final ReferralRepo referralRepo;
 
   ReferralController({required this.referralRepo});
@@ -19,14 +18,11 @@ class ReferralController extends GetxController{
   ReferralData? _message;
   ReferralData? get message => _message;
 
-
-
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
   double _totalReferralAmount = 0.0;
   double get totalReferralAmount => _totalReferralAmount;
-
 
   ReferralModel referralModel = ReferralModel();
 
@@ -35,37 +31,37 @@ class ReferralController extends GetxController{
     update();
     ApiResponse apiResponse = await referralRepo.getReferralData();
 
-    if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
+    if (apiResponse.response != null &&
+        apiResponse.response!.statusCode == 200) {
       // ... existing code
-    // if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
+      // if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
 
       _isLoading = false;
       update();
 
       if (apiResponse.response!.data != null) {
-        _message=null;
+        _message = null;
         update();
 
-        if(apiResponse.response!.data["message"]=="Email Verification Required"){
+        if (apiResponse.response!.data["message"] ==
+            "Email Verification Required") {
           Get.offAllNamed(MailVerificationScreen.routeName);
-        }
-        else if(apiResponse.response!.data["message"]=="Mobile Verification Required"){
+        } else if (apiResponse.response!.data["message"] ==
+            "Mobile Verification Required") {
           Get.offAllNamed(SmsVerificationScreen.routeName);
-        }
-        else if(apiResponse.response!.data["message"]=="Two FA Verification Required"){
+        } else if (apiResponse.response!.data["message"] ==
+            "Two FA Verification Required") {
           Get.offAllNamed(TwoFactorVerificationScreen.routeName);
-        }
-        else if(apiResponse.response!.data["message"]=="Your account has been suspend"){
+        } else if (apiResponse.response!.data["message"] ==
+            "Your account has been suspend") {
           Get.find<AuthController>().removeUserToken();
           await Get.offNamedUntil(LoginScreen.routeName, (route) => false);
-        }
-
-        else{
+        } else {
           referralModel = ReferralModel.fromJson(apiResponse.response!.data!);
           _message = referralModel.message;
+          //print('message ${_message!.levels!['2'].team.toString()}');
           update();
         }
-
       }
     } else {
       _isLoading = false;
@@ -79,6 +75,4 @@ class ReferralController extends GetxController{
     getReferralData();
     super.onInit();
   }
-
-
 }

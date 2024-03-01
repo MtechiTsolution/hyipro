@@ -61,31 +61,31 @@ class DashBoardScreen extends StatelessWidget {
                       "assets/images/menu.png",
                       height: 28.h,
                       width: 28.w,
-                      color: AppColors. appWhiteColor,
+                      color: AppColors.appWhiteColor,
                     )),
-                // InkWell(onTap: () {
-                //   Get.toNamed(NotificationScreen.routeName);
-                // }, child: GetBuilder<NotificationController>(
-                //     builder: (notificationController) {
-                //   return Stack(
-                //     children: [
-                //       Image.asset(
-                //         "assets/images/notification_icon.png",
-                //         height: 26.h,
-                //         width: 26.w,
-                //       ),
-                //       notificationController.eventCount.value > 1
-                //           ? Positioned(
-                //               top: 0,
-                //               right: 5,
-                //               child: CircleAvatar(
-                //                 backgroundColor: Colors.red,
-                //                 radius: 4,
-                //               ))
-                //           : const SizedBox.shrink(),
-                //     ],
-                //   );
-                // }))
+                InkWell(onTap: () {
+                  Get.toNamed(NotificationScreen.routeName);
+                }, child: GetBuilder<NotificationController>(
+                    builder: (notificationController) {
+                  return Stack(
+                    children: [
+                      Image.asset(
+                        "assets/images/notification_icon.png",
+                        height: 26.h,
+                        width: 26.w,
+                      ),
+                      notificationController.eventCount.value > 1
+                          ? Positioned(
+                              top: 0,
+                              right: 5,
+                              child: CircleAvatar(
+                                backgroundColor: Colors.red,
+                                radius: 4,
+                              ))
+                          : const SizedBox.shrink(),
+                    ],
+                  );
+                }))
               ],
             ),
           ),
@@ -223,7 +223,7 @@ class DashBoardScreen extends StatelessWidget {
                                         // ),),
 
                                         Text(
-                                          "${dashBoardController.dashBoardModel.message!.currency}${dashBoardController.dashBoardModel.message!.interestBalance!.toStringAsFixed(2)}",
+                                          "${dashBoardController.dashBoardModel.message!.currency}${dashBoardController.dashBoardModel.message!.interestBalance.toStringAsFixed(2) + dashBoardController.dashBoardModel.message!.mainBalance.toStringAsFixed(2)}",
                                           style: GoogleFonts.publicSans(
                                               fontSize: 15.sp,
                                               fontWeight: FontWeight.w700,

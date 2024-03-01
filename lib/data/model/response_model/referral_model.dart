@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:get/get.dart';
+
 ReferralModel referralModelFromJson(String str) =>
     ReferralModel.fromJson(json.decode(str));
 
@@ -33,26 +35,55 @@ class ReferralModel {
 
 class ReferralData {
   String? referralLink;
+  dynamic currency;
   Map<dynamic, List<Referral>>? referrals;
+  Map<dynamic, dynamic>? levels;
 
-  ReferralData({
-    this.referralLink,
-    this.referrals,
-  });
+  ReferralData({this.referralLink, this.referrals, this.levels, this.currency});
 
   factory ReferralData.fromJson(Map<String, dynamic> json) => ReferralData(
+        currency: json['currency'],
         referralLink: json["referralLink"],
         referrals: Map.from(json["referrals"]!).map((k, v) =>
             MapEntry<dynamic, List<Referral>>(k,
                 List<Referral>.from(v.map((x) => Referral.fromJson(x)) ?? {}))),
+        levels: json['levels'] != null
+            ? json['levels'].map((key, value) {
+                return MapEntry(key, Level.fromJson(value));
+              })
+            : {},
       );
 
   Map<String, dynamic> toJson() => {
+        "currency": currency,
         "referralLink": referralLink,
         "referrals": Map.from(referrals!).map((k, v) =>
             MapEntry<String, dynamic>(
                 k, List<dynamic>.from(v.map((x) => x.toJson())))),
       };
+}
+
+class Level {
+  final String? team;
+  final String? commission;
+  final String? totalInvest;
+  final String? teamWithdraw;
+
+  Level({
+    required this.team,
+    required this.commission,
+    required this.totalInvest,
+    required this.teamWithdraw,
+  });
+
+  factory Level.fromJson(Map<String, dynamic> json) {
+    return Level(
+      team: json['team'].toString(),
+      commission: json['commission'].toString(),
+      totalInvest: json['total_invest'].toString(),
+      teamWithdraw: json['team_withdraw'].toString(),
+    );
+  }
 }
 
 class Referral {
@@ -92,7 +123,7 @@ class Referral {
         email: json["email"],
         phoneCode: json["phone_code"],
         phone: json["phone"],
-        total_invest: json['total_invest'],
+        total_invest: json['total_invest'].toString(),
         referralId: json["referral_id"],
         createdAt: json["created_at"] == null
             ? null
