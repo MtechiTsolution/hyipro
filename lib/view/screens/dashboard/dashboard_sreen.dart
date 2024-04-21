@@ -104,356 +104,560 @@ class DashBoardScreen extends StatelessWidget {
                             SizedBox(
                               height: 20.h,
                             ),
+
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Container(
+                                        padding: EdgeInsets.only(top: 16, left: 10, right: 16, bottom: 16),
+                                        decoration: BoxDecoration(
+                                          color: Get.isDarkMode ? AppColors.appContainerBgColor : AppColors.appFillColor,
+                                          borderRadius: BorderRadius.circular(16),
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            Container(
+                                              width: 40,
+                                              height: 40,
+                                              padding: EdgeInsets.all(5),
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: AppColors.appBlackColor80,
+                                              ),
+                                              child: CircleAvatar(
+                                                radius: 15,
+                                                backgroundColor: Colors.transparent,
+                                                child: ClipOval(
+                                                  child: Padding(
+                                                    padding: EdgeInsets.all(2),
+                                                    child: Image.asset(
+                                                      "assets/images/main_balance.png",
+                                                      width: 40,
+                                                      height: 40,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(width: 8.w),
+                                            Expanded(
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    "${selectedLanguageStorage.read("languageData")["Current Balance"] ?? "Current Balance"}",
+                                                    style: GoogleFonts.aBeeZee(
+                                                      fontWeight: FontWeight.w600,
+                                                      fontSize: 20.sp,
+                                                      color: AppColors.getTextDarkLight(),
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    "${dashBoardController.dashBoardModel.message!.currency}${(dashBoardController.dashBoardModel.message!.interestBalance + dashBoardController.dashBoardModel.message!.mainBalance).toStringAsFixed(1)}",
+                                                    style: GoogleFonts.anticSlab(
+                                                      fontSize: 24.sp,
+                                                      fontWeight: FontWeight.w700,
+                                                      color: AppColors.appWhiteColor,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(width: 15.w),
+                                    Expanded(
+                                      child: Container(
+                                        padding: EdgeInsets.only(top: 16, left: 10, right: 16, bottom: 16),
+                                        decoration: BoxDecoration(
+                                          color: Get.isDarkMode ? AppColors.appContainerBgColor : AppColors.appFillColor,
+                                          borderRadius: BorderRadius.circular(16),
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            Container(
+                                              width: 40,
+                                              height: 40,
+                                              padding: EdgeInsets.all(5),
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: AppColors.appBlackColor80,
+                                              ),
+                                              child: CircleAvatar(
+                                                radius: 15,
+                                                backgroundColor: Colors.transparent,
+                                                child: ClipOval(
+                                                  child: Padding(
+                                                    padding: EdgeInsets.all(2),
+                                                    child: Image.asset(
+                                                      "assets/images/total_deposit.png",
+                                                      width: 40,
+                                                      height: 40,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(width: 8.w),
+                                            Expanded(
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    "${selectedLanguageStorage.read("languageData")["Total Withdraw"] ?? "Total Withdraw"}",
+                                                    style: GoogleFonts.aBeeZee(
+                                                      fontWeight: FontWeight.w600,
+                                                      fontSize: 20.sp,
+                                                      color: AppColors.getTextDarkLight(),
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    "${dashBoardController.dashBoardModel.message!.currency}${dashBoardController.dashBoardModel.message!.totalPayout}",
+                                                    style: GoogleFonts.anticSlab(
+                                                      fontSize: 20.sp,
+                                                      fontWeight: FontWeight.w700,
+                                                      color: AppColors.appWhiteColor,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 15.h),
+                                // Add your third card here
+                              ],
+                            ),
+
+
+
+//Vertical design file
+
+                            //
+                            //
+                            // Container(
+                            //   padding: EdgeInsets.only(
+                            //       top: 16, left: 10, right: 16, bottom: 16),
+                            //   decoration: BoxDecoration(
+                            //       color: Get.isDarkMode
+                            //           ? AppColors.appContainerBgColor
+                            //           : AppColors.appBlackColor10,
+                            //       borderRadius: BorderRadius.circular(16)),
+                            //   child: Column(
+                            //     mainAxisAlignment: MainAxisAlignment.start,
+                            //     crossAxisAlignment: CrossAxisAlignment.start,
+                            //     children: [
+                            //       Row(
+                            //         mainAxisAlignment: MainAxisAlignment.start,
+                            //         children: [
+                            //           Expanded(
+                            //             flex: 2,
+                            //             child: Container(
+                            //               width: 40,
+                            //               height: 40,
+                            //               padding: EdgeInsets.all(5),
+                            //               decoration: BoxDecoration(
+                            //                 shape: BoxShape.circle,
+                            //                color: AppColors.appBlackColor80,
+                            //               ),
+                            //               child: CircleAvatar(
+                            //                 radius: 15,
+                            //                 backgroundColor: Colors.transparent,
+                            //                 child: ClipOval(
+                            //                   child: Padding(
+                            //                     padding:  EdgeInsets.all(2),
+                            //                     child: Image.asset(
+                            //                      "assets/images/main_balance.png",
+                            //                      // fit: BoxFit.cover,
+                            //                       width: 40,
+                            //                       height: 40,
+                            //                     ),
+                            //                   ),
+                            //                 ),
+                            //               ),
+                            //             ),
+                            //
+                            //
+                            //           ),
+                            //           SizedBox(
+                            //             width: 8.w,
+                            //           ),
+                            //           Expanded(
+                            //               flex: 9,
+                            //               child: Column(
+                            //                 crossAxisAlignment:
+                            //                 CrossAxisAlignment.start,
+                            //                 children: [
+                            //
+                            //                   Text(
+                            //                     "${selectedLanguageStorage.read("languageData")["Current Balance"] ?? "Current Balance"}",
+                            //                     style: GoogleFonts.aBeeZee(
+                            //                         fontWeight: FontWeight.w600,
+                            //                         fontSize: 20.sp,
+                            //                         color: AppColors
+                            //                             .getTextDarkLight()),
+                            //                   ),
+                            //                   Text(
+                            //                     "${dashBoardController.dashBoardModel.message!.currency}${(dashBoardController.dashBoardModel.message!.interestBalance + dashBoardController.dashBoardModel.message!.mainBalance).toStringAsFixed(1)}",
+                            //                     style: GoogleFonts.anticSlab(
+                            //                         fontSize: 24.sp,
+                            //                         fontWeight: FontWeight.w700,
+                            //                         color:
+                            //                         AppColors.getTextDarkLight()),
+                            //                   ),
+                            //
+                            //                 ],
+                            //               ))
+                            //         ],
+                            //       ),
+                            //
+                            //     ],
+                            //   ),
+                            // ),
+                            // SizedBox(
+                            //   height: 15.h,
+                            // ),
+                            // Container(
+                            //   padding: EdgeInsets.only(
+                            //       top: 16, left: 10, right: 16, bottom: 16),
+                            //   decoration: BoxDecoration(
+                            //       color: Get.isDarkMode
+                            //           ? AppColors.appContainerBgColor
+                            //           : AppColors.appBrandColor3,
+                            //       borderRadius: BorderRadius.circular(16)),
+                            //   child: Column(
+                            //     mainAxisAlignment: MainAxisAlignment.start,
+                            //     crossAxisAlignment: CrossAxisAlignment.start,
+                            //     children: [
+                            //       Row(
+                            //         mainAxisAlignment: MainAxisAlignment.start,
+                            //         children: [
+                            //           Expanded(
+                            //             flex: 2,
+                            //             child: Container(
+                            //               width: 40,
+                            //               height: 40,
+                            //               padding: EdgeInsets.all(5),
+                            //               decoration: BoxDecoration(
+                            //                 shape: BoxShape.circle,
+                            //                 color: AppColors.appBlackColor80,
+                            //               ),
+                            //               child: CircleAvatar(
+                            //                 radius: 15,
+                            //                 backgroundColor: Colors.transparent,
+                            //                 child: ClipOval(
+                            //                   child: Padding(
+                            //                     padding:  EdgeInsets.all(2),
+                            //                     child: Image.asset(
+                            //                       "assets/images/total_deposit.png",
+                            //                       // fit: BoxFit.cover,
+                            //                       width: 40,
+                            //                       height: 40,
+                            //                     ),
+                            //                   ),
+                            //                 ),
+                            //               ),
+                            //             ),
+                            //             // child: Container(
+                            //             //   padding: EdgeInsets.all(8),
+                            //             //   height: 70.h,
+                            //             //   width: 70.w,
+                            //             //   decoration: BoxDecoration(
+                            //             //     shape: BoxShape.circle, // Makes the container circular
+                            //             //     color: Colors.grey[800], // Sets the background color to a dark shade of grey
+                            //             //   ),
+                            //             //   child: CircleAvatar(
+                            //             //
+                            //             //     backgroundImage: AssetImage("assets/images/main_balance.png"),
+                            //             //   ),
+                            //             // ),
+                            //
+                            //           ),
+                            //           SizedBox(
+                            //             width: 8.w,
+                            //           ),
+                            //           Expanded(
+                            //               flex: 9,
+                            //               child: Column(
+                            //                 crossAxisAlignment:
+                            //                 CrossAxisAlignment.start,
+                            //                 children: [
+                            //
+                            //                   Text(
+                            //                     "${selectedLanguageStorage.read("languageData")["Total Withdraw"] ?? "Total Withdraw"}",
+                            //                     style: GoogleFonts.aBeeZee(
+                            //                         fontWeight: FontWeight.w600,
+                            //                         fontSize: 20.sp,
+                            //                         color: AppColors
+                            //                             .getTextDarkLight()),
+                            //                   ),
+                            //                   Text(
+                            //                     "${dashBoardController.dashBoardModel.message!.currency}${dashBoardController.dashBoardModel.message!.totalPayout}",
+                            //                     style: GoogleFonts.anticSlab(
+                            //                         fontSize: 24.sp,
+                            //                         fontWeight: FontWeight.w700,
+                            //                         color:
+                            //                         AppColors.getTextDarkLight()),
+                            //                   ),
+                            //
+                            //                 ],
+                            //               ))
+                            //         ],
+                            //       ),
+                            //
+                            //     ],
+                            //   ),
+                            // ),
+                            // SizedBox(
+                            //   height: 15.h,
+                            // ),
+
+     //3rd card
                             Container(
                               padding: EdgeInsets.only(
-                                  top: 16, left: 10, right: 16, bottom: 16),
+                                  top: 16, left: 10, right: 10, bottom: 16),
                               decoration: BoxDecoration(
                                   color: Get.isDarkMode
                                       ? AppColors.appContainerBgColor
-                                      : AppColors.appBrandColor3,
+                                      : AppColors.appBrandColor2,
                                   borderRadius: BorderRadius.circular(16)),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Expanded(
-                                    flex: 4,
-                                    child: CircularPercentIndicator(
-                                      reverse: true,
-                                      radius: 45.0,
-                                      lineWidth: 10.0,
-                                      percent: dashBoardController
-                                              .message!.investComplete /
-                                          100.toInt(),
-                                      center: Text(
-                                          "${dashBoardController.message!.investComplete}%",
-                                          style: GoogleFonts.publicSans(
-                                              fontSize: 24.sp,
-                                              fontWeight: FontWeight.w700,
-                                              color: AppColors
-                                                  .getTextDarkLight())),
-                                      progressColor: AppColors.appBrandDeep,
+
+
+                                  Container(
+                                    width: 117.w,
+                                    decoration: BoxDecoration(
+                                      color: Get.isDarkMode
+                                          ? AppColors.appContainerBgColor
+                                          : AppColors.appBrandColor2,
+                                      borderRadius: BorderRadius.circular(16),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    width: 12.w,
-                                  ),
-                                  Expanded(
-                                      flex: 9,
+                                    child: Padding(
+                                      padding: EdgeInsets.only(
+                                          top: 22.h, left: 16.w, bottom: 22.h),
                                       child: Column(
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        CrossAxisAlignment.center,
                                         children: [
-                                          Text(
-                                            "${selectedLanguageStorage.read("languageData")["Invest Completed"] ?? "Invest Completed"}",
-                                            style: GoogleFonts.publicSans(
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 20.sp,
-                                                color: AppColors
-                                                    .getTextDarkLight()),
+                                          Container(
+                                            padding: EdgeInsets.all(8),
+                                            height: 44.h,
+                                            width: 44.w,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                              BorderRadius.circular(8),
+                                              color: AppColors
+                                                  .appTotalDepositIconColor,
+                                            ),
+                                            child: Image.asset(
+                                                "assets/images/payout.png"),
+                                          ),
+                                          SizedBox(
+                                            height: 20.h,
+                                          ),
+                                          GetBuilder<ReferralBonusController>(
+                                            builder: (referralBonusController) {
+                                              return Text(
+                                                dashBoardController
+                                                    .dashBoardModel
+                                                    .message!
+                                                    .roi!
+                                                    .totalInvestAmount !=
+                                                    null
+                                                    ? "${dashBoardController.dashBoardModel.message!.currency}${dashBoardController.dashBoardModel.message!.roi!.totalInvestAmount!}"
+                                                    : "${dashBoardController.dashBoardModel.message!.currency}0.00",
+                                                style: GoogleFonts.publicSans(
+                                                  fontSize: 14.sp,
+                                                  fontWeight: FontWeight.w700,
+                                                  color: AppColors
+                                                      .getTextDarkLight(),
+                                                ),
+                                              );
+                                            },
                                           ),
                                           SizedBox(
                                             height: 4.h,
                                           ),
                                           Text(
-                                            "${selectedLanguageStorage.read("languageData")["Investment banking is a special segment of banking operation."] ?? "Investment banking is a special segment of banking operation."}",
+                                            "${selectedLanguageStorage.read("languageData")["Total Invest"] ?? "Total Invest"}",
                                             style: GoogleFonts.niramit(
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: 16.sp,
-                                                height: 1.2,
-                                                color:
-                                                    AppColors.appBlackColor50),
-                                          ),
-                                          SizedBox(
-                                            height: 4.h,
-                                          ),
-                                          Text(
-                                            "${selectedLanguageStorage.read("languageData")["Investment Platform"] ?? "Investment Platform"}",
-                                            style: GoogleFonts.niramit(
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: 16.sp,
-                                                color: AppColors
-                                                    .getTextDarkLight()),
+                                              fontSize: 14.sp,
+                                              fontWeight: FontWeight.w500,
+                                              color: AppColors.appBlackColor50,
+                                            ),
                                           ),
                                         ],
-                                      ))
+                                      ),
+                                    ),
+                                  ),
+
+                                  Container(
+                                    width: 117.w,
+                                    decoration: BoxDecoration(
+                                      color: Get.isDarkMode
+                                          ? AppColors.appContainerBgColor
+                                          : AppColors.appBrandColor2,
+                                      borderRadius: BorderRadius.circular(16),
+                                    ),
+                                    child: Padding(
+                                      padding: EdgeInsets.only(
+                                          top: 22.h, left: 16.w, bottom: 22.h),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                            padding: EdgeInsets.all(8),
+                                            height: 44.h,
+                                            width: 44.w,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              color: AppColors
+                                                  .appTotalDepositIconColor,
+                                            ),
+                                            child: Image.asset(
+                                                "assets/images/referral.png"),
+                                          ),
+                                          SizedBox(
+                                            height: 20.h,
+                                          ),
+                                          GetBuilder<ReferralBonusController>(
+                                            builder: (referralBonusController) {
+                                              return Text(
+                                                "${dashBoardController.dashBoardModel.message!.currency}${referralBonusController.totalReferralAmount.toStringAsFixed(1)}",
+                                                style: GoogleFonts.publicSans(
+                                                  fontSize: 14.sp,
+                                                  fontWeight: FontWeight.w700,
+                                                  color: AppColors
+                                                      .getTextDarkLight(),
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                          SizedBox(
+                                            height: 4.h,
+                                          ),
+                                          Text(
+                                            "${selectedLanguageStorage.read("languageData")["Referral Earn"] ?? "Referral Earn"}",
+                                            style: GoogleFonts.niramit(
+                                              fontSize: 14.sp,
+                                              fontWeight: FontWeight.w500,
+                                              color: AppColors.appBlackColor50,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+
+                                  // Container(
+                                  //   width: 117.w,
+                                  //   decoration: BoxDecoration(
+                                  //       color: Get.isDarkMode? AppColors.appContainerBgColor:AppColors.appBrandColor2,
+                                  //       borderRadius: BorderRadius.circular(16)
+                                  //   ),
+                                  //   child: Padding(
+                                  //     padding: EdgeInsets.only(
+                                  //         top: 22.h,
+                                  //         left: 16.w,
+                                  //         bottom: 22.h
+                                  //     ),
+                                  //     child: Column(
+                                  //       crossAxisAlignment: CrossAxisAlignment.start,
+                                  //       children: [
+                                  //         Container(
+                                  //           padding: EdgeInsets.all(8),
+                                  //           height: 44.h,
+                                  //           width: 44.w,
+                                  //           decoration: BoxDecoration(
+                                  //               borderRadius: BorderRadius.circular(8),
+                                  //               color: AppColors.appTotalDepositIconColor
+                                  //           ),
+                                  //           child: Image.asset("assets/images/total_deposit.png",),
+                                  //         ),
+                                  //         SizedBox(height: 20.h,),
+                                  //         Text("${dashBoardController.dashBoardModel.message!.currency}${dashBoardController.dashBoardModel.message!.totalDeposit!.toStringAsFixed(2)}",style: GoogleFonts.publicSans(
+                                  //             fontSize: 14.sp,
+                                  //             fontWeight: FontWeight.w700,
+                                  //             color: AppColors.getTextDarkLight()
+                                  //         ),),
+                                  //         SizedBox(height: 4.h,),
+                                  //         Text("${selectedLanguageStorage.read("languageData")["Referral Earn"]??"Referral Earn"}",style: GoogleFonts.niramit(
+                                  //             fontSize: 14.sp,
+                                  //             fontWeight: FontWeight.w500,
+                                  //             color: AppColors.appBlackColor50
+                                  //         ),),
+                                  //       ],
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                  Container (
+                                    width: 117.w,
+                                    decoration: BoxDecoration(
+                                        color: Get.isDarkMode
+                                            ? AppColors.appContainerBgColor
+                                            : AppColors.appBrandColor2,
+                                        borderRadius: BorderRadius.circular(16)),
+                                    child: Padding(
+                                      padding: EdgeInsets.only(
+                                          top: 22.h, left: 16.w, bottom: 22.h),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                            padding: EdgeInsets.all(8),
+                                            height: 44.h,
+                                            width: 44.w,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                color: AppColors
+                                                    .appTotalEarnIconColor),
+                                            child: Image.asset(
+                                              "assets/images/total_earn.png",
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 20.h,
+                                          ),
+                                          Text(
+                                            "${dashBoardController.dashBoardModel.message!.currency}${dashBoardController.dashBoardModel.message!.totalEarn!.toStringAsFixed(1)}",
+                                            style: GoogleFonts.publicSans(
+                                                fontSize: 15.sp,
+                                                fontWeight: FontWeight.w700,
+                                                color:
+                                                    AppColors.getTextDarkLight()),
+                                          ),
+                                          SizedBox(
+                                            height: 4.h,
+                                          ),
+                                          Text(
+                                            "${selectedLanguageStorage.read("languageData")["Total Earn"] ?? "Total Earn"}",
+                                            style: GoogleFonts.niramit(
+                                                fontSize: 14.sp,
+                                                fontWeight: FontWeight.w500,
+                                                color: AppColors.appBlackColor50),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                                 ],
                               ),
-                            ),
-                            SizedBox(
-                              height: 24.h,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  width: 117.w,
-                                  decoration: BoxDecoration(
-                                      color: Get.isDarkMode
-                                          ? AppColors.appContainerBgColor
-                                          : AppColors.appBrandColor3,
-                                      borderRadius: BorderRadius.circular(16)),
-                                  child: Padding(
-                                    padding: EdgeInsets.only(
-                                        top: 22.h, left: 16.w, bottom: 22.h),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          padding: EdgeInsets.all(8),
-                                          height: 44.h,
-                                          width: 44.w,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              color: AppColors
-                                                  .appMainBalanceIconColor),
-                                          child: Image.asset(
-                                            "assets/images/main_balance.png",
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 20.h,
-                                        ),
-
-                                        // Text("${dashBoardController.dashBoardModel.message!.currency}${dashBoardController.dashBoardModel.message!.mainBalance!.toStringAsFixed(2)}",style: GoogleFonts.publicSans(
-                                        //   fontSize: 15.sp,
-                                        //     fontWeight: FontWeight.w700,
-                                        //   color: AppColors.getTextDarkLight()
-                                        // ),),
-
-                                        Text(
-                                          "${dashBoardController.dashBoardModel.message!.currency}${dashBoardController.dashBoardModel.message!.interestBalance.toStringAsFixed(2) + dashBoardController.dashBoardModel.message!.mainBalance.toStringAsFixed(2)}",
-                                          style: GoogleFonts.publicSans(
-                                              fontSize: 15.sp,
-                                              fontWeight: FontWeight.w700,
-                                              color:
-                                                  AppColors.getTextDarkLight()),
-                                        ),
-
-                                        SizedBox(
-                                          height: 4.h,
-                                        ),
-                                        // Text("${selectedLanguageStorage.read("languageData")["Main Balance"]??"Main Balance"}",style: GoogleFonts.niramit(
-                                        //   fontSize: 14.sp,
-                                        //   fontWeight: FontWeight.w500,
-                                        //   color: AppColors.appBlackColor50
-                                        // ),),
-                                        Text(
-                                          "${selectedLanguageStorage.read("languageData")["Current Balance"] ?? "Current Balance"}",
-                                          style: GoogleFonts.niramit(
-                                              fontSize: 14.sp,
-                                              fontWeight: FontWeight.w500,
-                                              color: AppColors.appBlackColor50),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-
-                                // Container(
-                                //   width: 117.w,
-                                //   decoration: BoxDecoration(
-                                //     color: Get.isDarkMode ? AppColors.appContainerBgColor : AppColors.appBrandColor2,
-                                //     borderRadius: BorderRadius.circular(16),
-                                //   ),
-                                //   child: Padding(
-                                //     padding: EdgeInsets.only(top: 22.h, left: 16.w, bottom: 22.h),
-                                //     child: Column(
-                                //       crossAxisAlignment: CrossAxisAlignment.start,
-                                //       children: [
-                                //         Container(
-                                //           padding: EdgeInsets.all(8),
-                                //           height: 44.h,
-                                //           width: 44.w,
-                                //           decoration: BoxDecoration(
-                                //             borderRadius: BorderRadius.circular(8),
-                                //               color: AppColors.appTotalDepositIconColor   // Use the color you prefer
-                                //           ),
-                                //           child: Image.asset("assets/images/referral.png"), // Change the icon asset
-                                //         ),
-                                //         SizedBox(height: 20.h,),
-                                //         GetBuilder<ReferralBonusController>(
-                                //           builder: (referralBonusController) {
-                                //             return Text(
-                                //               "${dashBoardController.dashBoardModel.message!.currency}${referralBonusController.totalReferralAmount.toStringAsFixed(2)}",
-                                //               style: GoogleFonts.publicSans(
-                                //                 fontSize: 14.sp,
-                                //                 fontWeight: FontWeight.w700,
-                                //                 color: AppColors.getTextDarkLight(),
-                                //               ),
-                                //             );
-                                //           },
-                                //         ),
-                                //         SizedBox(height: 4.h,),
-                                //         Text(
-                                //           "${selectedLanguageStorage.read("languageData")["Referral Earn"] ??
-                                //               "Referral Earn"}",
-                                //           style: GoogleFonts.niramit(
-                                //             fontSize: 14.sp,
-                                //             fontWeight: FontWeight.w500,
-                                //             color: AppColors.appBlackColor50,
-                                //           ),
-                                //         ),
-                                //       ],
-                                //     ),
-                                //   ),
-                                // ),
-
-                                Container(
-                                  width: 117.w,
-                                  decoration: BoxDecoration(
-                                    color: Get.isDarkMode
-                                        ? AppColors.appContainerBgColor
-                                        : AppColors.appBrandColor2,
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
-                                  child: Padding(
-                                    padding: EdgeInsets.only(
-                                        top: 22.h, left: 16.w, bottom: 22.h),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          padding: EdgeInsets.all(8),
-                                          height: 44.h,
-                                          width: 44.w,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                            color: AppColors
-                                                .appTotalDepositIconColor,
-                                          ),
-                                          child: Image.asset(
-                                              "assets/images/referral.png"),
-                                        ),
-                                        SizedBox(
-                                          height: 20.h,
-                                        ),
-                                        GetBuilder<ReferralBonusController>(
-                                          builder: (referralBonusController) {
-                                            return Text(
-                                              "${dashBoardController.dashBoardModel.message!.currency}${referralBonusController.totalReferralAmount.toStringAsFixed(2)}",
-                                              style: GoogleFonts.publicSans(
-                                                fontSize: 14.sp,
-                                                fontWeight: FontWeight.w700,
-                                                color: AppColors
-                                                    .getTextDarkLight(),
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                        SizedBox(
-                                          height: 4.h,
-                                        ),
-                                        Text(
-                                          "${selectedLanguageStorage.read("languageData")["Referral Earn"] ?? "Referral Earn"}",
-                                          style: GoogleFonts.niramit(
-                                            fontSize: 14.sp,
-                                            fontWeight: FontWeight.w500,
-                                            color: AppColors.appBlackColor50,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-
-                                // Container(
-                                //   width: 117.w,
-                                //   decoration: BoxDecoration(
-                                //       color: Get.isDarkMode? AppColors.appContainerBgColor:AppColors.appBrandColor2,
-                                //       borderRadius: BorderRadius.circular(16)
-                                //   ),
-                                //   child: Padding(
-                                //     padding: EdgeInsets.only(
-                                //         top: 22.h,
-                                //         left: 16.w,
-                                //         bottom: 22.h
-                                //     ),
-                                //     child: Column(
-                                //       crossAxisAlignment: CrossAxisAlignment.start,
-                                //       children: [
-                                //         Container(
-                                //           padding: EdgeInsets.all(8),
-                                //           height: 44.h,
-                                //           width: 44.w,
-                                //           decoration: BoxDecoration(
-                                //               borderRadius: BorderRadius.circular(8),
-                                //               color: AppColors.appTotalDepositIconColor
-                                //           ),
-                                //           child: Image.asset("assets/images/total_deposit.png",),
-                                //         ),
-                                //         SizedBox(height: 20.h,),
-                                //         Text("${dashBoardController.dashBoardModel.message!.currency}${dashBoardController.dashBoardModel.message!.totalDeposit!.toStringAsFixed(2)}",style: GoogleFonts.publicSans(
-                                //             fontSize: 14.sp,
-                                //             fontWeight: FontWeight.w700,
-                                //             color: AppColors.getTextDarkLight()
-                                //         ),),
-                                //         SizedBox(height: 4.h,),
-                                //         Text("${selectedLanguageStorage.read("languageData")["Referral Earn"]??"Referral Earn"}",style: GoogleFonts.niramit(
-                                //             fontSize: 14.sp,
-                                //             fontWeight: FontWeight.w500,
-                                //             color: AppColors.appBlackColor50
-                                //         ),),
-                                //       ],
-                                //     ),
-                                //   ),
-                                // ),
-                                Container(
-                                  width: 117.w,
-                                  decoration: BoxDecoration(
-                                      color: Get.isDarkMode
-                                          ? AppColors.appContainerBgColor
-                                          : AppColors.appBg2,
-                                      borderRadius: BorderRadius.circular(16)),
-                                  child: Padding(
-                                    padding: EdgeInsets.only(
-                                        top: 22.h, left: 16.w, bottom: 22.h),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          padding: EdgeInsets.all(8),
-                                          height: 44.h,
-                                          width: 44.w,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              color: AppColors
-                                                  .appTotalEarnIconColor),
-                                          child: Image.asset(
-                                            "assets/images/total_earn.png",
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 20.h,
-                                        ),
-                                        Text(
-                                          "${dashBoardController.dashBoardModel.message!.currency}${dashBoardController.dashBoardModel.message!.totalEarn!.toStringAsFixed(2)}",
-                                          style: GoogleFonts.publicSans(
-                                              fontSize: 15.sp,
-                                              fontWeight: FontWeight.w700,
-                                              color:
-                                                  AppColors.getTextDarkLight()),
-                                        ),
-                                        SizedBox(
-                                          height: 4.h,
-                                        ),
-                                        Text(
-                                          "${selectedLanguageStorage.read("languageData")["Total Earn"] ?? "Total Earn"}",
-                                          style: GoogleFonts.niramit(
-                                              fontSize: 14.sp,
-                                              fontWeight: FontWeight.w500,
-                                              color: AppColors.appBlackColor50),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
                             ),
                             SizedBox(
                               height: 24.h,
@@ -461,145 +665,6 @@ class DashBoardScreen extends StatelessWidget {
                             Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Container(
-                                  width: 400.w,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(16),
-                                      color: Get.isDarkMode
-                                          ? AppColors.appContainerBgColor
-                                          : AppColors.appBg3),
-                                  child: Padding(
-                                    padding: EdgeInsets.only(
-                                        top: 24.h, left: 16.w, bottom: 16),
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          height: 68.h,
-                                          width: 68.w,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              color: AppColors
-                                                  .appTotalInvestIconColor),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(4.0),
-                                            child: Image.asset(
-                                              "assets/images/total_invest_bg.png",
-                                              height: 18.h,
-                                              width: 18.w,
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 24.w,
-                                        ),
-                                        Column(
-                                          children: [
-                                            Text(
-                                              "${selectedLanguageStorage.read("languageData")["Total Invest"] ?? "Total Invest"}",
-                                              style: GoogleFonts.niramit(
-                                                  fontSize: 18.sp,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: AppColors
-                                                      .appBlackColor50),
-                                            ),
-                                            SizedBox(
-                                              height: 4.h,
-                                            ),
-                                            Text(
-                                              dashBoardController
-                                                          .dashBoardModel
-                                                          .message!
-                                                          .roi!
-                                                          .totalInvestAmount !=
-                                                      null
-                                                  ? "${dashBoardController.dashBoardModel.message!.currency}${dashBoardController.dashBoardModel.message!.roi!.totalInvestAmount!}"
-                                                  : "${dashBoardController.dashBoardModel.message!.currency}0.00",
-                                              style: GoogleFonts.publicSans(
-                                                  fontSize: 18.sp,
-                                                  fontWeight: FontWeight.w700,
-                                                  color: AppColors
-                                                      .getTextDarkLight()),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 6.h,
-                                ),
-                                Container(
-                                  width: 400.w,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(16),
-                                      color: Get.isDarkMode
-                                          ? AppColors.appContainerBgColor
-                                          : AppColors.appBg3),
-                                  child: Padding(
-                                    padding: EdgeInsets.only(
-                                        top: 24.h, left: 16.w, bottom: 16),
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          height: 68.h,
-                                          width: 68.w,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              color: AppColors
-                                                  .appTotalPayoutIconColor),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(4.0),
-                                            child: Image.asset(
-                                              "assets/images/main_balance.png",
-                                              height: 18.h,
-                                              width: 18.w,
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 24.w,
-                                        ),
-                                        Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "${selectedLanguageStorage.read("languageData")["Total Withdraw"] ?? "Total Withdraw"}",
-                                              style: GoogleFonts.niramit(
-                                                  fontSize: 18.sp,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: AppColors
-                                                      .appBlackColor50),
-                                            ),
-                                            SizedBox(
-                                              height: 4.h,
-                                            ),
-                                            Text(
-                                              "${dashBoardController.dashBoardModel.message!.currency}${dashBoardController.dashBoardModel.message!.totalPayout}",
-                                              style: GoogleFonts.publicSans(
-                                                  fontSize: 18.sp,
-                                                  fontWeight: FontWeight.w700,
-                                                  color: AppColors
-                                                      .getTextDarkLight()),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 24.h,
-                                ),
 
                                 //total team investment ,tottal refrells,invest refrals
                                 Container(
@@ -616,6 +681,7 @@ class DashBoardScreen extends StatelessWidget {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: [
+
                                       //Team Investment
                                       Container(
                                         width: 117.w,
@@ -659,7 +725,7 @@ class DashBoardScreen extends StatelessWidget {
                                               // ),),
 
                                               Text(
-                                                "${dashBoardController.dashBoardModel.message!.currency}${dashBoardController.dashBoardModel.message!.total_referrals_investment!.toStringAsFixed(2)}",
+                                                "${dashBoardController.dashBoardModel.message!.currency}${dashBoardController.dashBoardModel.message!.total_referrals_investment!.toStringAsFixed(1)}",
                                                 style: GoogleFonts.publicSans(
                                                     fontSize: 15.sp,
                                                     fontWeight: FontWeight.w700,
@@ -783,7 +849,7 @@ class DashBoardScreen extends StatelessWidget {
                                                     color:
                                                         AppColors.appBrandDeep),
                                                 child: Image.asset(
-                                                  "assets/images/total_deposit.png",
+                                                  "assets/images/payout.png",
                                                 ),
                                               ),
                                               SizedBox(

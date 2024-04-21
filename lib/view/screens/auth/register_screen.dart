@@ -530,7 +530,7 @@ class RegisterScreen extends StatelessWidget {
                       height: 20.h,
                     ),
                     Image.asset(
-                      "assets/images/logo.png",
+                      "assets/images/app_icon_primary.png",
                       height: 100,
                       width: 100,
                       // color: AppColors.appContainerBgColor,
@@ -573,7 +573,7 @@ class RegisterScreen extends StatelessWidget {
                           fillColor: AppColors.getTextFieldDarkLight(),
                           filled: true,
                           hintText:
-                              "${selectedLanguageStorage.read("languageData")["Enter Referral Username (Optional)"] ?? "Enter Referral Username (Optional)"}",
+                              "${selectedLanguageStorage.read("languageData")["Enter Referral Client number"] ?? "Enter Referral Client number"}",
                           prefixIcon: Padding(
                             padding: const EdgeInsets.all(16.0),
                             child: Image.asset(
@@ -936,8 +936,12 @@ class RegisterScreen extends StatelessWidget {
                           ),
                         ),
                       ],
-                    )
+                    ),
+                    SizedBox(
+                      height: 32.h,
+                    ),
                   ],
+
                 ),
               ),
             ),

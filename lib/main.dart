@@ -94,7 +94,7 @@ class MyApp extends StatelessWidget {
             darkTheme: Themes().darkTheme,
             theme: Themes().lightTheme,
             themeMode: ThemeService().getThemeMode(),
-            title: 'Hyip Pro',
+            title: 'Luxylion',
             initialRoute: SplashScreen.routeName,
             getPages: [
               GetPage(name: SplashScreen.routeName, page: () => SplashScreen()),

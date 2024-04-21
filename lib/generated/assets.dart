@@ -2,6 +2,7 @@
 class Assets {
   Assets._();
 
+  static const String assetsAppIconPrimary = 'assets/app_icon_primary.png';
   static const String iconsWhatsapp = 'assets/icons/whatsapp.png';
   static const String imagesAddressImage = 'assets/images/address_image.png';
   static const String imagesAppIconPrimary = 'assets/images/app_icon_primary.png';
@@ -48,6 +49,7 @@ class Assets {
   static const String imagesKyc = 'assets/images/kyc.png';
   static const String imagesLanguage = 'assets/images/language.png';
   static const String imagesLocation = 'assets/images/location.png';
+  static const String imagesLogo = 'assets/images/logo.png';
   static const String imagesLogout = 'assets/images/logout.png';
   static const String imagesMailImg = 'assets/images/mail_img.png';
   static const String imagesMainBalance = 'assets/images/main_balance.png';

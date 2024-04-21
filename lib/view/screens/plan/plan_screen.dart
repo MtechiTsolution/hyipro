@@ -9,6 +9,8 @@ import 'package:hyip_pro/utils/colors/app_colors.dart';
 import 'package:hyip_pro/view/screens/deposit/deposit_screen.dart';
 import 'package:hyip_pro/view/widgets/app_custom_dropdown.dart';
 
+import '../../widgets/app_drawer_widget.dart';
+
 class PlanScreen extends StatelessWidget {
   static const String routeName = "/planScreen";
   PlanScreen({super.key});
@@ -66,13 +68,15 @@ class PlanScreen extends StatelessWidget {
                     ))
                 : const SizedBox.shrink(),
             title: Text(
-              "${selectedLanguageStorage.read("languageData")["Investment Plan"] ?? "Investment Plan"}",
+              "${selectedLanguageStorage.read("languageData")["Buy Product plan"] ?? "Buy Product plan"}",
               style: GoogleFonts.publicSans(
                   fontWeight: FontWeight.w600,
                   fontSize: 20.sp,
                   color: AppColors.getTextDarkLight()),
             ),
           ),
+
+          drawer: appDrawer(),
           body: ListView(
             children: [
               planController.isLoading == false

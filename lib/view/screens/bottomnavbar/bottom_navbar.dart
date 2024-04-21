@@ -69,7 +69,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                 Get.back(); // Close the dialog
               },
               style: ElevatedButton.styleFrom(
-                primary: AppColors.appDashBoardTransactionRed,
+              //  primary: AppColors.appDashBoardTransactionRed,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
@@ -85,7 +85,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                exit(0);
               },
               style: ElevatedButton.styleFrom(
-                primary: AppColors.appDashBoardTransactionGreen,
+             //   primary: AppColors.appDashBoardTransactionGreen,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
@@ -123,27 +123,15 @@ class _BottomNavBarState extends State<BottomNavBar> {
                 children: <Widget>[
                   IconButton(
                     icon: Image.asset(
-                      "assets/images/home.png",
-                      height: 25.h,
-                      width: 25.w,
-                      color: controller.selectedIndex == 0
-                          ? AppColors. appWhiteColor
-                          : AppColors.appBlackColor50,
-                    ),
-                    onPressed: () => controller.changeScreen(0),
-                  ),
-                  IconButton(
-                    icon: Image.asset(
                       "assets/images/plan.png",
                       height: 25.h,
                       width: 25.w,
                       color: controller.selectedIndex == 1
                           ? AppColors. appWhiteColor
-                          : AppColors.appBlackColor50,
+                          : AppColors.appBlackColor80,
                     ),
                     onPressed: () => controller.changeScreen(1),
                   ),
-
                   IconButton(
                     icon: Image.asset(
                       "assets/images/transaction.png",
@@ -151,10 +139,11 @@ class _BottomNavBarState extends State<BottomNavBar> {
                       width: 25.w,
                       color: controller.selectedIndex == 3
                           ? AppColors. appWhiteColor
-                          : AppColors.appBlackColor50,
+                          : AppColors.appBlackColor80,
                     ),
                     onPressed: () => controller.changeScreen(3),
                   ),
+
                   IconButton(
                     icon: Image.asset(
                       "assets/images/menu_icon_new.png",
@@ -162,9 +151,20 @@ class _BottomNavBarState extends State<BottomNavBar> {
                       width: 25.w,
                       color: controller.selectedIndex == 4
                           ? AppColors. appWhiteColor
-                          : AppColors.appBlackColor50,
+                          : AppColors.appBlackColor80,
                     ),
                     onPressed: () => controller.changeScreen(4),
+                  ),
+                  IconButton(
+                    icon: Image.asset(
+                      "assets/images/home.png",
+                      height: 25.h,
+                      width: 25.w,
+                      color: controller.selectedIndex == 0
+                          ? AppColors. appWhiteColor
+                          : AppColors.appBlackColor80,
+                    ),
+                    onPressed: () => controller.changeScreen(0),
                   ),
                 ],
               ),

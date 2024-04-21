@@ -583,8 +583,8 @@ class _MenuScreenState extends State<MenuScreen> {
                                             Get.back(); // Close the dialog
                                           },
                                           style: ElevatedButton.styleFrom(
-                                            primary: AppColors
-                                                .appDashBoardTransactionRed,
+                                            // primary: AppColors
+                                            //     .appDashBoardTransactionRed,
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.circular(8),
@@ -608,8 +608,8 @@ class _MenuScreenState extends State<MenuScreen> {
                                                 (route) => false);
                                           },
                                           style: ElevatedButton.styleFrom(
-                                            primary: AppColors
-                                                .appDashBoardTransactionGreen,
+                                            // primary: AppColors
+                                            //     .appDashBoardTransactionGreen,
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.circular(8),

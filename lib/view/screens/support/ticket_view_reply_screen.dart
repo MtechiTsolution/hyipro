@@ -196,7 +196,7 @@ class _TicketViewReplyScreenState extends State<TicketViewReplyScreen> {
                             Get.back(); // Close the dialog
                           },
                           style: ElevatedButton.styleFrom(
-                            primary: AppColors.appDashBoardTransactionRed,
+                            // primary: AppColors.appDashBoardTransactionRed,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8),
                             ),
@@ -218,7 +218,7 @@ class _TicketViewReplyScreenState extends State<TicketViewReplyScreen> {
                               Navigator.pop(context);
                           },
                           style: ElevatedButton.styleFrom(
-                            primary: AppColors.appDashBoardTransactionGreen,
+                            // primary: AppColors.appDashBoardTransactionGreen,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8),
                             ),

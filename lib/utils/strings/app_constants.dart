@@ -1,11 +1,12 @@
 class AppConstants {
-  static const String appName = 'Hyip Pro';
+  static const String appName = 'Luxylion ';
   static const String token = '';
 
   ///Base URL
-  static const String baseUri = 'https://gms-world.app';
+  //static const String baseUri = 'https://gms-world.app';
   //static const String baseUri = 'http://192.168.1.5/hyp';
   //static const String baseUri = 'https://solanatrading.cash';
+  static const String baseUri = 'https://luxylion.com';
 
   ///End Point
   static const String dashBoardUri = '/api/dashboard';

@@ -17,9 +17,9 @@ class SplashScreen extends StatelessWidget {
         return Scaffold(
             body: Stack(
               children: [
-                Image.asset("assets/images/splash_bg.png",width: double.infinity,fit: BoxFit.fitWidth,),
+              //  Image.asset("assets/images/app_icon_primary.png",width: double.infinity,fit: BoxFit.fitWidth,),
                 Center(
-                  child: Image.asset("assets/images/splash_icon.png",
+                  child: Image.asset("assets/images/app_icon_primary.png",
                   ),
                 ),
 
@@ -30,19 +30,19 @@ class SplashScreen extends StatelessWidget {
                     child: Center(child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Hyip",
+                        Text("Luxy",
                         style: GoogleFonts.teko(
                           fontSize: 50.sp,
                           fontWeight: FontWeight.w500,
-                          color: AppColors.appWhiteColor
+                          color: AppColors.appFillColor
                         ),
                         ),
 
-                        Text("Pro",
+                        Text("lion",
                           style: GoogleFonts.teko(
                               fontSize: 50.sp,
                               fontWeight: FontWeight.w500,
-                              color: AppColors.appBrandColor2
+                              color: AppColors.appBlackColor
                           ),
                         ),
 

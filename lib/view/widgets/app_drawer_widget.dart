@@ -403,51 +403,11 @@ Widget appDrawer() {
                 //   ),
                 // ),
 
+
                 InkWell(
                   onTap: () async {
                     // Replace 'phoneNumber' with the actual phone number you want to open in WhatsApp
-                    String phoneNumber = "1234567890";
-
-                    // Construct the WhatsApp URL
-                    String whatsappUrl = "https://wa.me/$phoneNumber";
-
-                    // Launch the URL using the url_launcher package
-                    if (await canLaunch(whatsappUrl)) {
-                      await launch(whatsappUrl);
-                    } else {
-                      // Handle error, e.g., show an error message
-                      print("Could not launch $whatsappUrl");
-                    }
-                  },
-                  child: Row(
-                    children: [
-                      Image.asset(
-                        "assets/icons/whatsapp.png",
-                        // Replace with the actual path to the WhatsApp SVG logo
-                        color: AppColors.getTextDarkLight(),
-                        height: 20.h,
-                        width: 20.w,
-                      ),
-                      SizedBox(width: 16.w),
-                      Text(
-                        "${selectedLanguageStorage.read("languageData")["WhatsApp"] ?? "WhatsApp"}",
-                        style: GoogleFonts.publicSans(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.getTextDarkLight(),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                SizedBox(
-                  height: 32.h,
-                ),
-                InkWell(
-                  onTap: () async {
-                    // Replace 'phoneNumber' with the actual phone number you want to open in WhatsApp
-                    String phoneNumber = "1234567890";
+                    String phoneNumber = "+923205555828";
 
                     // Construct the WhatsApp URL
                     String whatsappUrl = "https://wa.me/$phoneNumber";
