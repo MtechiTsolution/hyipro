@@ -74,6 +74,7 @@ dependencies:
    flutter_widget_from_html: ^0.9.1
    fwfh_text_style: ^2.23.8
    circular_image: ^0.0.6
+   carousel_slider: ^4.2.1
 
 dev_dependencies:
    flutter_test:

@@ -118,7 +118,74 @@ class _BottomNavBarState extends State<BottomNavBar> {
               notchMargin: 8,
               shape: const CircularNotchedRectangle(
               ),
-              child: Row(
+              // child: Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: <Widget>[
+              //
+              //     IconButton(
+              //       icon: Image.asset(
+              //         "assets/images/plan.png",
+              //         height: 25.h,
+              //         width: 25.w,
+              //         color: controller.selectedIndex == 1
+              //             ? AppColors. appWhiteColor
+              //             : AppColors.appBlackColor80,
+              //       ),
+              //       onPressed: () => controller.changeScreen(1),
+              //     ),
+              //     IconButton(
+              //       icon: Image.asset(
+              //         "assets/images/transaction.png",
+              //         height: 25.h,
+              //         width: 25.w,
+              //         color: controller.selectedIndex == 3
+              //             ? AppColors. appWhiteColor
+              //             : AppColors.appBlackColor80,
+              //       ),
+              //       onPressed: () => controller.changeScreen(3),
+              //     ),
+              //
+              //     IconButton(
+              //       icon: Image.asset(
+              //         "assets/images/menu_icon_new.png",
+              //         height: 25.h,
+              //         width: 25.w,
+              //         color: controller.selectedIndex == 4
+              //             ? AppColors. appWhiteColor
+              //             : AppColors.appBlackColor80,
+              //       ),
+              //       onPressed: () => controller.changeScreen(4),
+              //     ),
+              //     // IconButton(
+              //     //   icon: Image.asset(
+              //     //     "assets/images/referral_bonus.png",
+              //     //     height: 25.h,
+              //     //     width: 25.w,
+              //     //     color: controller.selectedIndex == 0
+              //     //         ? AppColors. appWhiteColor
+              //     //         : AppColors.appBlackColor80,
+              //     //   ),
+              //     //   onPressed: () => controller.changeScreen(0),
+              //     // ),
+              //     IconButton(
+              //       icon: Icon(
+              //         Icons.account_balance_wallet, // Wallet icon from Flutter's Icons class
+              //         size: 25.h, // Set the size of the icon
+              //         color: controller.selectedIndex == 0
+              //             ? AppColors.appWhiteColor
+              //             : AppColors.appBlackColor80, // Color of the icon based on the condition
+              //       ),
+              //       onPressed: () {
+              //         // Add your onPressed logic here
+              //         // This function will be called when the IconButton is pressed
+              //         // For example, you can call a function to change the screen
+              //         controller.changeScreen(0);
+              //       },
+              //     ),
+              //
+              //   ],
+              // ),
+              child:  Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   IconButton(
@@ -126,48 +193,47 @@ class _BottomNavBarState extends State<BottomNavBar> {
                       "assets/images/plan.png",
                       height: 25.h,
                       width: 25.w,
-                      color: controller.selectedIndex == 1
-                          ? AppColors. appWhiteColor
+                      color: controller.selectedIndex == 0 // Changed to index 0
+                          ? AppColors.appWhiteColor
                           : AppColors.appBlackColor80,
                     ),
-                    onPressed: () => controller.changeScreen(1),
+                    onPressed: () => controller.changeScreen(0),
                   ),
                   IconButton(
                     icon: Image.asset(
                       "assets/images/transaction.png",
                       height: 25.h,
                       width: 25.w,
-                      color: controller.selectedIndex == 3
-                          ? AppColors. appWhiteColor
+                      color: controller.selectedIndex == 1 // Changed to index 1
+                          ? AppColors.appWhiteColor
                           : AppColors.appBlackColor80,
                     ),
-                    onPressed: () => controller.changeScreen(3),
+                    onPressed: () => controller.changeScreen(1),
                   ),
-
                   IconButton(
                     icon: Image.asset(
                       "assets/images/menu_icon_new.png",
                       height: 25.h,
                       width: 25.w,
-                      color: controller.selectedIndex == 4
-                          ? AppColors. appWhiteColor
+                      color: controller.selectedIndex == 2 // Changed to index 2
+                          ? AppColors.appWhiteColor
                           : AppColors.appBlackColor80,
                     ),
-                    onPressed: () => controller.changeScreen(4),
+                    onPressed: () => controller.changeScreen(2),
                   ),
                   IconButton(
-                    icon: Image.asset(
-                      "assets/images/home.png",
-                      height: 25.h,
-                      width: 25.w,
-                      color: controller.selectedIndex == 0
-                          ? AppColors. appWhiteColor
+                    icon: Icon(
+                      Icons.account_balance_wallet,
+                      size: 25.h,
+                      color: controller.selectedIndex == 3 // Changed to index 3
+                          ? AppColors.appWhiteColor
                           : AppColors.appBlackColor80,
                     ),
-                    onPressed: () => controller.changeScreen(0),
+                    onPressed: () => controller.changeScreen(3),
                   ),
                 ],
               ),
+
             ),
             // floatingActionButton: ClipOval(
             //   child: FloatingActionButton(

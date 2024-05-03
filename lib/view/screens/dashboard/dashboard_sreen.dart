@@ -104,6 +104,45 @@ class DashBoardScreen extends StatelessWidget {
                             SizedBox(
                               height: 20.h,
                             ),
+                            // Padding(
+                            //   padding: EdgeInsets.symmetric(horizontal: 24.w),
+                            //   child: dashBoardController.isLoading == false &&
+                            //       dashBoardController.message != null
+                            //       ? Column(
+                            //     crossAxisAlignment: CrossAxisAlignment.start,
+                            //     children: [
+                            //       SizedBox(
+                            //         height: 20.h,
+                            //       ),
+                            //       // Add your SizedBox widget here
+                            //       SizedBox(
+                            //         height: 200.h, // Set the height of the SizedBox as needed
+                            //         child: ListView.builder(
+                            //           scrollDirection: Axis.horizontal, // Make it scroll horizontally
+                            //           itemCount: 5, // Replace 5 with the actual number of items
+                            //           itemBuilder: (context, index) {
+                            //             // Return each item for the horizontal slider
+                            //             // You can customize this based on your requirement
+                            //             return Container(
+                            //               width: MediaQuery.of(context).size.width * 0.8, // Set the width of each item
+                            //               margin: EdgeInsets.symmetric(horizontal: 8.w), // Adjust margin as needed
+                            //               decoration: BoxDecoration(
+                            //                 color: Colors.grey[300],
+                            //                 borderRadius: BorderRadius.circular(10),
+                            //               ),
+                            //               child: Center(
+                            //                 child: Text(
+                            //                   'Item $index',
+                            //                   style: TextStyle(fontSize: 20),
+                            //                 ),
+                            //               ),
+                            //             );
+                            //           },
+                            //         ),
+                            //       ),
+                            //     ],
+                            //   ) : CircularProgressIndicator(), // Add a loading indicator if data is still loading
+                            // ),
 
                             Column(
                               mainAxisAlignment: MainAxisAlignment.start,

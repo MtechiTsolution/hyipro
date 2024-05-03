@@ -58,6 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
         body: Stack(
           children: [
             ListView(
+              shrinkWrap: false,
               children: [
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 24.w),
@@ -67,11 +68,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         SizedBox(
-                          height: 108.h,
+                          height: 80.h,
                         ),
-                        Image.asset("assets/images/app_icon_primary.png",
-                         height: 100,
-                         width: 100,
+                        Image.asset("assets/images/luxylion226.png",
+                          color: AppColors.getTextDarkLight(),
                          // color: AppColors.appContainerBgColor,
                         ),
                         Text(
@@ -96,7 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         SizedBox(
-                          height: 100.h,
+                          height: 70.h,
                         ),
                         TextFormField(
                           validator: (value) {
@@ -299,7 +299,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               )),
                             ),
                           ),
-                        )
+                        ),
+
                       ],
                     ),
                   ),

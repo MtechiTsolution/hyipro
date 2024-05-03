@@ -11,11 +11,13 @@ import '../view/screens/transfer/transfer_screen.dart';
 class BottomNavController extends GetxController {
   int selectedIndex = 0;
   List<Widget> screens = [
-    DashBoardScreen(),
+
     PlanScreen(),
-    TransferScreen(),
     TransactionHistoryScreen(),
+    //TransferScreen(),
     MenuScreen(),
+    DashBoardScreen(),
+
   ];
 
   Widget get currentScreen => screens[selectedIndex];

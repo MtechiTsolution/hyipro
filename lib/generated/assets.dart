@@ -51,6 +51,7 @@ class Assets {
   static const String imagesLocation = 'assets/images/location.png';
   static const String imagesLogo = 'assets/images/logo.png';
   static const String imagesLogout = 'assets/images/logout.png';
+  static const String imagesLuxylion226 = 'assets/images/luxylion226.png';
   static const String imagesMailImg = 'assets/images/mail_img.png';
   static const String imagesMainBalance = 'assets/images/main_balance.png';
   static const String imagesMaster = 'assets/images/master.png';
@@ -64,6 +65,7 @@ class Assets {
   static const String imagesNotificationIcon = 'assets/images/notification_icon.png';
   static const String imagesNotificationIconNew = 'assets/images/notification_icon_new.png';
   static const String imagesOpenTicket = 'assets/images/open_ticket.png';
+  static const String imagesP = 'assets/images/product_1.png';
   static const String imagesPasswordTextfieldImg = 'assets/images/password_textfield_img.png';
   static const String imagesPayout = 'assets/images/payout.png';
   static const String imagesPayoutAlertHeaderBg = 'assets/images/payout_alert_header_bg.png';
