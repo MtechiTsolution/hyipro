@@ -941,7 +941,6 @@ class RegisterScreen extends StatelessWidget {
                       height: 32.h,
                     ),
                   ],
-
                 ),
               ),
             ),

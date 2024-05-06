@@ -7,7 +7,7 @@ class PlanModel {
   PlanModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message =
-    json['message'] != null ? new PlanData.fromJson(json['message']) : null;
+        json['message'] != null ? new PlanData.fromJson(json['message']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -30,11 +30,11 @@ class PlanData {
 
   PlanData(
       {this.title,
-        this.subTitle,
-        this.shortDetails,
-        this.balance,
-        this.interestBalance,
-        this.plans});
+      this.subTitle,
+      this.shortDetails,
+      this.balance,
+      this.interestBalance,
+      this.plans});
 
   PlanData.fromJson(Map<String, dynamic> json) {
     title = json['title'];
@@ -67,6 +67,7 @@ class PlanData {
 class Plans {
   int? id;
   String? name;
+  String? image;
   String? min;
   String? max;
   String? price;
@@ -78,19 +79,21 @@ class Plans {
 
   Plans(
       {this.id,
-        this.name,
-        this.min,
-        this.max,
-        this.price,
-        this.profit,
-        this.profitType,
-        this.profitFor,
-        this.capitalBack,
-        this.capitalEarning});
+      this.name,
+      this.image,
+      this.min,
+      this.max,
+      this.price,
+      this.profit,
+      this.profitType,
+      this.profitFor,
+      this.capitalBack,
+      this.capitalEarning});
 
   Plans.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
+    image = json['image'];
     min = json['min'];
     max = json['max'];
     price = json['price'];
