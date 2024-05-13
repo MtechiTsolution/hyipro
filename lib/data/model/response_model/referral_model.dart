@@ -92,6 +92,7 @@ class Referral {
   String? lastname;
   String? username;
   String? email;
+  String? image;
   String? phoneCode;
   String? phone;
   String? total_invest;
@@ -113,6 +114,7 @@ class Referral {
     this.createdAt,
     this.fullname,
     this.mobile,
+    this.image
   });
 
   factory Referral.fromJson(Map<String, dynamic> json) => Referral(
@@ -130,6 +132,7 @@ class Referral {
             : DateTime.parse(json["created_at"]),
         fullname: json["fullname"],
         mobile: json["mobile"],
+       image: json["image"]
       );
 
   Map<String, dynamic> toJson() => {
@@ -144,5 +147,6 @@ class Referral {
         "created_at": createdAt?.toIso8601String(),
         "fullname": fullname,
         "mobile": mobile,
+         "image":image
       };
 }

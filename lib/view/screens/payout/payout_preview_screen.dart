@@ -422,12 +422,16 @@ class _PayoutPreviewScreenState extends State<PayoutPreviewScreen> {
                                       controller.message!.gateways![index];
                                   final gatewayFormFields = controller
                                       .gatewayFormFields[gateway.name];
+                                  if (gatewayFormFields == null){
+                                    print("not hace data");
+                                    print(controller.gatewayFormFields.length);
+                                  }
                                   final supportedCurrencies = controller
                                       .gatewaySupportedCurrencies[gateway.name];
 
                                   // Check if the gateway name is "Wire Transfer"
                                   if (gateway.name == '${widget.data.name}') {
-                                    print("testing...running");
+                                    print("testing...running2");
                                     return Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,

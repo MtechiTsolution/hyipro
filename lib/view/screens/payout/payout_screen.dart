@@ -485,11 +485,11 @@ class _PayoutScreenState extends State<PayoutScreen> {
                                               items: [
                                                 DropdownMenuItem(
                                                   value:
-                                                      '${payoutController.message!.interestBalance}',
+                                                      '${payoutController.message!.balance}',
                                                   child: Row(
                                                     children: [
                                                       Text(
-                                                        'Current Balance: ${payoutController.message!.interestAmount}',
+                                                        'Current Balance: ${payoutController.message!.depositAmount}',
                                                         style: TextStyle(
                                                           fontSize: 14.sp,
                                                           fontWeight:
@@ -511,14 +511,14 @@ class _PayoutScreenState extends State<PayoutScreen> {
                                                 setState(() {
                                                   selectedOption = value!;
                                                   walletType =
-                                                      "interest_balance"; // You can update this accordingly
+                                                      "balance"; // You can update this accordingly
                                                   if (kDebugMode) {
                                                     print(walletType);
                                                   }
                                                 });
                                               },
                                               value:
-                                                  '${payoutController.message!.interestBalance}', // Set the default value here
+                                                  '${payoutController.message!.balance}', // Set the default value here
                                               isExpanded: true,
                                               underline: Container(),
                                             );

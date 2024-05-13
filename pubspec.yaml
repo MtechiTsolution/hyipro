@@ -75,6 +75,8 @@ dependencies:
    fwfh_text_style: ^2.23.8
    circular_image: ^0.0.6
    carousel_slider: ^4.2.1
+   graphview: ^1.2.0
+   graphite: ^1.1.2
 
 dev_dependencies:
    flutter_test:

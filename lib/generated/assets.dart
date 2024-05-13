@@ -65,7 +65,6 @@ class Assets {
   static const String imagesNotificationIcon = 'assets/images/notification_icon.png';
   static const String imagesNotificationIconNew = 'assets/images/notification_icon_new.png';
   static const String imagesOpenTicket = 'assets/images/open_ticket.png';
-  static const String imagesP = 'assets/images/product_1.png';
   static const String imagesPasswordTextfieldImg = 'assets/images/password_textfield_img.png';
   static const String imagesPayout = 'assets/images/payout.png';
   static const String imagesPayoutAlertHeaderBg = 'assets/images/payout_alert_header_bg.png';
@@ -75,6 +74,7 @@ class Assets {
   static const String imagesPendingIconHistory = 'assets/images/pending_icon_history.png';
   static const String imagesPersonTextfieldImg = 'assets/images/person_textfield_img.png';
   static const String imagesPlan = 'assets/images/plan.png';
+  static const String imagesProduct1 = 'assets/images/product_1.png';
   static const String imagesProfileImg = 'assets/images/profile_img.png';
   static const String imagesReferBonusImg = 'assets/images/refer_bonus_img.png';
   static const String imagesReferTxtfieldImg = 'assets/images/refer_txtfield_img.png';

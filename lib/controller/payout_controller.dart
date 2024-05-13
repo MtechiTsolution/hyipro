@@ -113,9 +113,11 @@ class PayoutController extends GetxController {
 
   ///Get Payout Data
   Future<void> getPayoutData() async {
+
     _isLoading = true;
     update();
     ApiResponse apiResponse = await payoutRepo.getPayoutData();
+    print("not hace data2");
 
     if (apiResponse.response != null &&
         apiResponse.response!.statusCode == 200) {
@@ -141,9 +143,9 @@ class PayoutController extends GetxController {
           payoutModel = PayoutModel.fromJson(apiResponse.response!.data!);
           _message = payoutModel.message;
 
-          bankNameFlutterWave = _message!.gateways![2].bankName;
-          supportedCurrencyFlutterWave =
-              _message!.gateways![2].supportedCurrency;
+          // bankNameFlutterWave = _message!.gateways![2].bankName;
+          // supportedCurrencyFlutterWave =
+          //     _message!.gateways![2].supportedCurrency;
 
           if (kDebugMode) {
             print(bankNameFlutterWave);
@@ -153,6 +155,7 @@ class PayoutController extends GetxController {
           // Clear the existing form fields for each gateway
           gatewayFormFields.clear();
           selectedCurrency = null;
+
 
           for (var gateway in payoutModel.message!.gateways!) {
             final dynamicForm = gateway.dynamicForm;

@@ -196,7 +196,7 @@ class DashBoardScreen extends StatelessWidget {
                                                     ),
                                                   ),
                                                   Text(
-                                                    "${dashBoardController.dashBoardModel.message!.currency}${(dashBoardController.dashBoardModel.message!.interestBalance + dashBoardController.dashBoardModel.message!.mainBalance).toStringAsFixed(1)}",
+                                                    "${dashBoardController.dashBoardModel.message!.currency}${( dashBoardController.dashBoardModel.message!.mainBalance).toStringAsFixed(1)}",
                                                     style: GoogleFonts.anticSlab(
                                                       fontSize: 24.sp,
                                                       fontWeight: FontWeight.w700,
@@ -530,7 +530,7 @@ class DashBoardScreen extends StatelessWidget {
                                             height: 4.h,
                                           ),
                                           Text(
-                                            "${selectedLanguageStorage.read("languageData")["Total Invest"] ?? "Total Invest"}",
+                                            "${selectedLanguageStorage.read("languageData")["Total Purchased"] ?? "Total Purchased"}",
                                             style: GoogleFonts.niramit(
                                               fontSize: 14.sp,
                                               fontWeight: FontWeight.w500,
@@ -777,7 +777,7 @@ class DashBoardScreen extends StatelessWidget {
                                               ),
 
                                               Text(
-                                                "${selectedLanguageStorage.read("languageData")["Team Investment"] ?? "Team Investment"}",
+                                                "${selectedLanguageStorage.read("languageData")["Team Purchased"] ?? "Team Purchased"}",
                                                 style: GoogleFonts.niramit(
                                                     fontSize: 12.sp,
                                                     fontWeight: FontWeight.w500,
@@ -906,7 +906,7 @@ class DashBoardScreen extends StatelessWidget {
                                                 height: 4.h,
                                               ),
                                               Text(
-                                                "${selectedLanguageStorage.read("languageData")["Invest referrals"] ?? "Invest referrals"}",
+                                                "${selectedLanguageStorage.read("languageData")["Purchased referrals"] ?? "Purchased referrals"}",
                                                 style: GoogleFonts.niramit(
                                                     fontSize: 14.sp,
                                                     fontWeight: FontWeight.w500,

@@ -19,7 +19,7 @@ class SplashScreen extends StatelessWidget {
               children: [
               //  Image.asset("assets/images/app_icon_primary.png",width: double.infinity,fit: BoxFit.fitWidth,),
                 Center(
-                  child: Image.asset("assets/images/app_icon_primary.png",
+                  child: Image.asset("assets/images/luxylion226.png",
                   ),
                 ),
 

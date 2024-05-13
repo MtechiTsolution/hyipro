@@ -76,7 +76,7 @@ Widget appDrawer() {
                         height: 8.h,
                       ),
                       Text(
-                          "${selectedLanguageStorage.read("languageData")["Current Balance:"] ?? "Current Balance:"}   ${dashBoardController.message!.currency}${dashBoardController.message!.interestBalance + dashBoardController.message!.mainBalance}",
+                          "${selectedLanguageStorage.read("languageData")["Current Balance:"] ?? "Current Balance:"}   ${dashBoardController.message!.currency}${ dashBoardController.message!.mainBalance}",
                           style: GoogleFonts.publicSans(
                               fontWeight: FontWeight.w500,
                               fontSize: 16.sp,
