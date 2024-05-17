@@ -4,13 +4,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:graphite/graphite.dart';
 import 'package:hyip_pro/controller/dashboard_controller.dart';
 import 'package:hyip_pro/controller/referral_controller.dart';
 import 'package:hyip_pro/utils/colors/app_colors.dart';
 import 'package:intl/intl.dart';
+import 'package:responsive_text_widget/responsive_text_widget.dart';
 
-import '../../../controller/referral_bonus_controller.dart';
+
 
 class ReferralScreen extends StatefulWidget {
   static const String routeName = "/referralScreen";
@@ -40,22 +40,22 @@ class _ReferralScreenState extends State<ReferralScreen> {
 
   final selectedLanguageStorage = GetStorage();
 
-  static const String imageAPath = 'assets/images/logo.png'; // Replace with your image paths
-  static const String imageBPath = 'assets/images/logo.png';
+  // static const String imageAPath = 'assets/images/logo.png'; // Replace with your image paths
+  // static const String imageBPath = 'assets/images/logo.png';
 // ... Similarly for other image paths
 
-  static var list = '['
-      '{"id":"A","next":[{"outcome":"B"}]},'
-      '{"id":"B","next":[{"outcome":"A"}]},'
-      '{"id":"C","next":[{"outcome":"A"}]},'
-      '{"id":"D","next":[{"outcome":"A"}]},{"id":"E","next":[{"outcome":"A"}]},'
-      '{"id":"J","next":[{"outcome":"A"}]},'
-      '{"id":"I","next":[{"outcome":"A"}]},{"id":"F","next":[{"outcome":"A"}]},'
-      '{"id":"K","next":[{"outcome":"A"}]},'
-      '{"id":"H","next":[{"outcome":"A"}]},{"id":"L","next":[{"outcome":"A"}]},'
-      '{"id":"P","next":[{"outcome":"A"}]},'
-      '{"id":"M","next":[]},{"id":"N","next":[]}'
-      ']';
+  // static var list = '['
+  //     '{"id":"A","next":[{"outcome":"B"}]},'
+  //     '{"id":"B","next":[{"outcome":"A"}]},'
+  //     '{"id":"C","next":[{"outcome":"A"}]},'
+  //     '{"id":"D","next":[{"outcome":"A"}]},{"id":"E","next":[{"outcome":"A"}]},'
+  //     '{"id":"J","next":[{"outcome":"A"}]},'
+  //     '{"id":"I","next":[{"outcome":"A"}]},{"id":"F","next":[{"outcome":"A"}]},'
+  //     '{"id":"K","next":[{"outcome":"A"}]},'
+  //     '{"id":"H","next":[{"outcome":"A"}]},{"id":"L","next":[{"outcome":"A"}]},'
+  //     '{"id":"P","next":[{"outcome":"A"}]},'
+  //     '{"id":"M","next":[]},{"id":"N","next":[]}'
+  //     ']';
 
 
 
@@ -663,13 +663,13 @@ class _ReferralScreenState extends State<ReferralScreen> {
                                                 // Profile image and name widget
                                                 Container(
                                                   width: 100.0,
-                                                  height: 100.0,
+                                                  height: 115.h,
                                                   child: Column(
                                                     mainAxisAlignment: MainAxisAlignment.center,
                                                     children: [
                                                       Container(
                                                         padding: EdgeInsets.all(4), // Border width
-                                                        decoration: BoxDecoration(color: Colors.yellow, shape: BoxShape.circle),
+                                                        decoration: BoxDecoration(color: Colors.black, shape: BoxShape.circle),
                                                         child: ClipOval(
                                                           child: SizedBox.fromSize(
                                                             size: Size.fromRadius(30), // Image radius
@@ -680,12 +680,13 @@ class _ReferralScreenState extends State<ReferralScreen> {
 
                                                       SizedBox(height: 10.0),
 
-                                                      Text(
+                                                      ResponsiveText(
 
-                                                        "${referralController.message!.referralLink}".substring(30), // Replace with actual name
+                                                       text: "${referralController.message!.referralLink}".substring(30), // Replace with actual name
                                                         style: TextStyle(
-                                                          fontSize: 16.0,
-                                                          fontWeight: FontWeight.bold,
+                                                          fontSize: 14.0,
+                                                          color: Get.isDarkMode ? AppColors.appContainerBgColor : AppColors.appFillColor,
+                                                          // fontWeight: FontWeight.bold,
                                                         ),
                                                       ),
                                                     ],
@@ -706,7 +707,7 @@ class _ReferralScreenState extends State<ReferralScreen> {
                                               if(referralController.message!.referrals!['1']!.length>=1)
                                               Container(
                                                 width: 100.0,
-                                                height: 100.0,
+                                                height: 115.h,
                                                 child: Column(
                                                   mainAxisAlignment: MainAxisAlignment.center,
                                                   children: [
@@ -721,11 +722,13 @@ class _ReferralScreenState extends State<ReferralScreen> {
       ),   // Replace with your image asset
 
                                                     SizedBox(height: 10.0),
-                                                    Text(
-                                                      referralController.message!.referrals!['1']![0].username!, // Replace with actual name
+                                                    ResponsiveText(
+                                                     text:  referralController.message!.referrals!['1']![0].username!, // Replace with actual name
                                                       style: TextStyle(
-                                                        fontSize: 16.0,
-                                                        fontWeight: FontWeight.bold,
+                                                        fontSize: 14.0,
+                                                          color: Get.isDarkMode ? AppColors.appContainerBgColor : AppColors.appFillColor,
+                                                        // fontWeight: FontWeight.bold,
+                                                        // color: Colors.orange
                                                       ),
                                                     ),
                                                   ],
@@ -736,7 +739,7 @@ class _ReferralScreenState extends State<ReferralScreen> {
                                               if(referralController.message!.referrals!['1']!.length>=2)
                                               Container(
                                                 width: 100.0,
-                                                height: 100.0,
+                                                height: 115.h,
                                                 child: Column(
                                                   mainAxisAlignment: MainAxisAlignment.center,
                                                   children: [
@@ -749,11 +752,12 @@ class _ReferralScreenState extends State<ReferralScreen> {
                                                         backgroundImage:AssetImage('assets/images/luxylion226.png')
                                                     ),
                                                     SizedBox(height: 10.0),
-                                                    Text(
-                                                      referralController.message!.referrals!['1']![1].username!, // Replace with actual name
+                                                    ResponsiveText(
+                                                     text:  referralController.message!.referrals!['1']![1].username!, // Replace with actual name
                                                       style: TextStyle(
-                                                        fontSize: 16.0,
-                                                        fontWeight: FontWeight.bold,
+                                                        fontSize: 14.0,
+
+                                                        color: Get.isDarkMode ? AppColors.appContainerBgColor : AppColors.appFillColor,
                                                       ),
                                                     ),
                                                   ],
@@ -772,7 +776,7 @@ class _ReferralScreenState extends State<ReferralScreen> {
                                               if(referralController.message!.referrals!['1']!.length>=i)
                                               Container(
                                                 width: 100.0,
-                                                height: 100.0,
+                                                height: 115.h,
                                                 child: Column(
                                                   mainAxisAlignment: MainAxisAlignment.center,
                                                   children: [
@@ -785,11 +789,12 @@ class _ReferralScreenState extends State<ReferralScreen> {
                                                         backgroundImage:AssetImage('assets/images/luxylion226.png')
                                                     ),
                                                     SizedBox(height: 10.0),
-                                                    Text(
-                                                      referralController.message!.referrals!['1']![i-1].username!, // Replace with actual name
+                                                    ResponsiveText(
+                                                    text:   referralController.message!.referrals!['1']![i-1].username!, // Replace with actual name
                                                       style: TextStyle(
-                                                        fontSize: 16.0,
-                                                        fontWeight: FontWeight.bold,
+                                                        fontSize: 14.0,
+
+                                                        color: Get.isDarkMode ? AppColors.appContainerBgColor : AppColors.appFillColor,
                                                       ),
                                                     ),
                                                   ],
@@ -800,7 +805,7 @@ class _ReferralScreenState extends State<ReferralScreen> {
                                               if(referralController.message!.referrals!['1']!.length>=i+1)
                                               Container(
                                                 width: 100.0,
-                                                height: 100.0,
+                                                height: 115.h,
                                                 child: Column(
                                                   mainAxisAlignment: MainAxisAlignment.center,
                                                   children: [
@@ -813,11 +818,12 @@ class _ReferralScreenState extends State<ReferralScreen> {
                                                         backgroundImage:AssetImage('assets/images/luxylion226.png')
                                                     ),
                                                     SizedBox(height: 10.0),
-                                                    Text(
-                                                      referralController.message!.referrals!['1']![i].username!, // Replace with actual name
+                                                    ResponsiveText(
+                                                     text:  referralController.message!.referrals!['1']![i].username!, // Replace with actual name
                                                       style: TextStyle(
-                                                        fontSize: 16.0,
-                                                        fontWeight: FontWeight.bold,
+                                                        fontSize: 14.0,
+
+                                                        color: Get.isDarkMode ? AppColors.appContainerBgColor : AppColors.appFillColor,
                                                       ),
                                                     ),
                                                   ],
@@ -828,7 +834,7 @@ class _ReferralScreenState extends State<ReferralScreen> {
                                               if(referralController.message!.referrals!['1']!.length>=i+2)
                                               Container(
                                                 width: 100.0,
-                                                height: 100.0,
+                                                height: 115.h,
                                                 child: Column(
                                                   mainAxisAlignment: MainAxisAlignment.center,
                                                   children: [
@@ -841,11 +847,12 @@ class _ReferralScreenState extends State<ReferralScreen> {
                                                         backgroundImage:AssetImage('assets/images/luxylion226.png')
                                                     ),
                                                     SizedBox(height: 10.0),
-                                                    Text(
-                                                      referralController.message!.referrals!['1']![i+1].username!, // Replace with actual name
+                                                    ResponsiveText(
+                                                     text: referralController.message!.referrals!['1']![i+1].username!, // Replace with actual name
                                                       style: TextStyle(
-                                                        fontSize: 16.0,
-                                                        fontWeight: FontWeight.bold,
+                                                        fontSize: 14.0,
+
+                                                        color: Get.isDarkMode ? AppColors.appContainerBgColor : AppColors.appFillColor,
                                                       ),
                                                     ),
                                                   ],

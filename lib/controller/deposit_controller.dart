@@ -647,10 +647,10 @@ class DepositController extends GetxController {
                     borderRadius: BorderRadius.circular(16),
                   ),
                   content: Container(
-                    height: 260.h,
-                    width: 260.w,
+                    height: 270.h,
+                    width: 270.w,
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(5.0),
                       child: Column(
                         children: [
                           Lottie.asset("assets/images/success.json"),
@@ -1582,7 +1582,8 @@ class DepositController extends GetxController {
                         fieldValue = textControllers[fieldName]!.text;
                         fieldNames.add(fieldName);
                         fieldValuesList.add(fieldValue);
-                        // print("Field $fieldName: $fieldValue");
+                        print(value);
+                         // print("Field $fieldName: $fieldValue");
                         update();
                       }
                       if (kDebugMode) {

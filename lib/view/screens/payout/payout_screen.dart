@@ -9,6 +9,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hyip_pro/controller/payout_controller.dart';
 import 'package:hyip_pro/view/screens/payout/payout_preview_screen.dart';
+import 'package:responsive_text_widget/responsive_text_widget.dart';
 
 import '../../../data/model/response_model/payout_model.dart';
 import '../../../utils/colors/app_colors.dart';
@@ -325,10 +326,10 @@ class _PayoutScreenState extends State<PayoutScreen> {
                                                         MainAxisAlignment
                                                             .spaceBetween,
                                                     children: [
-                                                      Text(
-                                                        "${selectedLanguageStorage.read("languageData")["Transaction Limit"] ?? "Transaction Limit"}",
+                                                      ResponsiveText(
+                                                        text: "${selectedLanguageStorage.read("languageData")["Transaction Limit"] ?? "Transaction Limit"}",
                                                         style: GoogleFonts.niramit(
-                                                            fontSize: 16.sp,
+                                                            fontSize: 14.sp,
                                                             fontWeight:
                                                                 FontWeight.w400,
                                                             color: Get
@@ -338,10 +339,10 @@ class _PayoutScreenState extends State<PayoutScreen> {
                                                                 : AppColors
                                                                     .appBlackColor50),
                                                       ),
-                                                      Text(
-                                                        "${minAmount} - ${maxAmount} ${currency}",
+                                                      ResponsiveText(
+                                                        text: "${minAmount} - ${maxAmount} ${currency}",
                                                         style: GoogleFonts.niramit(
-                                                            fontSize: 16.sp,
+                                                            fontSize: 14.sp,
                                                             fontWeight:
                                                                 FontWeight.w400,
                                                             color: Get

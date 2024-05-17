@@ -10,7 +10,7 @@ import 'package:hyip_pro/view/verify_required/sms_verification_screen.dart';
 import 'package:hyip_pro/view/verify_required/two_factor_verification_screen.dart';
 import '../data/model/response_model/plan_model.dart';
 import '../data/repository/plan_repo.dart';
-import '../view/widgets/app_plan_purchase.dart';
+
 
 class PlanController extends GetxController {
   final PlanRepo planRepo;

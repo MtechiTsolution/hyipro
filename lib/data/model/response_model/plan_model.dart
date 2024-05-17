@@ -25,6 +25,7 @@ class PlanData {
   String? subTitle;
   String? shortDetails;
   String? balance;
+  String? totalInvestment_refer;
   String? interestBalance;
   List<Plans>? plans;
 
@@ -34,6 +35,7 @@ class PlanData {
       this.shortDetails,
       this.balance,
       this.interestBalance,
+        this.totalInvestment_refer,
       this.plans});
 
   PlanData.fromJson(Map<String, dynamic> json) {
@@ -42,6 +44,8 @@ class PlanData {
     shortDetails = json['short_details'];
     balance = json['balance'];
     interestBalance = json['interest_balance'];
+    totalInvestment_refer=json['totalInvestment_refer'];
+    print("tes: ${json['totalInvestment_refer']}");
     if (json['plans'] != null) {
       plans = <Plans>[];
       json['plans'].forEach((v) {
@@ -57,6 +61,7 @@ class PlanData {
     data['short_details'] = this.shortDetails;
     data['balance'] = this.balance;
     data['interest_balance'] = this.interestBalance;
+    data['totalInvestment_refer']=this.totalInvestment_refer;
     if (this.plans != null) {
       data['plans'] = this.plans!.map((v) => v.toJson()).toList();
     }

@@ -61,6 +61,7 @@ class DashBoardController extends GetxController {
       } else {
         dashBoardModel = DashBoardModel.fromJson(apiResponse.response!.data!);
         _message = dashBoardModel.message;
+
         update();
       }
     } else {

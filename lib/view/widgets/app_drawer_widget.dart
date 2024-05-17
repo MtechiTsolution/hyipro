@@ -28,6 +28,7 @@ Widget appDrawer() {
     elevation: 0,
     backgroundColor: AppColors.getBackgroundDarkLight(),
     child: GetBuilder<DashBoardController>(builder: (dashBoardController) {
+     // print("imgp- ${dashBoardController.message!.userImage!}");
       return ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
@@ -145,7 +146,7 @@ Widget appDrawer() {
                                       width: 6.w,
                                     ),
                                     Text(
-                                        "${selectedLanguageStorage.read("languageData")["Invest"] ?? "Invest"}",
+                                        "${selectedLanguageStorage.read("languageData")["Purchase"] ?? "Purchase"}",
                                         style: GoogleFonts.niramit(
                                             fontWeight: FontWeight.w500,
                                             fontSize: 16.sp,
@@ -203,7 +204,7 @@ Widget appDrawer() {
                         width: 16.w,
                       ),
                       Text(
-                        "${selectedLanguageStorage.read("languageData")["Invest History"] ?? "Invest History"}",
+                        "${selectedLanguageStorage.read("languageData")["Purchase History"] ?? "Purchase History"}",
                         style: GoogleFonts.publicSans(
                           fontSize: 16.sp,
                           fontWeight: FontWeight.w400,
