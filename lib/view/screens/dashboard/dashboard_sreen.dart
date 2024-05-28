@@ -7,6 +7,7 @@ import 'package:hyip_pro/controller/dashboard_controller.dart';
 import 'package:hyip_pro/controller/notification_controller.dart';
 import 'package:hyip_pro/utils/colors/app_colors.dart';
 import 'package:hyip_pro/view/screens/notification/notification_screen.dart';
+import 'package:hyip_pro/view/screens/payout/payout_screen.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
@@ -151,62 +152,67 @@ class DashBoardScreen extends StatelessWidget {
                                 Row(
                                   children: [
                                     Expanded(
-                                      child: Container(
-                                        padding: EdgeInsets.only(top: 16, left: 10, right: 16, bottom: 16),
-                                        decoration: BoxDecoration(
-                                          color: Get.isDarkMode ? AppColors.appContainerBgColor : AppColors.appFillColor,
-                                          borderRadius: BorderRadius.circular(16),
-                                        ),
-                                        child: Row(
-                                          children: [
-                                            Container(
-                                              width: 40,
-                                              height: 40,
-                                              padding: EdgeInsets.all(5),
-                                              decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color: AppColors.appBlackColor80,
-                                              ),
-                                              child: CircleAvatar(
-                                                radius: 15,
-                                                backgroundColor: Colors.transparent,
-                                                child: ClipOval(
-                                                  child: Padding(
-                                                    padding: EdgeInsets.all(2),
-                                                    child: Image.asset(
-                                                      "assets/images/main_balance.png",
-                                                      width: 40,
-                                                      height: 40,
+                                      child: InkWell(
+                                        onTap: (){
+                                          Navigator.pushNamed(context, PayoutScreen.routeName);
+                                        },
+                                        child: Container(
+                                          padding: EdgeInsets.only(top: 16, left: 10, right: 16, bottom: 16),
+                                          decoration: BoxDecoration(
+                                            color: Get.isDarkMode ? AppColors.appContainerBgColor : AppColors.appFillColor,
+                                            borderRadius: BorderRadius.circular(16),
+                                          ),
+                                          child: Row(
+                                            children: [
+                                              Container(
+                                                width: 40,
+                                                height: 40,
+                                                padding: EdgeInsets.all(5),
+                                                decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  color: AppColors.appBlackColor80,
+                                                ),
+                                                child: CircleAvatar(
+                                                  radius: 15,
+                                                  backgroundColor: Colors.transparent,
+                                                  child: ClipOval(
+                                                    child: Padding(
+                                                      padding: EdgeInsets.all(2),
+                                                      child: Image.asset(
+                                                        "assets/images/main_balance.png",
+                                                        width: 40,
+                                                        height: 40,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                            SizedBox(width: 8.w),
-                                            Expanded(
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    "${selectedLanguageStorage.read("languageData")["Current Balance"] ?? "Current Balance"}",
-                                                    style: GoogleFonts.aBeeZee(
-                                                      fontWeight: FontWeight.w600,
-                                                      fontSize: 20.sp,
-                                                      color: AppColors.getTextDarkLight(),
+                                              SizedBox(width: 8.w),
+                                              Expanded(
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      "${selectedLanguageStorage.read("languageData")["Current Balance"] ?? "Current Balance"}",
+                                                      style: GoogleFonts.aBeeZee(
+                                                        fontWeight: FontWeight.w600,
+                                                        fontSize: 20.sp,
+                                                        color: AppColors.getTextDarkLight(),
+                                                      ),
                                                     ),
-                                                  ),
-                                                  Text(
-                                                    "${dashBoardController.dashBoardModel.message!.currency}${( dashBoardController.dashBoardModel.message!.mainBalance).toStringAsFixed(1)}",
-                                                    style: GoogleFonts.anticSlab(
-                                                      fontSize: 24.sp,
-                                                      fontWeight: FontWeight.w700,
-                                                      color: AppColors.appWhiteColor,
+                                                    Text(
+                                                      "${dashBoardController.dashBoardModel.message!.currency}${( dashBoardController.dashBoardModel.message!.mainBalance).toStringAsFixed(1)}",
+                                                      style: GoogleFonts.anticSlab(
+                                                        fontSize: 24.sp,
+                                                        fontWeight: FontWeight.w700,
+                                                        color: AppColors.appWhiteColor,
+                                                      ),
                                                     ),
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),

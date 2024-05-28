@@ -138,9 +138,10 @@ class _DepositPreviewScreenState extends State<DepositPreviewScreen> {
                               ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                children: depositController.testing(
-                                    depositController.gateways![widget
-                                        .selectedind]), // Use the list of form fields here
+                                children:depositController.formFields
+                                // depositController.testing(
+                                //     depositController.gateways![widget
+                                //         .selectedind]), // Use the list of form fields here
                               ),
                             ],
                           ),

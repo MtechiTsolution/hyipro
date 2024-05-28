@@ -79,6 +79,8 @@ class DepositRepo {
         }
       }
 
+      print(formData.toString());
+
       Response response = await dioClient.post(
         AppConstants.manualPaymentSubmitUri,
         data: formData,

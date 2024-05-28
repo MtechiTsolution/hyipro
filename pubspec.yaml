@@ -77,6 +77,9 @@ dependencies:
    carousel_slider: ^4.2.1
    graphview: ^1.2.0
    graphite: ^1.1.2
+   image_cropper: ^4.0.0
+
+
    responsive_text_widget: ^0.0.2
 
 dev_dependencies:

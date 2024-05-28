@@ -1549,6 +1549,7 @@ class DepositController extends GetxController {
   }
 
   testing(gateway) {
+    print("restarting...");
     formFields.clear();
     if (gateway.parameters != null) {
       gateway.parameters!.forEach((key, value) {
@@ -1563,6 +1564,7 @@ class DepositController extends GetxController {
           dynamic textAreaFieldValue;
 
           if (value['type'] == 'text') {
+
             textControllers[fieldName] = TextEditingController();
             formFields.add(
               Column(
@@ -1576,14 +1578,15 @@ class DepositController extends GetxController {
                     height: 10.h,
                   ),
                   TextFormField(
+
                     controller: textControllers[fieldName],
                     onChanged: (value) {
                       for (var fieldName in textControllers.keys) {
                         fieldValue = textControllers[fieldName]!.text;
                         fieldNames.add(fieldName);
                         fieldValuesList.add(fieldValue);
-                        print(value);
-                         // print("Field $fieldName: $fieldValue");
+                        print("val: $value");
+                          print("Field $fieldName: $fieldValue");
                         update();
                       }
                       if (kDebugMode) {

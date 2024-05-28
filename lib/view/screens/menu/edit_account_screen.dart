@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hyip_pro/controller/my_account_controller.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../../utils/colors/app_colors.dart';
+import 'package:image_cropper/image_cropper.dart';
 
 
 class EditAccountScreen extends StatefulWidget {
@@ -33,6 +34,51 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
   }
 
   final account = Get.find<MyAccountController>();
+  File? _pickedImage;
+  final ImagePicker _picker = ImagePicker();
+
+  Future<void> _cropImage(String imagePath) async {
+    final croppedFile = await ImageCropper().cropImage(
+      sourcePath: imagePath,
+      aspectRatioPresets: [
+        CropAspectRatioPreset.square,
+        CropAspectRatioPreset.ratio3x2,
+        CropAspectRatioPreset.original,
+        CropAspectRatioPreset.ratio4x3,
+        CropAspectRatioPreset.ratio16x9,
+      ],
+      uiSettings: [
+        AndroidUiSettings(
+          toolbarTitle: 'Cropper',
+          toolbarColor: Colors.deepOrange,
+          toolbarWidgetColor: Colors.white,
+          initAspectRatio: CropAspectRatioPreset.original,
+          lockAspectRatio: false,
+        ),
+        IOSUiSettings(
+          title: 'Cropper',
+        ),
+        WebUiSettings(
+          context: context,
+        ),
+      ],
+    );
+
+    if (croppedFile != null) {
+      setState(() {
+        _pickedImage = File(croppedFile.path);
+      });
+    }
+  }
+
+  Future<void> _pickImage(ImageSource source) async {
+    final pickedFile = await _picker.pickImage(source: source);
+
+    if (pickedFile != null) {
+      // Crop the picked image
+      await _cropImage(pickedFile.path);
+    }
+  }
 
   @override
   void initState() {
@@ -84,7 +130,8 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
                   color: AppColors.getTextDarkLight(),),
               ),
             ),
-            body: ListView(
+            body:
+            ListView(
               children: [
 
                 Padding(
@@ -148,6 +195,12 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
                                       //   )
                                       //       : const Icon(Icons.account_circle, size: 180.0),
                                       // ),
+
+
+
+
+
+
                                       ClipOval(
                                         child: pickedImage != null
                                             ? Image.file(
@@ -586,3 +639,187 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
     );
   }
 }
+
+//
+// import 'dart:io';
+// import 'package:flutter/material.dart';
+// import 'package:image_cropper/image_cropper.dart';
+// import 'package:image_picker/image_picker.dart';
+// import 'package:cached_network_image/cached_network_image.dart';
+//
+// class MyImagePickerWidget extends StatefulWidget {
+//   @override
+//   _MyImagePickerWidgetState createState() => _MyImagePickerWidgetState();
+// }
+//
+// class _MyImagePickerWidgetState extends State<MyImagePickerWidget> {
+//   File? _pickedImage;
+//   final ImagePicker _picker = ImagePicker();
+//
+//   Future<void> _cropImage(String imagePath) async {
+//     final croppedFile = await ImageCropper().cropImage(
+//       sourcePath: imagePath,
+//       aspectRatioPresets: [
+//         CropAspectRatioPreset.square,
+//         CropAspectRatioPreset.ratio3x2,
+//         CropAspectRatioPreset.original,
+//         CropAspectRatioPreset.ratio4x3,
+//         CropAspectRatioPreset.ratio16x9,
+//       ],
+//       uiSettings: [
+//         AndroidUiSettings(
+//           toolbarTitle: 'Cropper',
+//           toolbarColor: Colors.deepOrange,
+//           toolbarWidgetColor: Colors.white,
+//           initAspectRatio: CropAspectRatioPreset.original,
+//           lockAspectRatio: false,
+//         ),
+//         IOSUiSettings(
+//           title: 'Cropper',
+//         ),
+//         WebUiSettings(
+//           context: context,
+//         ),
+//       ],
+//     );
+//
+//     if (croppedFile != null) {
+//       setState(() {
+//         _pickedImage = File(croppedFile.path);
+//       });
+//     }
+//   }
+//
+//   Future<void> _pickImage(ImageSource source) async {
+//     final pickedFile = await _picker.pickImage(source: source);
+//
+//     if (pickedFile != null) {
+//       // Crop the picked image
+//       await _cropImage(pickedFile.path);
+//     }
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return
+//
+//       SizedBox(
+//       width: double.infinity,
+//       child: Row(
+//         mainAxisAlignment: MainAxisAlignment.center,
+//         children: [
+//           Center(
+//             child: Stack(
+//               children: [
+//                 ClipOval(
+//                   child: _pickedImage != null
+//                       ? Image.file(
+//                     _pickedImage!,
+//                     height: 180.0,
+//                     width: 180.0,
+//                     fit: BoxFit.cover,
+//                   )
+//                       : CachedNetworkImage(
+//                     imageUrl: "${account.message?.userImage ?? ''}",
+//                     height: 180.0,
+//                     width: 180.0,
+//                     fit: BoxFit.cover,
+//                     placeholder: (context, url) => CircularProgressIndicator(), // Placeholder while loading
+//                     errorWidget: (context, url, error) => const Icon(Icons.account_circle, size: 180.0), // Error widget if loading fails
+//                   ),
+//                 ),
+//                 Positioned(
+//                   bottom: 0,
+//                   right: 0,
+//                   child: Container(
+//                     decoration: BoxDecoration(
+//                       color: AppColors.appPrimaryColor,
+//                       shape: BoxShape.circle,
+//                       border: Border.all(color: Colors.grey.shade100),
+//                     ),
+//                     child: IconButton(
+//                       icon: const Icon(Icons.add_a_photo, color: AppColors.appWhiteColor),
+//                       onPressed: () {
+//                         showModalBottomSheet(
+//                           context: context,
+//                           builder: (BuildContext context) {
+//                             return Container(
+//                               height: MediaQuery.of(context).size.height * 0.2,
+//                               width: double.infinity,
+//                               child: Row(
+//                                 mainAxisAlignment: MainAxisAlignment.center,
+//                                 children: <Widget>[
+//                                   SizedBox(height: 10.h),
+//                                   GestureDetector(
+//                                     onTap: () {
+//                                       _pickImage(ImageSource.camera);
+//                                     },
+//                                     child: Container(
+//                                       height: 80.h,
+//                                       width: 150.w,
+//                                       decoration: BoxDecoration(
+//                                         borderRadius: BorderRadius.circular(5),
+//                                         color: AppColors.getContainerBgDarkLight(),
+//                                         border: Border.all(color: AppColors.appBlackColor50),
+//                                       ),
+//                                       child: Column(
+//                                         mainAxisAlignment: MainAxisAlignment.center,
+//                                         children: [
+//                                           Icon(Icons.camera_alt, size: 35.h, color: AppColors.appBlackColor50),
+//                                           SizedBox(height: 2.h),
+//                                           Text('Pick from Camera', style: TextStyle(fontSize: 14.sp)),
+//                                         ],
+//                                       ),
+//                                     ),
+//                                   ),
+//                                   SizedBox(width: 10.w),
+//                                   GestureDetector(
+//                                     onTap: () {
+//                                       _pickImage(ImageSource.gallery);
+//                                     },
+//                                     child: Container(
+//                                       height: 80.h,
+//                                       width: 150.w,
+//                                       decoration: BoxDecoration(
+//                                         borderRadius: BorderRadius.circular(5),
+//                                         color: AppColors.getContainerBgDarkLight(),
+//                                         border: Border.all(color: AppColors.appBlackColor50),
+//                                       ),
+//                                       child: Column(
+//                                         mainAxisAlignment: MainAxisAlignment.center,
+//                                         children: [
+//                                           Icon(Icons.photo_library, size: 35.h, color: AppColors.appBlackColor50),
+//                                           SizedBox(height: 2.h),
+//                                           Text('Pick from Gallery', style: TextStyle(fontSize: 14.sp)),
+//                                         ],
+//                                       ),
+//                                     ),
+//                                   ),
+//                                 ],
+//                               ),
+//                             );
+//                           },
+//                         );
+//                       },
+//                     ),
+//                   ),
+//                 ),
+//               ],
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+//
+// void main() {
+//   runApp(MaterialApp(
+//     home: Scaffold(
+//       appBar: AppBar(
+//         title: Text('Image Picker and Cropper Example'),
+//       ),
+//       body: MyImagePickerWidget(),
+//     ),
+//   ));
+// }
