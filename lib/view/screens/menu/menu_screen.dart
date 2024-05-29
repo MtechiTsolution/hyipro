@@ -661,6 +661,23 @@ class _MenuScreenState extends State<MenuScreen> {
                                     ),
                                   ),
                                 ),
+
+                                Center(
+                                  child: ElevatedButton(
+                                      onPressed: () async {
+                                        var res = await myAccountController
+                                            .closeAccount();
+                                        if (res) {
+                                          print("logout");
+                                          Get.find<AuthController>()
+                                              .removeUserToken();
+                                          await Get.offNamedUntil(
+                                              LoginScreen.routeName,
+                                              (route) => false);
+                                        }
+                                      },
+                                      child: Text("Closed account")),
+                                )
                               ],
                             ),
                           ),

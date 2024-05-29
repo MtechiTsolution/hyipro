@@ -6,8 +6,9 @@ class DepositHistorySearchModel {
 
   DepositHistorySearchModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    message =
-    json['message'] != null ? new DepositHistorySearchData.fromJson(json['message']) : null;
+    message = json['message'] != null
+        ? new DepositHistorySearchData.fromJson(json['message'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -37,18 +38,18 @@ class DepositHistorySearchData {
 
   DepositHistorySearchData(
       {this.currentPage,
-        this.data,
-        this.firstPageUrl,
-        this.from,
-        this.lastPage,
-        this.lastPageUrl,
-        this.links,
-        this.nextPageUrl,
-        this.path,
-        this.perPage,
-        this.prevPageUrl,
-        this.to,
-        this.total});
+      this.data,
+      this.firstPageUrl,
+      this.from,
+      this.lastPage,
+      this.lastPageUrl,
+      this.links,
+      this.nextPageUrl,
+      this.path,
+      this.perPage,
+      this.prevPageUrl,
+      this.to,
+      this.total});
 
   DepositHistorySearchData.fromJson(Map<String, dynamic> json) {
     currentPage = json['current_page'];
@@ -107,15 +108,17 @@ class Data {
   dynamic charge;
   dynamic status;
   dynamic time;
+  dynamic feedback;
 
   Data(
       {this.transactionId,
-        this.gateway,
-        this.currency,
-        this.amount,
-        this.charge,
-        this.status,
-        this.time});
+      this.gateway,
+      this.currency,
+      this.amount,
+      this.charge,
+      this.status,
+      this.time,
+      this.feedback});
 
   Data.fromJson(Map<String, dynamic> json) {
     transactionId = json['transactionId'];
@@ -125,6 +128,7 @@ class Data {
     charge = json['charge'];
     status = json['status'];
     time = json['time'];
+    feedback = json['feedback'];
   }
 
   Map<String, dynamic> toJson() {
@@ -136,6 +140,7 @@ class Data {
     data['charge'] = this.charge;
     data['status'] = this.status;
     data['time'] = this.time;
+    data['feedback'] = this.feedback;
     return data;
   }
 }

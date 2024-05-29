@@ -153,14 +153,22 @@ class DashBoardScreen extends StatelessWidget {
                                   children: [
                                     Expanded(
                                       child: InkWell(
-                                        onTap: (){
-                                          Navigator.pushNamed(context, PayoutScreen.routeName);
+                                        onTap: () {
+                                          Navigator.pushNamed(
+                                              context, PayoutScreen.routeName);
                                         },
                                         child: Container(
-                                          padding: EdgeInsets.only(top: 16, left: 10, right: 16, bottom: 16),
+                                          padding: EdgeInsets.only(
+                                              top: 16,
+                                              left: 10,
+                                              right: 16,
+                                              bottom: 16),
                                           decoration: BoxDecoration(
-                                            color: Get.isDarkMode ? AppColors.appContainerBgColor : AppColors.appFillColor,
-                                            borderRadius: BorderRadius.circular(16),
+                                            color: Get.isDarkMode
+                                                ? AppColors.appContainerBgColor
+                                                : AppColors.appFillColor,
+                                            borderRadius:
+                                                BorderRadius.circular(16),
                                           ),
                                           child: Row(
                                             children: [
@@ -170,14 +178,17 @@ class DashBoardScreen extends StatelessWidget {
                                                 padding: EdgeInsets.all(5),
                                                 decoration: BoxDecoration(
                                                   shape: BoxShape.circle,
-                                                  color: AppColors.appBlackColor80,
+                                                  color:
+                                                      AppColors.appBlackColor80,
                                                 ),
                                                 child: CircleAvatar(
                                                   radius: 15,
-                                                  backgroundColor: Colors.transparent,
+                                                  backgroundColor:
+                                                      Colors.transparent,
                                                   child: ClipOval(
                                                     child: Padding(
-                                                      padding: EdgeInsets.all(2),
+                                                      padding:
+                                                          EdgeInsets.all(2),
                                                       child: Image.asset(
                                                         "assets/images/main_balance.png",
                                                         width: 40,
@@ -190,22 +201,29 @@ class DashBoardScreen extends StatelessWidget {
                                               SizedBox(width: 8.w),
                                               Expanded(
                                                 child: Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
                                                       "${selectedLanguageStorage.read("languageData")["Current Balance"] ?? "Current Balance"}",
-                                                      style: GoogleFonts.aBeeZee(
-                                                        fontWeight: FontWeight.w600,
+                                                      style:
+                                                          GoogleFonts.aBeeZee(
+                                                        fontWeight:
+                                                            FontWeight.w600,
                                                         fontSize: 20.sp,
-                                                        color: AppColors.getTextDarkLight(),
+                                                        color: AppColors
+                                                            .getTextDarkLight(),
                                                       ),
                                                     ),
                                                     Text(
-                                                      "${dashBoardController.dashBoardModel.message!.currency}${( dashBoardController.dashBoardModel.message!.mainBalance).toStringAsFixed(1)}",
-                                                      style: GoogleFonts.anticSlab(
+                                                      "${dashBoardController.dashBoardModel.message!.currency}${(dashBoardController.dashBoardModel.message!.mainBalance).toStringAsFixed(1)}",
+                                                      style:
+                                                          GoogleFonts.anticSlab(
                                                         fontSize: 24.sp,
-                                                        fontWeight: FontWeight.w700,
-                                                        color: AppColors.appWhiteColor,
+                                                        fontWeight:
+                                                            FontWeight.w700,
+                                                        color: AppColors
+                                                            .appWhiteColor,
                                                       ),
                                                     ),
                                                   ],
@@ -219,10 +237,17 @@ class DashBoardScreen extends StatelessWidget {
                                     SizedBox(width: 15.w),
                                     Expanded(
                                       child: Container(
-                                        padding: EdgeInsets.only(top: 16, left: 10, right: 16, bottom: 16),
+                                        padding: EdgeInsets.only(
+                                            top: 16,
+                                            left: 10,
+                                            right: 16,
+                                            bottom: 16),
                                         decoration: BoxDecoration(
-                                          color: Get.isDarkMode ? AppColors.appContainerBgColor : AppColors.appFillColor,
-                                          borderRadius: BorderRadius.circular(16),
+                                          color: Get.isDarkMode
+                                              ? AppColors.appContainerBgColor
+                                              : AppColors.appFillColor,
+                                          borderRadius:
+                                              BorderRadius.circular(16),
                                         ),
                                         child: Row(
                                           children: [
@@ -232,11 +257,13 @@ class DashBoardScreen extends StatelessWidget {
                                               padding: EdgeInsets.all(5),
                                               decoration: BoxDecoration(
                                                 shape: BoxShape.circle,
-                                                color: AppColors.appBlackColor80,
+                                                color:
+                                                    AppColors.appBlackColor80,
                                               ),
                                               child: CircleAvatar(
                                                 radius: 15,
-                                                backgroundColor: Colors.transparent,
+                                                backgroundColor:
+                                                    Colors.transparent,
                                                 child: ClipOval(
                                                   child: Padding(
                                                     padding: EdgeInsets.all(2),
@@ -252,22 +279,28 @@ class DashBoardScreen extends StatelessWidget {
                                             SizedBox(width: 8.w),
                                             Expanded(
                                               child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
                                                     "${selectedLanguageStorage.read("languageData")["Total Withdraw"] ?? "Total Withdraw"}",
                                                     style: GoogleFonts.aBeeZee(
-                                                      fontWeight: FontWeight.w600,
+                                                      fontWeight:
+                                                          FontWeight.w600,
                                                       fontSize: 20.sp,
-                                                      color: AppColors.getTextDarkLight(),
+                                                      color: AppColors
+                                                          .getTextDarkLight(),
                                                     ),
                                                   ),
                                                   Text(
                                                     "${dashBoardController.dashBoardModel.message!.currency}${dashBoardController.dashBoardModel.message!.totalPayout}",
-                                                    style: GoogleFonts.anticSlab(
+                                                    style:
+                                                        GoogleFonts.anticSlab(
                                                       fontSize: 20.sp,
-                                                      fontWeight: FontWeight.w700,
-                                                      color: AppColors.appWhiteColor,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      color: AppColors
+                                                          .appWhiteColor,
                                                     ),
                                                   ),
                                                 ],
@@ -283,8 +316,6 @@ class DashBoardScreen extends StatelessWidget {
                                 // Add your third card here
                               ],
                             ),
-
-
 
 //Vertical design file
 
@@ -467,7 +498,7 @@ class DashBoardScreen extends StatelessWidget {
                             //   height: 15.h,
                             // ),
 
-     //3rd card
+                            //3rd card
                             Container(
                               padding: EdgeInsets.only(
                                   top: 16, left: 10, right: 10, bottom: 16),
@@ -479,8 +510,6 @@ class DashBoardScreen extends StatelessWidget {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-
-
                                   Container(
                                     width: 117.w,
                                     decoration: BoxDecoration(
@@ -494,7 +523,7 @@ class DashBoardScreen extends StatelessWidget {
                                           top: 22.h, left: 16.w, bottom: 22.h),
                                       child: Column(
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                            CrossAxisAlignment.center,
                                         children: [
                                           Container(
                                             padding: EdgeInsets.all(8),
@@ -502,7 +531,7 @@ class DashBoardScreen extends StatelessWidget {
                                             width: 44.w,
                                             decoration: BoxDecoration(
                                               borderRadius:
-                                              BorderRadius.circular(8),
+                                                  BorderRadius.circular(8),
                                               color: AppColors
                                                   .appTotalDepositIconColor,
                                             ),
@@ -516,11 +545,11 @@ class DashBoardScreen extends StatelessWidget {
                                             builder: (referralBonusController) {
                                               return Text(
                                                 dashBoardController
-                                                    .dashBoardModel
-                                                    .message!
-                                                    .roi!
-                                                    .totalInvestAmount !=
-                                                    null
+                                                            .dashBoardModel
+                                                            .message!
+                                                            .roi!
+                                                            .totalInvestAmount !=
+                                                        null
                                                     ? "${dashBoardController.dashBoardModel.message!.currency}${dashBoardController.dashBoardModel.message!.roi!.totalInvestAmount!}"
                                                     : "${dashBoardController.dashBoardModel.message!.currency}0.00",
                                                 style: GoogleFonts.publicSans(
@@ -649,13 +678,14 @@ class DashBoardScreen extends StatelessWidget {
                                   //     ),
                                   //   ),
                                   // ),
-                                  Container (
+                                  Container(
                                     width: 117.w,
                                     decoration: BoxDecoration(
                                         color: Get.isDarkMode
                                             ? AppColors.appContainerBgColor
                                             : AppColors.appBrandColor2,
-                                        borderRadius: BorderRadius.circular(16)),
+                                        borderRadius:
+                                            BorderRadius.circular(16)),
                                     child: Padding(
                                       padding: EdgeInsets.only(
                                           top: 22.h, left: 16.w, bottom: 22.h),
@@ -684,8 +714,8 @@ class DashBoardScreen extends StatelessWidget {
                                             style: GoogleFonts.publicSans(
                                                 fontSize: 15.sp,
                                                 fontWeight: FontWeight.w700,
-                                                color:
-                                                    AppColors.getTextDarkLight()),
+                                                color: AppColors
+                                                    .getTextDarkLight()),
                                           ),
                                           SizedBox(
                                             height: 4.h,
@@ -695,7 +725,8 @@ class DashBoardScreen extends StatelessWidget {
                                             style: GoogleFonts.niramit(
                                                 fontSize: 14.sp,
                                                 fontWeight: FontWeight.w500,
-                                                color: AppColors.appBlackColor50),
+                                                color:
+                                                    AppColors.appBlackColor50),
                                           ),
                                         ],
                                       ),
@@ -710,7 +741,6 @@ class DashBoardScreen extends StatelessWidget {
                             Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-
                                 //total team investment ,tottal refrells,invest refrals
                                 Container(
                                   padding: EdgeInsets.only(
@@ -726,7 +756,6 @@ class DashBoardScreen extends StatelessWidget {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: [
-
                                       //Team Investment
                                       Container(
                                         width: 117.w,

@@ -588,12 +588,13 @@ class _PayoutHistoryScreenState extends State<PayoutHistoryScreen> {
                                                                         fontWeight:
                                                                             FontWeight.w500),
                                                                   ),
+
                                                                   SizedBox(
                                                                     height:
                                                                         12.h,
                                                                   ),
                                                                   SelectableText(
-                                                                    "${selectedLanguageStorage.read("languageData")["Charge"] ?? "Charge"}",
+                                                                    "${selectedLanguageStorage.read("languageData")["Feedback"] ?? "Feedback"}",
                                                                     style: GoogleFonts.niramit(
                                                                         fontSize: 16
                                                                             .sp,
@@ -606,7 +607,7 @@ class _PayoutHistoryScreenState extends State<PayoutHistoryScreen> {
                                                                     height: 5.h,
                                                                   ),
                                                                   SelectableText(
-                                                                    "${item.charge}",
+                                                                    "${item.feedback}",
                                                                     style: GoogleFonts.niramit(
                                                                         fontSize: 14
                                                                             .sp,
@@ -615,6 +616,33 @@ class _PayoutHistoryScreenState extends State<PayoutHistoryScreen> {
                                                                         fontWeight:
                                                                             FontWeight.w500),
                                                                   ),
+                                                                  // SizedBox(
+                                                                  //   height:
+                                                                  //       12.h,
+                                                                  // ),
+                                                                  // SelectableText(
+                                                                  //   "${selectedLanguageStorage.read("languageData")["Charge"] ?? "Charge"}",
+                                                                  //   style: GoogleFonts.niramit(
+                                                                  //       fontSize: 16
+                                                                  //           .sp,
+                                                                  //       color: AppColors
+                                                                  //           .appBlackColor50,
+                                                                  //       fontWeight:
+                                                                  //           FontWeight.w500),
+                                                                  // ),
+                                                                  // SizedBox(
+                                                                  //   height: 5.h,
+                                                                  // ),
+                                                                  // SelectableText(
+                                                                  //   "${item.charge}",
+                                                                  //   style: GoogleFonts.niramit(
+                                                                  //       fontSize: 14
+                                                                  //           .sp,
+                                                                  //       color: AppColors
+                                                                  //           .getTextDarkLight(),
+                                                                  //       fontWeight:
+                                                                  //           FontWeight.w500),
+                                                                  // ),
                                                                   SizedBox(
                                                                     height:
                                                                         12.h,

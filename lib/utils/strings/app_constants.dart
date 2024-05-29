@@ -29,6 +29,7 @@ class AppConstants {
   static const String ticketListUri = '/api/support-ticket/list?';
   static const String createTicketUri = '/api/support-ticket/create';
   static const String myAccountUri = '/api/profile';
+  static const String closeAccount = '/api/closeAccount';
   static const String passwordUpdateUri = '/api/profile/password/update';
   static const String twoFactorUri = '/api/2FA-security';
   static const String enableTwoFactorUri = '/api/2FA-security/enable';

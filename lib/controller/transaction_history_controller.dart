@@ -9,8 +9,7 @@ import 'package:hyip_pro/view/verify_required/mail_verification_screen.dart';
 import 'package:hyip_pro/view/verify_required/sms_verification_screen.dart';
 import 'package:hyip_pro/view/verify_required/two_factor_verification_screen.dart';
 
-class TransactionHistoryController extends GetxController{
-
+class TransactionHistoryController extends GetxController {
   final TransactionHistoryRepo transactionHistoryRepo;
 
   TransactionHistoryController({required this.transactionHistoryRepo});
@@ -37,7 +36,8 @@ class TransactionHistoryController extends GetxController{
 
   double _currentScrollOffset = 0;
 
-  List<Data> transactionHistorySearchItems = []; // List to store all fetched items
+  List<Data> transactionHistorySearchItems =
+      []; // List to store all fetched items
 
   void resetPage() {
     page.value = 1;
@@ -51,7 +51,6 @@ class TransactionHistoryController extends GetxController{
     update();
   }
 
-
   String? _status;
   TransactionHistorySearchData? _message;
   bool _isLoading = false;
@@ -60,43 +59,45 @@ class TransactionHistoryController extends GetxController{
   TransactionHistorySearchData? get message => _message;
   bool get isLoading => _isLoading;
 
-
-  TransactionHistorySearchModel transactionHistorySearchModel = TransactionHistorySearchModel();
+  TransactionHistorySearchModel transactionHistorySearchModel =
+      TransactionHistorySearchModel();
 
   Future<dynamic> getTransactionHistorySearchData(
-      dynamic transactionId,
-      dynamic remark,
-      dynamic createdAt,
-      {dynamic page}
-      ) async {
+      dynamic transactionId, dynamic remark, dynamic createdAt,
+      {dynamic page}) async {
     _isLoading = true;
-    if(page==1){
+    if (page == 1) {
       transactionHistorySearchItems = [];
     }
     update();
-    ApiResponse apiResponse = await transactionHistoryRepo.searchRequestTransactionHistory(transactionId, remark, createdAt,page: page);
+    ApiResponse apiResponse = await transactionHistoryRepo
+        .searchRequestTransactionHistory(transactionId, remark, createdAt,
+            page: page);
 
-    if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
+    if (apiResponse.response != null &&
+        apiResponse.response!.statusCode == 200) {
       _isLoading = false;
       update();
       if (apiResponse.response!.data != null) {
-        _message=null;
+        _message = null;
         update();
-        if(apiResponse.response!.data["message"]=="Email Verification Required"){
+        if (apiResponse.response!.data["message"] ==
+            "Email Verification Required") {
           Get.offAllNamed(MailVerificationScreen.routeName);
-        }
-        else if(apiResponse.response!.data["message"]=="Mobile Verification Required"){
+        } else if (apiResponse.response!.data["message"] ==
+            "Mobile Verification Required") {
           Get.offAllNamed(SmsVerificationScreen.routeName);
-        }
-        else if(apiResponse.response!.data["message"]=="Two FA Verification Required"){
+        } else if (apiResponse.response!.data["message"] ==
+            "Two FA Verification Required") {
           Get.offAllNamed(TwoFactorVerificationScreen.routeName);
-        }
-        else if(apiResponse.response!.data["message"]=="Your account has been suspend"){
+        } else if (apiResponse.response!.data["message"] ==
+            "Your account has been suspend") {
           Get.find<AuthController>().removeUserToken();
           await Get.offNamedUntil(LoginScreen.routeName, (route) => false);
-        }
-        else{
-          transactionHistorySearchModel = TransactionHistorySearchModel.fromJson(apiResponse.response!.data!);
+        } else {
+          transactionHistorySearchModel =
+              TransactionHistorySearchModel.fromJson(
+                  apiResponse.response!.data!);
           _message = transactionHistorySearchModel.message;
 
           if (_message != null) {
@@ -106,7 +107,6 @@ class TransactionHistoryController extends GetxController{
 
           update();
         }
-
       }
     } else {
       _isLoading = false;
@@ -114,13 +114,12 @@ class TransactionHistoryController extends GetxController{
     }
   }
 
-
   @override
   void onInit() {
     super.onInit();
 
     resetPage();
-    getTransactionHistorySearchData("","","",page :page.value.toString());
+    getTransactionHistorySearchData("", "", "", page: page.value.toString());
     scrollController.addListener(_scrollListener);
   }
 
@@ -130,15 +129,16 @@ class TransactionHistoryController extends GetxController{
 
     if (!isLoading &&
         data!.length >= 10 &&
-        scrollController.position.pixels == scrollController.position.maxScrollExtent) {
-      _currentScrollOffset = scrollController.position.pixels; // Save the current scroll offset
+        scrollController.position.pixels ==
+            scrollController.position.maxScrollExtent) {
+      _currentScrollOffset =
+          scrollController.position.pixels; // Save the current scroll offset
       pageCounter();
       final page = this.page;
-      getTransactionHistorySearchData("","","",page:page.value.toString());
+      getTransactionHistorySearchData("", "", "", page: page.value.toString());
       print("scrolling");
     }
   }
-
 
   @override
   void onClose() {
@@ -147,5 +147,4 @@ class TransactionHistoryController extends GetxController{
     remark.dispose();
     super.onClose();
   }
-
 }

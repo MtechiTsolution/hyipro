@@ -9,9 +9,9 @@ import 'package:hyip_pro/view/screens/bottomnavbar/bottom_navbar.dart';
 import 'package:hyip_pro/view/widgets/app_custom_dropdown.dart';
 
 class DepositHistoryScreen extends StatefulWidget {
-   static const String routeName = "/depositHistoryScreen";
-   dynamic status;
-   DepositHistoryScreen({super.key,this.status});
+  static const String routeName = "/depositHistoryScreen";
+  dynamic status;
+  DepositHistoryScreen({super.key, this.status});
 
   @override
   State<DepositHistoryScreen> createState() => _DepositHistoryScreenState();
@@ -41,21 +41,21 @@ class _DepositHistoryScreenState extends State<DepositHistoryScreen> {
     print(widget.status);
     final status = Get.parameters['status'];
     print("Check $status");
-    print(status=="true");
+    print(status == "true");
 
     return WillPopScope(
-      onWillPop: () async{
-        if(widget.status=="true"){
+      onWillPop: () async {
+        if (widget.status == "true") {
           Get.offAllNamed(BottomNavBar.routeName);
-        }
-        else{
+        } else {
           Navigator.pop(context);
         }
         return true;
       },
       child: RefreshIndicator(
-        onRefresh: ()async{
-          Get.find<DepositHistoryController>().getDepositHistorySearchData("", "", "",page: 1);
+        onRefresh: () async {
+          Get.find<DepositHistoryController>()
+              .getDepositHistorySearchData("", "", "", page: 1);
         },
         child: Scaffold(
           backgroundColor: AppColors.getBackgroundDarkLight(),
@@ -67,10 +67,9 @@ class _DepositHistoryScreenState extends State<DepositHistoryScreen> {
               children: [
                 InkWell(
                     onTap: () {
-                      if(widget.status=="true"){
+                      if (widget.status == "true") {
                         Get.offAllNamed(BottomNavBar.routeName);
-                      }
-                      else{
+                      } else {
                         Navigator.pop(context);
                       }
                     },
@@ -81,14 +80,14 @@ class _DepositHistoryScreenState extends State<DepositHistoryScreen> {
                       color: AppColors.getTextDarkLight(),
                     )),
                 Text(
-                  "${selectedLanguageStorage.read("languageData")["Deposit History"]??"Deposit History"}",
+                  "${selectedLanguageStorage.read("languageData")["Deposit History"] ?? "Deposit History"}",
                   style: GoogleFonts.publicSans(
                       fontWeight: FontWeight.w600,
                       fontSize: 20.sp,
                       color: AppColors.getTextDarkLight()),
                 ),
                 InkWell(
-                  onTap: (){
+                  onTap: () {
                     showDialog<void>(
                         barrierDismissible: true,
                         context: context,
@@ -100,204 +99,227 @@ class _DepositHistoryScreenState extends State<DepositHistoryScreen> {
                             child: Center(
                               child: GetBuilder<DepositHistoryController>(
                                   builder: (depositHistoryController) {
-                                    return Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          width: MediaQuery.of(context).size.width,
-                                          decoration: BoxDecoration(
-                                              color: AppColors.getBackgroundDarkLight(),
-                                              borderRadius: BorderRadius.circular(5)),
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 16, vertical: 10),
-                                            child: Column(
-                                              children: [
-                                                Align(
-                                                    alignment: Alignment.topRight,
-                                                    child: IconButton(
-                                                        onPressed: () {
-                                                          Navigator.pop(context);
-                                                        },
-                                                        icon: const Icon(
-                                                          Icons.cancel,
-                                                          color: AppColors.appBlackColor50,))),
-                                                SizedBox(height: 5.h,),
-                                                SizedBox(
-                                                  height: 5.h,
+                                return Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      decoration: BoxDecoration(
+                                          color: AppColors
+                                              .getBackgroundDarkLight(),
+                                          borderRadius:
+                                              BorderRadius.circular(5)),
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 16, vertical: 10),
+                                        child: Column(
+                                          children: [
+                                            Align(
+                                                alignment: Alignment.topRight,
+                                                child: IconButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                    },
+                                                    icon: const Icon(
+                                                      Icons.cancel,
+                                                      color: AppColors
+                                                          .appBlackColor50,
+                                                    ))),
+                                            SizedBox(
+                                              height: 5.h,
+                                            ),
+                                            SizedBox(
+                                              height: 5.h,
+                                            ),
+                                            TextFormField(
+                                              controller: Get.find<
+                                                      DepositHistoryController>()
+                                                  .name,
+                                              decoration: InputDecoration(
+                                                  contentPadding:
+                                                      EdgeInsets.symmetric(
+                                                          horizontal: 10.r,
+                                                          vertical: 5.r),
+                                                  filled: true,
+                                                  fillColor: AppColors
+                                                      .getTextFieldDarkLight(),
+                                                  border: InputBorder.none,
+                                                  hintText:
+                                                      "${selectedLanguageStorage.read("languageData")["Type here"] ?? "Type here"}",
+                                                  hintStyle: TextStyle(
+                                                    fontSize: 14.sp,
+                                                    fontWeight: FontWeight.w400,
+                                                  )),
+                                            ),
+                                            SizedBox(
+                                              height: 16.h,
+                                            ),
+                                            Container(
+                                              height: 50.h,
+                                              width: double.infinity,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                              ),
+                                              child: Obx(
+                                                () => AppCustomDropDown(
+                                                  items: const [
+                                                    'All Payment',
+                                                    'Complete Payment',
+                                                    'Pending Payment',
+                                                    'Cancel Payment'
+                                                  ],
+                                                  onChanged: (value) => Get.find<
+                                                          DepositHistoryController>()
+                                                      .onDropdownChanged(
+                                                          value!),
+                                                  selectedValue: Get.find<
+                                                          DepositHistoryController>()
+                                                      .selectedOption
+                                                      .value,
+                                                  hint:
+                                                      "${selectedLanguageStorage.read("languageData")["Select an option"] ?? "Select an option"}",
+                                                  hintStyle: TextStyle(
+                                                      fontSize: 14.sp,
+                                                      color: AppColors
+                                                          .appBlackColor50),
+                                                  decoration: BoxDecoration(
+                                                    // Customize the button decoration here
+                                                    // Example: You can set the border radius or background color
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
+                                                    color: AppColors
+                                                        .getTextFieldDarkLight(),
+                                                  ),
+                                                  dropdownDecoration:
+                                                      BoxDecoration(
+                                                    // Customize the dropdown decoration here
+                                                    // Example: You can set the border or background color
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
+                                                    color: Get.isDarkMode
+                                                        ? AppColors
+                                                            .appDefaultDarkMode
+                                                        : Colors.white,
+                                                  ),
+                                                  itemHeight:
+                                                      40, // Set the height of each item in the dropdown
                                                 ),
-                                                TextFormField(
-                                                  controller:
-                                                  Get.find<DepositHistoryController>()
-                                                      .name,
-                                                  decoration: InputDecoration(
-                                                      contentPadding: EdgeInsets.symmetric(
-                                                          horizontal: 10.r, vertical: 5.r),
-                                                      filled: true,
-                                                      fillColor: AppColors.getTextFieldDarkLight(),
-                                                      border: InputBorder.none,
-                                                      hintText: "${selectedLanguageStorage.read("languageData")["Type here"]??"Type here"}",
-                                                      hintStyle: TextStyle(
-                                                        fontSize: 14.sp,
-                                                        fontWeight: FontWeight.w400,
-                                                      )),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 16.h,
+                                            ),
+                                            TextFormField(
+                                              readOnly: true,
+                                              onTap: () => _selectDate(context),
+                                              controller: TextEditingController(
+                                                  text: Get.find<
+                                                          DepositHistoryController>()
+                                                      .selectedDate
+                                                      .value),
+                                              decoration: InputDecoration(
+                                                contentPadding: EdgeInsets.only(
+                                                    top: 16, left: 10),
+                                                filled: true,
+                                                fillColor: AppColors
+                                                    .getTextFieldDarkLight(),
+                                                border: InputBorder.none,
+                                                hintText:
+                                                    "${selectedLanguageStorage.read("languageData")["Select Date"] ?? "Select Date"}",
+                                                suffixIcon: GestureDetector(
+                                                    onTap: () {
+                                                      depositHistoryController
+                                                          .setDate("");
+                                                    },
+                                                    child:
+                                                        depositHistoryController
+                                                                .selectedDate
+                                                                .isNotEmpty
+                                                            ? Padding(
+                                                                padding:
+                                                                    EdgeInsets
+                                                                        .all(16.0
+                                                                            .h),
+                                                                child: Text(
+                                                                  "${selectedLanguageStorage.read("languageData")["Clear"] ?? "Clear"}",
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    fontSize:
+                                                                        12.sp,
+                                                                    color: AppColors
+                                                                        .appBlackColor50, // Set the color for the border when not focused
+                                                                  ),
+                                                                ),
+                                                              )
+                                                            : const SizedBox
+                                                                .shrink()),
+                                                hintStyle: TextStyle(
+                                                  fontSize: 14.sp,
+                                                  fontWeight: FontWeight.w400,
                                                 ),
-                                                SizedBox(
-                                                  height: 16.h,
-                                                ),
-                                                Container(
-                                                  height: 50.h,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 24.h,
+                                            ),
+                                            InkWell(
+                                                onTap: () {
+                                                  Navigator.pop(context);
+                                                  Get.find<
+                                                          DepositHistoryController>()
+                                                      .depositHistorySearchItems
+                                                      .clear();
+                                                  Get.find<
+                                                          DepositHistoryController>()
+                                                      .getDepositHistorySearchData(
+                                                    Get.find<
+                                                            DepositHistoryController>()
+                                                        .name
+                                                        .text
+                                                        .toString(),
+                                                    Get.find<
+                                                            DepositHistoryController>()
+                                                        .selectedDate
+                                                        .value,
+                                                    "${checkStatus(Get.find<DepositHistoryController>().selectedOption.value)}",
+                                                  );
+                                                },
+                                                child: Container(
+                                                  height: 45.h,
                                                   width: double.infinity,
                                                   decoration: BoxDecoration(
+                                                      color: AppColors
+                                                          .appPrimaryColor,
                                                       borderRadius:
-                                                      BorderRadius.circular(5),
-                                                     ),
-                                                  child: Obx(
-                                                        () => AppCustomDropDown(
-                                                      items: const [
-                                                        'All Payment',
-                                                        'Complete Payment',
-                                                        'Pending Payment',
-                                                        'Cancel Payment'
-                                                      ],
-                                                      onChanged: (value) => Get.find<
-                                                          DepositHistoryController>()
-                                                          .onDropdownChanged(value!),
-                                                      selectedValue: Get.find<
-                                                          DepositHistoryController>()
-                                                          .selectedOption
-                                                          .value,
-                                                      hint: "${selectedLanguageStorage.read("languageData")["Select an option"]??"Select an option"}",
-                                                      hintStyle: TextStyle(
-                                                          fontSize: 14.sp,
-                                                          color:
-                                                          AppColors.appBlackColor50),
-                                                      decoration: BoxDecoration(
-                                                        // Customize the button decoration here
-                                                        // Example: You can set the border radius or background color
-                                                        borderRadius:
-                                                        BorderRadius.circular(8.0),
-                                                        color: AppColors.getTextFieldDarkLight(),
-                                                      ),
-                                                      dropdownDecoration: BoxDecoration(
-                                                        // Customize the dropdown decoration here
-                                                        // Example: You can set the border or background color
-                                                        borderRadius:
-                                                        BorderRadius.circular(8.0),
-                                                        color: Get.isDarkMode? AppColors.appDefaultDarkMode:Colors.white,
-                                                      ),
-                                                      itemHeight:
-                                                      40, // Set the height of each item in the dropdown
-                                                    ),
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: 16.h,
-                                                ),
-                                                TextFormField(
-                                                  readOnly: true,
-                                                  onTap: () => _selectDate(context),
-                                                  controller: TextEditingController(
-                                                      text: Get.find<
-                                                          DepositHistoryController>()
-                                                          .selectedDate
-                                                          .value),
-                                                  decoration: InputDecoration(
-                                                    contentPadding: EdgeInsets.only(
-                                                      top: 16,left: 10
-                                                    ),
-                                                    filled: true,
-                                                    fillColor: AppColors.getTextFieldDarkLight(),
-                                                    border: InputBorder.none,
-                                                    hintText: "${selectedLanguageStorage.read("languageData")["Select Date"]??"Select Date"}",
-                                                    suffixIcon: GestureDetector(
-                                                        onTap: () {
-                                                          depositHistoryController
-                                                              .setDate("");
-                                                        },
-                                                        child: depositHistoryController
-                                                            .selectedDate.isNotEmpty
-                                                            ? Padding(
-                                                          padding: EdgeInsets.all(
-                                                              16.0.h),
-                                                          child: Text(
-                                                            "${selectedLanguageStorage.read("languageData")["Clear"]??"Clear"}",
-                                                            style: TextStyle(
-                                                              fontWeight:
-                                                              FontWeight.w500,
-                                                              fontSize: 12.sp,
-                                                              color: AppColors
-                                                                  .appBlackColor50, // Set the color for the border when not focused
-                                                            ),
-                                                          ),
-                                                        )
-                                                            : const SizedBox.shrink()),
-                                                    hintStyle: TextStyle(
-                                                      fontSize: 14.sp,
-                                                      fontWeight: FontWeight.w400,
-                                                    ),
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: 24.h,
-                                                ),
-                                                InkWell(
-                                                    onTap: () {
-                                                      Navigator.pop(context);
-                                                      Get
-                                                          .find<
-                                                          DepositHistoryController>()
-                                                          .depositHistorySearchItems
-                                                          .clear();
-                                                      Get.find<
-                                                          DepositHistoryController>()
-                                                          .getDepositHistorySearchData(
-                                                        Get
-                                                            .find<
-                                                            DepositHistoryController>()
-                                                            .name
-                                                            .text
-                                                            .toString(),
-                                                        Get
-                                                            .find<
-                                                            DepositHistoryController>()
-                                                            .selectedDate
-                                                            .value,
-                                                        "${checkStatus(Get
-                                                            .find<
-                                                            DepositHistoryController>()
-                                                            .selectedOption
-                                                            .value)}",
-                                                      );
-                                                    },
-                                                    child: Container(
-                                                      height: 45.h,
-                                                      width: double.infinity,
-                                                      decoration: BoxDecoration(
-                                                          color: AppColors.appPrimaryColor,
-                                                          borderRadius: BorderRadius.circular(16)),
-                                                      child: Center(
-                                                          child:
-                                                          Text(
-                                                            "${selectedLanguageStorage.read("languageData")["Search"]??"Search"}",
-                                                            style: GoogleFonts.niramit(
-                                                                fontSize: 20.sp,
-                                                                color: AppColors.appWhiteColor,
-                                                                fontWeight: FontWeight.w500),
-                                                          )
-                                                      ),
-                                                    )
-                                                ),
-                                                SizedBox(
-                                                  height: 20.h,
-                                                ),
-                                              ],
+                                                          BorderRadius.circular(
+                                                              16)),
+                                                  child: Center(
+                                                      child: Text(
+                                                    "${selectedLanguageStorage.read("languageData")["Search"] ?? "Search"}",
+                                                    style: GoogleFonts.niramit(
+                                                        fontSize: 20.sp,
+                                                        color: AppColors
+                                                            .appWhiteColor,
+                                                        fontWeight:
+                                                            FontWeight.w500),
+                                                  )),
+                                                )),
+                                            SizedBox(
+                                              height: 20.h,
                                             ),
-                                          ),
+                                          ],
                                         ),
-                                      ],
-                                    );
-                                  }),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              }),
                             ),
                           );
                         });
@@ -340,31 +362,36 @@ class _DepositHistoryScreenState extends State<DepositHistoryScreen> {
                   } else if (historyItems.isEmpty) {
                     return Center(
                       child: Padding(
-                        padding:  EdgeInsets.only(
-                          top: 180.h
-                        ),
+                        padding: EdgeInsets.only(top: 180.h),
                         child: Center(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Get.isDarkMode?
-                              Image.asset("assets/images/dark_no_data_found.png",
-                                height: 250.h,
-                                width: 250.w,
-                              ):
-                              Image.asset("assets/images/no_data_found.png",
-                                height: 250.h,
-                                width: 250.w,
+                              Get.isDarkMode
+                                  ? Image.asset(
+                                      "assets/images/dark_no_data_found.png",
+                                      height: 250.h,
+                                      width: 250.w,
+                                    )
+                                  : Image.asset(
+                                      "assets/images/no_data_found.png",
+                                      height: 250.h,
+                                      width: 250.w,
+                                    ),
+                              SizedBox(
+                                height: 12.h,
                               ),
-                              SizedBox(height: 12.h,),
                               Padding(
                                 padding: const EdgeInsets.only(right: 32),
-                                child: Text("${selectedLanguageStorage.read("languageData")["No data found."]??"No data found."}",style: GoogleFonts.publicSans(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 18.sp,
-                                  color: AppColors.appBlackColor50,
-                                ),),
+                                child: Text(
+                                  "${selectedLanguageStorage.read("languageData")["No data found."] ?? "No data found."}",
+                                  style: GoogleFonts.publicSans(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 18.sp,
+                                    color: AppColors.appBlackColor50,
+                                  ),
+                                ),
                               )
                             ],
                           ),
@@ -399,260 +426,287 @@ class _DepositHistoryScreenState extends State<DepositHistoryScreen> {
                                       type: MaterialType.transparency,
                                       child: Center(
                                         child: GetBuilder<
-                                            DepositHistoryController>(
+                                                DepositHistoryController>(
                                             builder:
                                                 (depositHistoryController) {
-                                              return Column(
-                                                mainAxisAlignment:
+                                          return Column(
+                                            mainAxisAlignment:
                                                 MainAxisAlignment.center,
-                                                children: [
-                                                  Container(
-                                                      width:
-                                                      MediaQuery.of(context)
-                                                          .size
-                                                          .width,
-                                                      decoration: BoxDecoration(
-                                                          color: AppColors
-                                                              .appBlackColor50,
-                                                          borderRadius:
-                                                          BorderRadius
-                                                              .circular(5)),
-                                                      child: Column(
-                                                        crossAxisAlignment:
+                                            children: [
+                                              Container(
+                                                  width: MediaQuery.of(context)
+                                                      .size
+                                                      .width,
+                                                  decoration: BoxDecoration(
+                                                      color: AppColors
+                                                          .appBlackColor50,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5)),
+                                                  child: Column(
+                                                    crossAxisAlignment:
                                                         CrossAxisAlignment
                                                             .center,
+                                                    children: [
+                                                      Stack(
                                                         children: [
-                                                          Stack(
-                                                            children: [
-                                                              Container(
-                                                                  width: double
-                                                                      .infinity,
-                                                                  color: AppColors
-                                                                      .appPrimaryColor,
-                                                                  child:
+                                                          Container(
+                                                              width: double
+                                                                  .infinity,
+                                                              color: AppColors
+                                                                  .appPrimaryColor,
+                                                              child:
                                                                   Image.asset(
-                                                                    "assets/images/deposit_alert_header_bg.png",
-                                                                    fit: BoxFit
-                                                                        .cover,
-                                                                  )),
-                                                              Positioned(
-                                                                  top: 20.h,
-                                                                  right: 20.w,
-                                                                  child:
+                                                                "assets/images/deposit_alert_header_bg.png",
+                                                                fit: BoxFit
+                                                                    .cover,
+                                                              )),
+                                                          Positioned(
+                                                              top: 20.h,
+                                                              right: 20.w,
+                                                              child:
                                                                   GestureDetector(
-                                                                    onTap: () {
-                                                                      Navigator.pop(
-                                                                          context);
-                                                                    },
+                                                                onTap: () {
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                },
+                                                                child:
+                                                                    Image.asset(
+                                                                  "assets/images/cancel_icon.png",
+                                                                  height: 15.h,
+                                                                  width: 15.w,
+                                                                ),
+                                                              )),
+                                                          Positioned(
+                                                              top: 30.h,
+                                                              left: 0,
+                                                              right: 0,
+                                                              child: Column(
+                                                                children: [
+                                                                  Center(
                                                                     child: Image
                                                                         .asset(
-                                                                      "assets/images/cancel_icon.png",
+                                                                      "assets/images/deposit_history.png",
                                                                       height:
-                                                                      15.h,
-                                                                      width: 15.w,
-                                                                    ),
-                                                                  )),
-                                                              Positioned(
-                                                                  top: 30.h,
-                                                                  left: 0,
-                                                                  right: 0,
-                                                                  child: Column(
-                                                                    children: [
-                                                                      Center(
-                                                                        child: Image
-                                                                            .asset(
-                                                                          "assets/images/deposit_history.png",
-                                                                          height:
                                                                           50.h,
-                                                                          width:
+                                                                      width:
                                                                           50.w,
-                                                                          color: checkStatusColor(item.status),
-                                                                        ),
-                                                                      ),
-                                                                      SizedBox(
-                                                                        height:
+                                                                      color: checkStatusColor(
+                                                                          item.status),
+                                                                    ),
+                                                                  ),
+                                                                  SizedBox(
+                                                                    height:
                                                                         12.h,
-                                                                      ),
-                                                                      Text(
-                                                                        "${item.gateway}",
-                                                                        style: GoogleFonts.publicSans(
-                                                                            fontWeight: FontWeight
+                                                                  ),
+                                                                  Text(
+                                                                    "${item.gateway}",
+                                                                    style: GoogleFonts.publicSans(
+                                                                        fontWeight:
+                                                                            FontWeight
                                                                                 .w600,
-                                                                            fontSize: 18
-                                                                                .sp,
-                                                                            color:
-                                                                            AppColors.appBlackColor),
-                                                                      )
-                                                                    ],
-                                                                  ))
-                                                            ],
-                                                          ),
-                                                          Container(
-                                                            width:
-                                                            double.infinity,
-                                                            color: AppColors
-                                                                .getAppBarBgDarkLight(),
-                                                            child: Padding(
-                                                              padding:
+                                                                        fontSize: 18
+                                                                            .sp,
+                                                                        color: AppColors
+                                                                            .appBlackColor),
+                                                                  )
+                                                                ],
+                                                              ))
+                                                        ],
+                                                      ),
+                                                      Container(
+                                                        width: double.infinity,
+                                                        color: AppColors
+                                                            .getAppBarBgDarkLight(),
+                                                        child: Padding(
+                                                          padding:
                                                               const EdgeInsets
                                                                   .symmetric(
-                                                                  vertical:
-                                                                  16),
-                                                              child: Column(
-                                                                crossAxisAlignment:
+                                                                  vertical: 16),
+                                                          child: Column(
+                                                            crossAxisAlignment:
                                                                 CrossAxisAlignment
                                                                     .center,
-                                                                children: [
-                                                                  Text(
-                                                                    "${selectedLanguageStorage.read("languageData")["Transaction ID"]??"Transaction ID"}",
-                                                                    style: GoogleFonts.publicSans(
-                                                                        fontSize:
+                                                            children: [
+                                                              Text(
+                                                                "${selectedLanguageStorage.read("languageData")["Transaction ID"] ?? "Transaction ID"}",
+                                                                style: GoogleFonts.publicSans(
+                                                                    fontSize:
                                                                         16.sp,
-                                                                        color: AppColors
-                                                                            .appBlackColor50,
-                                                                        fontWeight:
+                                                                    color: AppColors
+                                                                        .appBlackColor50,
+                                                                    fontWeight:
                                                                         FontWeight
                                                                             .w500),
-                                                                  ),
-                                                                  SizedBox(
-                                                                    height: 5.h,
-                                                                  ),
-                                                                  SelectableText(
-                                                                    "${item.transactionId}",
-                                                                    style: GoogleFonts.niramit(
-                                                                        fontSize:
-                                                                        14.sp,
-                                                                        color: AppColors
-                                                                            .getTextDarkLight(),
-                                                                        fontWeight:
-                                                                        FontWeight
-                                                                            .w500),
-                                                                  ),
-                                                                  SizedBox(
-                                                                    height: 12.h,
-                                                                  ),
-                                                                  SelectableText(
-                                                                    "${selectedLanguageStorage.read("languageData")["Amount"]??"Amount"}",
-                                                                    style: GoogleFonts.niramit(
-                                                                        fontSize:
-                                                                        16.sp,
-                                                                        color: AppColors
-                                                                            .appBlackColor50,
-                                                                        fontWeight:
-                                                                        FontWeight
-                                                                            .w500),
-                                                                  ),
-                                                                  SizedBox(
-                                                                    height: 5.h,
-                                                                  ),
-                                                                  SelectableText(
-                                                                    "${item.amount}",
-                                                                    style: GoogleFonts.niramit(
-                                                                        fontSize:
-                                                                        14.sp,
-                                                                        color: AppColors
-                                                                            .getTextDarkLight(),
-                                                                        fontWeight:
-                                                                        FontWeight
-                                                                            .w500),
-                                                                  ),
-                                                                  SizedBox(
-                                                                    height: 12.h,
-                                                                  ),
-                                                                  SelectableText(
-                                                                    "${selectedLanguageStorage.read("languageData")["Charge"]??"Charge"}",
-                                                                    style: GoogleFonts.niramit(
-                                                                        fontSize:
-                                                                        16.sp,
-                                                                        color: AppColors
-                                                                            .appBlackColor50,
-                                                                        fontWeight:
-                                                                        FontWeight
-                                                                            .w500),
-                                                                  ),
-                                                                  SizedBox(
-                                                                    height: 5.h,
-                                                                  ),
-                                                                  SelectableText(
-                                                                    "${item.charge}",
-                                                                    style: GoogleFonts.niramit(
-                                                                        fontSize:
-                                                                        14.sp,
-                                                                        color: AppColors
-                                                                            .getTextDarkLight(),
-                                                                        fontWeight:
-                                                                        FontWeight
-                                                                            .w500),
-                                                                  ),
-                                                                  SizedBox(
-                                                                    height: 12.h,
-                                                                  ),
-
-                                                                  SelectableText(
-                                                                    "${selectedLanguageStorage.read("languageData")["Status"]??"Status"}",
-                                                                    style: GoogleFonts.niramit(
-                                                                        fontSize:
-                                                                        16.sp,
-                                                                        color: AppColors
-                                                                            .appBlackColor50,
-                                                                        fontWeight:
-                                                                        FontWeight
-                                                                            .w500),
-                                                                  ),
-                                                                  SizedBox(
-                                                                    height: 5.h,
-                                                                  ),
-                                                                  SelectableText(
-                                                                    "${item.status}",
-                                                                    style: GoogleFonts.niramit(
-                                                                        fontSize:
-                                                                        14.sp,
-                                                                        color: checkStatusColor(item.status),
-                                                                        fontWeight:
-                                                                        FontWeight
-                                                                            .w500),
-                                                                  ),
-                                                                  SizedBox(
-                                                                    height: 12.h,
-                                                                  ),
-
-                                                                  Text(
-                                                                    "${selectedLanguageStorage.read("languageData")["Date & Time"]??"Date & Time"}",
-                                                                    style: GoogleFonts.niramit(
-                                                                        fontSize:
-                                                                        16.sp,
-                                                                        color: AppColors
-                                                                            .appBlackColor50,
-                                                                        fontWeight:
-                                                                        FontWeight
-                                                                            .w500),
-                                                                  ),
-                                                                  SizedBox(
-                                                                    height: 5.h,
-                                                                  ),
-                                                                  Text(
-                                                                    "${item.time}",
-                                                                    style: GoogleFonts.niramit(
-                                                                        fontSize:
-                                                                        14.sp,
-                                                                        color: AppColors
-                                                                            .getTextDarkLight(),
-                                                                        fontWeight:
-                                                                        FontWeight
-                                                                            .w500),
-                                                                  ),
-                                                                  SizedBox(
-                                                                    height: 24.h,
-                                                                  ),
-                                                                ],
                                                               ),
-                                                            ),
+                                                              SizedBox(
+                                                                height: 5.h,
+                                                              ),
+                                                              SelectableText(
+                                                                "${item.transactionId}",
+                                                                style: GoogleFonts.niramit(
+                                                                    fontSize:
+                                                                        14.sp,
+                                                                    color: AppColors
+                                                                        .getTextDarkLight(),
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500),
+                                                              ),
+                                                              SizedBox(
+                                                                height: 12.h,
+                                                              ),
+                                                              SelectableText(
+                                                                "${selectedLanguageStorage.read("languageData")["Amount"] ?? "Amount"}",
+                                                                style: GoogleFonts.niramit(
+                                                                    fontSize:
+                                                                        16.sp,
+                                                                    color: AppColors
+                                                                        .appBlackColor50,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500),
+                                                              ),
+                                                              SizedBox(
+                                                                height: 5.h,
+                                                              ),
+                                                              SelectableText(
+                                                                "${item.amount}",
+                                                                style: GoogleFonts.niramit(
+                                                                    fontSize:
+                                                                        14.sp,
+                                                                    color: AppColors
+                                                                        .getTextDarkLight(),
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500),
+                                                              ),
+                                                              // SizedBox(
+                                                              //   height: 12.h,
+                                                              // ),
+                                                              // SelectableText(
+                                                              //   "${selectedLanguageStorage.read("languageData")["Charge"]??"Charge"}",
+                                                              //   style: GoogleFonts.niramit(
+                                                              //       fontSize:
+                                                              //       16.sp,
+                                                              //       color: AppColors
+                                                              //           .appBlackColor50,
+                                                              //       fontWeight:
+                                                              //       FontWeight
+                                                              //           .w500),
+                                                              // ),
+                                                              // SizedBox(
+                                                              //   height: 5.h,
+                                                              // ),
+                                                              // SelectableText(
+                                                              //   "${item.charge}",
+                                                              //   style: GoogleFonts.niramit(
+                                                              //       fontSize:
+                                                              //       14.sp,
+                                                              //       color: AppColors
+                                                              //           .getTextDarkLight(),
+                                                              //       fontWeight:
+                                                              //       FontWeight
+                                                              //           .w500),
+                                                              // ),
+                                                              SizedBox(
+                                                                height: 12.h,
+                                                              ),
+                                                              SelectableText(
+                                                                "${selectedLanguageStorage.read("languageData")["Feedback"] ?? "Feedback"}",
+                                                                style: GoogleFonts.niramit(
+                                                                    fontSize:
+                                                                        16.sp,
+                                                                    color: AppColors
+                                                                        .appBlackColor50,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500),
+                                                              ),
+                                                              SizedBox(
+                                                                height: 5.h,
+                                                              ),
+                                                              SelectableText(
+                                                                "${item.feedback}",
+                                                                style: GoogleFonts.niramit(
+                                                                    fontSize:
+                                                                        14.sp,
+                                                                    color: AppColors
+                                                                        .getTextDarkLight(),
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500),
+                                                              ),
+                                                              SizedBox(
+                                                                height: 12.h,
+                                                              ),
+
+                                                              SelectableText(
+                                                                "${selectedLanguageStorage.read("languageData")["Status"] ?? "Status"}",
+                                                                style: GoogleFonts.niramit(
+                                                                    fontSize:
+                                                                        16.sp,
+                                                                    color: AppColors
+                                                                        .appBlackColor50,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500),
+                                                              ),
+                                                              SizedBox(
+                                                                height: 5.h,
+                                                              ),
+                                                              SelectableText(
+                                                                "${item.status}",
+                                                                style: GoogleFonts.niramit(
+                                                                    fontSize:
+                                                                        14.sp,
+                                                                    color: checkStatusColor(item
+                                                                        .status),
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500),
+                                                              ),
+                                                              SizedBox(
+                                                                height: 12.h,
+                                                              ),
+
+                                                              Text(
+                                                                "${selectedLanguageStorage.read("languageData")["Date & Time"] ?? "Date & Time"}",
+                                                                style: GoogleFonts.niramit(
+                                                                    fontSize:
+                                                                        16.sp,
+                                                                    color: AppColors
+                                                                        .appBlackColor50,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500),
+                                                              ),
+                                                              SizedBox(
+                                                                height: 5.h,
+                                                              ),
+                                                              Text(
+                                                                "${item.time}",
+                                                                style: GoogleFonts.niramit(
+                                                                    fontSize:
+                                                                        14.sp,
+                                                                    color: AppColors
+                                                                        .getTextDarkLight(),
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500),
+                                                              ),
+                                                              SizedBox(
+                                                                height: 24.h,
+                                                              ),
+                                                            ],
                                                           ),
-                                                        ],
-                                                      ))
-                                                ],
-                                              );
-                                            }),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ))
+                                            ],
+                                          );
+                                        }),
                                       ),
                                     ),
                                   );
@@ -664,18 +718,25 @@ class _DepositHistoryScreenState extends State<DepositHistoryScreen> {
                                   left: 24.w, right: 24.w, bottom: 12.h),
                               child: Container(
                                 decoration: BoxDecoration(
-                                  color: Get.isDarkMode? AppColors.appContainerBgColor:AppColors.appFillColor,
+                                  color: Get.isDarkMode
+                                      ? AppColors.appContainerBgColor
+                                      : AppColors.appFillColor,
                                   borderRadius: BorderRadius.circular(16),
                                 ),
                                 child: Padding(
-                                  padding: EdgeInsets.only(left: 16.w, right: 24.w,top: 10,bottom: 10),
+                                  padding: EdgeInsets.only(
+                                      left: 16.w,
+                                      right: 24.w,
+                                      top: 10,
+                                      bottom: 10),
                                   child: Row(
                                     children: [
                                       Container(
                                         height: 40.h,
                                         width: 40.w,
                                         decoration: BoxDecoration(
-                                            color: checkStatusColor(item.status),
+                                            color:
+                                                checkStatusColor(item.status),
                                             borderRadius:
                                                 BorderRadius.circular(12)),
                                         child: Padding(
@@ -701,17 +762,20 @@ class _DepositHistoryScreenState extends State<DepositHistoryScreen> {
                                                 Text(
                                                   "${item.gateway}",
                                                   style: GoogleFonts.publicSans(
-                                                      fontSize: 16.sp,
-                                                      color:
-                                                          AppColors.getTextDarkLight(),
-                                                      fontWeight: FontWeight.w500,
+                                                    fontSize: 16.sp,
+                                                    color: AppColors
+                                                        .getTextDarkLight(),
+                                                    fontWeight: FontWeight.w500,
                                                   ),
                                                 ),
-                                                SizedBox(height: 6.h,),
+                                                SizedBox(
+                                                  height: 6.h,
+                                                ),
                                                 Text(
                                                   "${item.time}",
                                                   style: GoogleFonts.publicSans(
-                                                      fontWeight: FontWeight.w400,
+                                                      fontWeight:
+                                                          FontWeight.w400,
                                                       fontSize: 14.sp,
                                                       color: AppColors
                                                           .appBlackColor50),
@@ -719,7 +783,9 @@ class _DepositHistoryScreenState extends State<DepositHistoryScreen> {
                                               ],
                                             ),
                                           )),
-                                      SizedBox(width: 10.w,),
+                                      SizedBox(
+                                        width: 10.w,
+                                      ),
                                       Text(
                                         "+${item.amount}",
                                         style: GoogleFonts.publicSans(

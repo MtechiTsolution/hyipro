@@ -28,7 +28,7 @@ Widget appDrawer() {
     elevation: 0,
     backgroundColor: AppColors.getBackgroundDarkLight(),
     child: GetBuilder<DashBoardController>(builder: (dashBoardController) {
-     // print("imgp- ${dashBoardController.message!.userImage!}");
+      // print("imgp- ${dashBoardController.message!.userImage!}");
       return ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
@@ -77,7 +77,7 @@ Widget appDrawer() {
                         height: 8.h,
                       ),
                       Text(
-                          "${selectedLanguageStorage.read("languageData")["Current Balance:"] ?? "Current Balance:"}   ${dashBoardController.message!.currency}${ dashBoardController.message!.mainBalance}",
+                          "${selectedLanguageStorage.read("languageData")["Current Balance:"] ?? "Current Balance:"}   ${dashBoardController.message!.currency}${dashBoardController.message!.mainBalance}",
                           style: GoogleFonts.publicSans(
                               fontWeight: FontWeight.w500,
                               fontSize: 16.sp,
@@ -190,7 +190,7 @@ Widget appDrawer() {
 
                 InkWell(
                   onTap: () {
-                    Get.toNamed(InvestHistoryScreen.routeName);
+                    Get.toNamed(DepositHistoryScreen.routeName);
                   },
                   child: Row(
                     children: [
@@ -403,7 +403,6 @@ Widget appDrawer() {
                 //     ],
                 //   ),
                 // ),
-
 
                 InkWell(
                   onTap: () async {

@@ -12,7 +12,6 @@ class MyAccountRepo {
 
   MyAccountRepo({required this.dioClient, required this.sharedPreferences});
 
-
   /// Get AccountData
   Future<ApiResponse> getAccountData() async {
     try {
@@ -21,7 +20,7 @@ class MyAccountRepo {
         options: Options(headers: {
           "Content-Type": "application/json",
           "Authorization":
-          "Bearer ${ sharedPreferences.getString(AppConstants.token)}",
+              "Bearer ${sharedPreferences.getString(AppConstants.token)}",
         }),
       );
       return ApiResponse.withSuccess(response);
@@ -30,29 +29,45 @@ class MyAccountRepo {
     }
   }
 
-
+  //closedaccount
+  Future<ApiResponse> closeAccount() async {
+    try {
+      Response response = await dioClient.get(
+        "${AppConstants.closeAccount}",
+        options: Options(headers: {
+          "Content-Type": "application/json",
+          "Authorization":
+              "Bearer ${sharedPreferences.getString(AppConstants.token)}",
+        }),
+      );
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      print(e);
+      print(ApiErrorHandler.getMessage(e));
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
 
   ///Profile Information Update
   Future<ApiResponse> updateAccountInformation(
-      dynamic firstName,
-      dynamic lastName,
-      dynamic userName,
-      dynamic address,
-      ) async {
+    dynamic firstName,
+    dynamic lastName,
+    dynamic userName,
+    dynamic address,
+  ) async {
     try {
       Response response = await dioClient.post(
-
         "${AppConstants.accountInformationUpdate}",
         queryParameters: {
-          "firstname" : firstName,
-          "lastname" : lastName,
-          "username" : userName,
-          "address" : address
+          "firstname": firstName,
+          "lastname": lastName,
+          "username": userName,
+          "address": address
         },
         options: Options(headers: {
           "Content-Type": "application/json",
           "Authorization":
-          "Bearer ${ sharedPreferences.getString(AppConstants.token)}",
+              "Bearer ${sharedPreferences.getString(AppConstants.token)}",
         }),
       );
       return ApiResponse.withSuccess(response);
@@ -73,7 +88,7 @@ class MyAccountRepo {
         options: Options(headers: {
           'Content-Type': 'multipart/form-data',
           "Authorization":
-          "Bearer ${ sharedPreferences.getString(AppConstants.token)}",
+              "Bearer ${sharedPreferences.getString(AppConstants.token)}",
         }),
       );
       return ApiResponse.withSuccess(response);
@@ -81,7 +96,4 @@ class MyAccountRepo {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
     }
   }
-
-
-
 }

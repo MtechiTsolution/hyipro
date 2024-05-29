@@ -7,7 +7,6 @@ import 'package:hyip_pro/notification_service/notification_service.dart';
 import 'package:intl/intl.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 
-
 class NotificationController extends GetxController {
   final PusherChannelsFlutter pusher = PusherChannelsFlutter.getInstance();
   Rx<String> log = 'output:\n'.obs;
@@ -19,15 +18,18 @@ class NotificationController extends GetxController {
   // Initialize GetStorage
   final box = GetStorage();
 
-
   @override
   void onInit() {
     super.onInit();
     notificationService.initialiseNotification();
     // Load logList from GetStorage when the controller is initialized
     Get.find<PusherConfigController>().getPusherConfig().then((value) {
-      if (box.hasData('${Get.find<PusherConfigController>().message!.channel}')) {
-        logList = (box.read('${Get.find<PusherConfigController>().message!.channel}') as List).obs;
+      if (box
+          .hasData('${Get.find<PusherConfigController>().message!.channel}')) {
+        logList =
+            (box.read('${Get.find<PusherConfigController>().message!.channel}')
+                    as List)
+                .obs;
       }
       initializePusher();
       triggerEventAutomatically(); // Automatically trigger the event when the app starts
@@ -36,7 +38,8 @@ class NotificationController extends GetxController {
 
   void clearAllData() {
     logList.clear(); // Clear the logList
-    GetStorage().remove('${Get.find<PusherConfigController>().message!.channel}'); // Remove the data from GetStorage
+    GetStorage().remove(
+        '${Get.find<PusherConfigController>().message!.channel}'); // Remove the data from GetStorage
     eventCount.value = 0; // Reset eventCount to 0
     update(); // Trigger an update to refresh the UI
   }
@@ -53,7 +56,6 @@ class NotificationController extends GetxController {
   //     update(); // Trigger an update to refresh the UI
   //   }
   // }
-
 
   // void logMessage(String text, {bool addToLogList = false}) {
   //   if (kDebugMode) {
@@ -82,14 +84,17 @@ class NotificationController extends GetxController {
     }
 
     if (addToLogList) {
-      final timestamp = DateFormat('MMMM d, yyyy h:mm a').format(DateTime.now());
+      final timestamp =
+          DateFormat('MMMM d, yyyy h:mm a').format(DateTime.now());
 
-      final cleanedText = text.replaceAll(RegExp(r'\s+'), ' '); // Remove all line breaks and replace with a space
+      final cleanedText = text.replaceAll(RegExp(r'\s+'),
+          ' '); // Remove all line breaks and replace with a space
 
       final logEntry = "$cleanedText\n$timestamp\n";
 
       logList.add(logEntry);
-      box.write('${Get.find<PusherConfigController>().message!.channel}', logList.toList());
+      box.write('${Get.find<PusherConfigController>().message!.channel}',
+          logList.toList());
       update();
 
       // Display the cleaned text in the notification
@@ -97,12 +102,11 @@ class NotificationController extends GetxController {
     }
   }
 
-
   void initializePusher() async {
     try {
       await pusher.init(
         apiKey: '${Get.find<PusherConfigController>().message!.apiKey}',
-        cluster:'${Get.find<PusherConfigController>().message!.cluster}',
+        cluster: '${Get.find<PusherConfigController>().message!.cluster}',
         onConnectionStateChange: onConnectionStateChange,
         onError: onError,
         onSubscriptionSucceeded: onSubscriptionSucceeded,
@@ -113,7 +117,9 @@ class NotificationController extends GetxController {
         onMemberRemoved: onMemberRemoved,
         onSubscriptionCount: onSubscriptionCount,
       );
-      await pusher.subscribe(channelName: '${Get.find<PusherConfigController>().message!.channel}',);
+      await pusher.subscribe(
+        channelName: '${Get.find<PusherConfigController>().message!.channel}',
+      );
       await pusher.connect();
     } catch (e) {
       logMessage("ERROR: $e");
@@ -131,7 +137,8 @@ class NotificationController extends GetxController {
   void onEvent(PusherEvent event) {
     final eventData = event.data.toString();
     final parsedData = jsonDecode(eventData); // Parse the event data JSON
-    final text = parsedData["message"]["description"]["text"] as String; // Extract the "text" field
+    final text = parsedData["message"]["description"]["text"]
+        as String; // Extract the "text" field
     if (kDebugMode) {
       print(text);
     }
@@ -140,7 +147,7 @@ class NotificationController extends GetxController {
     update(); // Trigger an update to refresh the UI
 
     // Display a local notification when a pusher event is received
-    notificationService.scheduleNotification("Notification",text);
+    notificationService.scheduleNotification("Notification", text);
   }
 
   void onSubscriptionSucceeded(String channelName, dynamic data) {
@@ -166,19 +173,20 @@ class NotificationController extends GetxController {
   }
 
   void onSubscriptionCount(String channelName, int subscriptionCount) {
-    logMessage("onSubscriptionCount: $channelName subscriptionCount: $subscriptionCount");
+    logMessage(
+        "onSubscriptionCount: $channelName subscriptionCount: $subscriptionCount");
   }
 
   void triggerEventAutomatically() async {
     try {
-      await Future.delayed(const Duration(seconds: 2)); // Delay for 2 seconds before triggering the event
+      await Future.delayed(const Duration(
+          seconds: 2)); // Delay for 2 seconds before triggering the event
       pusher.trigger(PusherEvent(
         channelName: '${Get.find<PusherConfigController>().message!.channel}',
         eventName: '${Get.find<PusherConfigController>().message!.event}',
       ));
     } catch (e) {
-      logMessage("ERROR: $e", addToLogList: true);
+      logMessage("ERROR.mit: $e", addToLogList: true);
     }
   }
-
 }

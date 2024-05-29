@@ -116,30 +116,31 @@ class Data {
   dynamic time;
   dynamic adminFeedback;
   dynamic paymentInformation;
+  dynamic feedback;
 
-  Data({
-    this.transactionId,
-    this.gateway,
-    this.amount,
-    this.charge,
-    this.currency,
-    this.status,
-    this.time,
-    this.adminFeedback,
-    this.paymentInformation,
-  });
+  Data(
+      {this.transactionId,
+      this.gateway,
+      this.amount,
+      this.charge,
+      this.currency,
+      this.status,
+      this.time,
+      this.adminFeedback,
+      this.paymentInformation,
+      this.feedback});
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-        transactionId: json["transactionId"],
-        gateway: json["gateway"],
-        amount: json["amount"],
-        charge: json["charge"],
-        currency: currencyValues.map[json["currency"]] ?? Currency.USD,
-        status: json["status"]!,
-        time: json["time"],
-        adminFeedback: json["adminFeedback"],
-        paymentInformation: json["paymentInformation"],
-      );
+      transactionId: json["transactionId"],
+      gateway: json["gateway"],
+      amount: json["amount"],
+      charge: json["charge"],
+      currency: currencyValues.map[json["currency"]] ?? Currency.USD,
+      status: json["status"]!,
+      time: json["time"],
+      adminFeedback: json["adminFeedback"],
+      paymentInformation: json["paymentInformation"],
+      feedback: json['feedback']);
 
   Map<String, dynamic> toJson() => {
         "transactionId": transactionId,
@@ -151,6 +152,7 @@ class Data {
         "time": time,
         "adminFeedback": adminFeedback,
         "paymentInformation": paymentInformation,
+        "feedback": feedback
       };
 }
 
